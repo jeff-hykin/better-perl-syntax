@@ -125,7 +125,7 @@ require_relative './tokens.rb'
                     lookBehindToAvoid(/\s|\w|</).then(std_space).then(
                         match: /</,
                         tag_as: "punctuation.separator.readline",
-                    ).lookAheadToAvoid(/</)
+                    ).lookAheadToAvoid(/<|\=/)
                 ),
                 end_pattern: newPattern(
                     match: />/,
@@ -193,7 +193,7 @@ require_relative './tokens.rb'
                 ),
                 includes: [ :$initial_context ]
             ),
-            grammar[:parentheses] = PatternRange.new(
+            grammar[:parentheses, overwrite: true] = PatternRange.new(
                 start_pattern: newPattern(
                     match: /\(/,
                     tag_as: "punctuation.section.parens",
