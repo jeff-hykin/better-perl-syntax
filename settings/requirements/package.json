@@ -121,7 +121,6 @@
     "yargs": "^13.2.2"
   },
   "dependencies": {
-    "textmate-bailout": "^1.1.0",
-    "vsce": "^1.85.0"
+    "textmate-bailout": "^1.1.0"
   }
 }

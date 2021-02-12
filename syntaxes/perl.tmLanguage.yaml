@@ -1346,11 +1346,11 @@ repository:
     begin: "(\\()"
     beginCaptures:
       '1':
-        name: punctuation.section.parameters.perl
+        name: punctuation.section.parens.perl
     end: "(\\))"
     endCaptures:
       '1':
-        name: punctuation.section.parameters.perl
+        name: punctuation.section.parens.perl
     patterns:
     - include: "$self"
   punctuation:
@@ -1554,6 +1554,17 @@ repository:
     - include: "#else_statement"
     - include: "#while_statement"
     - include: "#for_statement"
+  parameters:
+    begin: "(\\()"
+    beginCaptures:
+      '1':
+        name: punctuation.section.parameters.perl
+    end: "(\\))"
+    endCaptures:
+      '1':
+        name: punctuation.section.parameters.perl
+    patterns:
+    - include: "$self"
   function_definition:
     begin: "(sub)(?:(?>\\s+)+?|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?:(?<!\\w)[a-zA-Z_][a-zA-Z_0-9]*(?!\\w))?)"
     beginCaptures:
@@ -1575,7 +1586,7 @@ repository:
       end: "(?=\\})"
       patterns:
       - include: "$self"
-    - include: "#parentheses"
+    - include: "#parameters"
     - match: "(:)(?:(?>\\s+)+?|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?<!\\w)[a-zA-Z_][a-zA-Z_0-9]*(?!\\w))(?:(?>\\s+)+?|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))"
       captures:
         '1':

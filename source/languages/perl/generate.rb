@@ -287,7 +287,7 @@ require_relative './tokens.rb'
                     end_pattern: lookAheadFor(/\}/),
                     includes: [ :$initial_context ],
                 ),
-                grammar[:parentheses] = PatternRange.new(
+                grammar[:parameters] = PatternRange.new(
                     start_pattern: newPattern(
                         match: /\(/,
                         tag_as: "punctuation.section.parameters",

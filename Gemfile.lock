@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     deep_clone (0.0.1)
 
@@ -10,4 +10,4 @@ DEPENDENCIES
   deep_clone
 
 BUNDLED WITH
-   2.0.2
+   2.1.4

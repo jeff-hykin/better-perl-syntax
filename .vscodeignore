@@ -6,6 +6,7 @@ node_modules/
 scripts/
 source/
 test/
+settings/
 **/tags.txt
 **/*.rb
 **/*.yaml
