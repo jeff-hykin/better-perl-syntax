@@ -33,3 +33,6 @@ If you'd like to help improve the syntax, take a look at `source/languages` and 
 
 ## What if I see a highlighting bug?
 Post an issue on https://github.com/jeff-hykin/better-perl-syntax
+
+# Setup/Build
+Everything is detailed in the `documentation/SETUP.md`!
