@@ -37,6 +37,9 @@
       "include": "#keyword_operators"
     },
     {
+      "include": "#storage_declares"
+    },
+    {
       "include": "#line_comment"
     },
     {
@@ -2485,6 +2488,10 @@
           "name": "keyword.operator.perl"
         }
       ]
+    },
+    "storage_declares": {
+      "match": "\\b(my|our|local|state)\\b",
+      "name": "storage.modifier.$0.perl"
     },
     "semicolon": {
       "match": ";",

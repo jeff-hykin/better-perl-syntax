@@ -62,6 +62,7 @@ require_relative './tokens.rb'
             :inline_regex,
             :special_identifiers,
             :keyword_operators,
+            :storage_declares,
             # import all the original patterns
             *original_grammar["patterns"],
             :operators,
@@ -158,6 +159,13 @@ require_relative './tokens.rb'
                 tag_as: "keyword.operator",
             ),
         ]
+    # 
+    # state
+    # 
+        grammar[:storage_declares] = newPattern(
+            match: /\b(my|our|local|state)\b/,
+            tag_as: "storage.modifier.$match",
+        )
     # 
     # punctuation
     # 

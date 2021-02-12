@@ -15,6 +15,7 @@ patterns:
 - include: "#inline_regex"
 - include: "#special_identifiers"
 - include: "#keyword_operators"
+- include: "#storage_declares"
 - include: "#line_comment"
 - begin: "^(?==[a-zA-Z]+)"
   end: "^(=cut\\b.*$)"
@@ -1314,6 +1315,9 @@ repository:
       name: keyword.operator.bitwise.perl
     - match: "(?:\\+=|\\-=|\\*=|\\/=|\\*\\*=|%=|\\-\\-|\\+\\+|\\+|\\-|\\*|\\/|\\*\\*|%|==|!=|<=>|>|<|>=|<=|=~|!~|~~|&&|\\|\\||\\/\\/|<<=|>>=|<<|>>|&=|\\|=|\\^=|&|\\||\\^|=|\\.|\\.=)"
       name: keyword.operator.perl
+  storage_declares:
+    match: "\\b(my|our|local|state)\\b"
+    name: storage.modifier.$0.perl
   semicolon:
     match: ";"
     name: punctuation.terminator.statement.perl

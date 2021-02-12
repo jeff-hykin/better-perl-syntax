@@ -118,6 +118,7 @@ punctuation.whitespace.comment.leading.perl
 source.js.embedded.perl
 source.postscript.embedded.perl
 source.sql.embedded.perl
+storage.modifier.$0.perl
 storage.modifier.perl
 storage.type.class.pod.perl
 storage.type.method.perl
