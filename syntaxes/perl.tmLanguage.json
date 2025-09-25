@@ -2464,7 +2464,7 @@
           ]
         },
         {
-          "match": "(?:==|!=|<=>|>|<|>=|<=|=~|!~|~~)",
+          "match": "(?:==|!=|<=>|>|<|>=|<=|=~|!~|~~|!)",
           "name": "keyword.operator.comparison.perl"
         },
         {
@@ -2476,7 +2476,7 @@
           "name": "keyword.operator.logical.perl"
         },
         {
-          "match": "(?:\\-\\-|\\+\\+|\\+|\\-|\\*|\\/|\\*\\*|%)",
+          "match": "(?:\\-\\-|\\+\\+|\\+|\\-|\\*|\\/|\\*\\*|%|x)",
           "name": "keyword.operator.arithmetic.perl"
         },
         {
