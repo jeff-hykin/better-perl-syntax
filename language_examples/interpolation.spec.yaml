@@ -1,0 +1,61 @@
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: gcc
+  scopesBegin:
+    - meta.attribute-set
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: pkgs
+  scopesBegin:
+    - meta.statement
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: '${'
+  scopes:
+    - punctuation.section.embedded
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: gcc
+- source: '${'
+  scopes:
+    - punctuation.section.embedded
+- source: numS
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: '}'
+  scopes:
+    - punctuation.section.embedded
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: '}'
+  scopes:
+    - punctuation.section.embedded
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: '}'
+  scopes:
+    - punctuation.section.bracket

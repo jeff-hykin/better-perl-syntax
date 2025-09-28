@@ -1,0 +1,780 @@
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: lib
+  scopesBegin:
+    - meta.punctuation.section.function
+    - meta.punctuation.section.parameters
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: fetchFromGitHub
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: cmake
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: curl
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: xorg
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: avahi
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: qtbase
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: mkDerivation
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: openssl
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: wrapGAppsHook
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: avahiWithLibdnssdCompat
+  scopes:
+    - variable.parameter.function
+    - variable.other.object.parameter
+- source: '?'
+  scopesBegin:
+    - meta.default
+  scopes:
+    - punctuation.separator.default
+- source: avahi
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: override
+  scopes:
+    - entity.name.function.method.call
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: withLibdnssdCompat
+  scopesBegin:
+    - meta.attribute-set
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: 'true'
+  scopesBegin:
+    - meta.statement
+  scopes:
+    - constant.language.boolean.true
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: '}'
+  scopes:
+    - punctuation.section.bracket
+  scopesEnd:
+    - meta.default
+    - meta.punctuation.section.bracket
+    - meta.attribute-set
+- source: '}'
+  scopes:
+    - punctuation.section.bracket
+- source: ':'
+  scopes:
+    - punctuation.definition.function.colon
+  scopesEnd:
+    - meta.punctuation.section.bracket
+    - meta.punctuation.section.function
+    - meta.punctuation.section.parameters
+- source: mkDerivation
+  scopes:
+    - entity.name.function.call
+- source: rec
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - storage.modifier
+- source: '{'
+  scopes:
+    - punctuation.section.bracket
+- source: pname
+  scopesBegin:
+    - meta.attribute-set
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - meta.statement
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: barrier
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: version
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: 2.4.0
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: src
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: fetchFromGitHub
+  scopes:
+    - entity.name.function.call
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: owner
+  scopesBegin:
+    - meta.attribute-set
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - meta.statement
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: debauchee
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: repo
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: pname
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: rev
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: v
+- source: '${'
+  scopes:
+    - punctuation.section.embedded
+- source: version
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: '}'
+  scopes:
+    - punctuation.section.embedded
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: sha256
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: sha256-2tHqLF3zS3C4UnOVIZfpcuzaemC9++nC7lXgFnFSfKU=
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: fetchSubmodules
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: 'true'
+  scopes:
+    - constant.language.boolean.true
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: '}'
+  scopes:
+    - punctuation.section.bracket
+  scopesEnd:
+    - meta.punctuation.section.bracket
+    - meta.attribute-set
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: buildInputs
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '['
+  scopesBegin:
+    - meta.list
+  scopes:
+    - punctuation.definition.list
+- source: curl
+  scopes:
+    - entity.name.function.object.method
+- source: xorg
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: libX11
+  scopes:
+    - variable.other.property.last
+- source: xorg
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: libXext
+  scopes:
+    - variable.other.property.last
+- source: xorg
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: libXtst
+  scopes:
+    - variable.other.property.last
+- source: avahiWithLibdnssdCompat
+  scopesBegin:
+    - entity.name.function.object.method
+- source: qtbase
+  scopesEnd:
+    - entity.name.function.object.method
+- source: ']'
+  scopes:
+    - punctuation.definition.list
+  scopesEnd:
+    - meta.list
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: nativeBuildInputs
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '['
+  scopesBegin:
+    - meta.list
+  scopes:
+    - punctuation.definition.list
+- source: cmake
+  scopesBegin:
+    - entity.name.function.object.method
+- source: wrapGAppsHook
+  scopesEnd:
+    - entity.name.function.object.method
+- source: ']'
+  scopes:
+    - punctuation.definition.list
+  scopesEnd:
+    - meta.list
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: postFixup
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: ''''''
+  scopesBegin:
+    - string.quoted.other
+  scopes:
+    - string.quoted.single
+    - punctuation.definition.string.single
+- source: '    substituteInPlace "$out/share/applications/barrier.desktop" --replace "Exec=barrier" "Exec=$out/bin/barrier"'
+- source: ''''''
+  scopes:
+    - string.quoted.single
+    - punctuation.definition.string.single
+  scopesEnd:
+    - string.quoted.other
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: qtWrapperArgs
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '['
+  scopesBegin:
+    - meta.list
+  scopes:
+    - punctuation.definition.list
+- source: ''''''
+  scopesBegin:
+    - string.quoted.other
+  scopes:
+    - string.quoted.single
+    - punctuation.definition.string.single
+- source: '--prefix PATH : '
+- source: '${'
+  scopes:
+    - punctuation.section.embedded
+- source: lib
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: makeBinPath
+  scopes:
+    - entity.name.function.method.call
+- source: '['
+  scopesBegin:
+    - meta.list
+  scopes:
+    - punctuation.definition.list
+- source: openssl
+  scopes:
+    - entity.name.function.object.method
+- source: ']'
+  scopes:
+    - punctuation.definition.list
+  scopesEnd:
+    - meta.list
+- source: '}'
+  scopes:
+    - punctuation.section.embedded
+- source: ''''''
+  scopes:
+    - string.quoted.single
+    - punctuation.definition.string.single
+  scopesEnd:
+    - string.quoted.other
+- source: ']'
+  scopes:
+    - punctuation.definition.list
+  scopesEnd:
+    - meta.list
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: meta
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: description
+  scopesBegin:
+    - meta.attribute-set
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - meta.statement
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: Open-source KVM software
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: longDescription
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: ''''''
+  scopesBegin:
+    - string.quoted.other
+  scopes:
+    - string.quoted.single
+    - punctuation.definition.string.single
+- source: '      Barrier is KVM software forked from Symless''s synergy 1.9 codebase.'
+- source: '      Synergy was a commercialized reimplementation of the original'
+- source: '      CosmoSynergy written by Chris Schoeneman.'
+- source: ''''''
+  scopes:
+    - string.quoted.single
+    - punctuation.definition.string.single
+  scopesEnd:
+    - string.quoted.other
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: homepage
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: 'https://github.com/debauchee/barrier'
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: downloadPage
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.double
+- source: 'https://github.com/debauchee/barrier/releases'
+- source: '"'
+  scopes:
+    - punctuation.definition.string.double
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: license
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: lib
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: licenses
+  scopes:
+    - variable.other.object.property
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: gpl2
+  scopes:
+    - variable.other.property.last
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: maintainers
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: '['
+  scopesBegin:
+    - meta.list
+  scopes:
+    - punctuation.definition.list
+- source: lib
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: maintainers
+  scopes:
+    - variable.other.object.property
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: phryneas
+  scopes:
+    - variable.other.property.last
+- source: ']'
+  scopes:
+    - punctuation.definition.list
+  scopesEnd:
+    - meta.list
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: platforms
+  scopesBegin:
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: lib
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: platforms
+  scopes:
+    - variable.other.object.property
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: linux
+  scopes:
+    - variable.other.property.last
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: '}'
+  scopes:
+    - punctuation.section.bracket
+  scopesEnd:
+    - meta.punctuation.section.bracket
+    - meta.attribute-set
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: '}'
+  scopes:
+    - punctuation.section.bracket

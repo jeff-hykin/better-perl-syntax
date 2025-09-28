@@ -1,0 +1,212 @@
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: groupBy
+  scopesBegin:
+    - meta.attribute-set
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: builtins
+  scopesBegin:
+    - meta.statement
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+    - support.module
+    - variable.language.special.builtins
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: groupBy
+  scopes:
+    - variable.other.property.last
+- source: or
+  scopes:
+    - keyword.operator.or
+- source: (
+  scopes:
+    - punctuation.section.parentheses
+- source: pred
+  scopes:
+    - variable.parameter.function.standalone
+    - variable.other.object.parameter
+- source: ':'
+  scopes:
+    - punctuation.definition.function.colon
+    - variable.other.object.parameter
+- source: foldl'
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.parentheses
+- source: r
+  scopes:
+    - variable.parameter.function.standalone
+    - variable.other.object.parameter
+- source: ':'
+  scopes:
+    - punctuation.definition.function.colon
+    - variable.other.object.parameter
+- source: e
+  scopes:
+    - variable.parameter.function.standalone
+    - variable.other.object.parameter
+- source: ':'
+  scopes:
+    - punctuation.definition.function.colon
+    - variable.other.object.parameter
+- source: let
+  scopesBegin:
+    - meta.punctuation.section.let
+  scopes:
+    - keyword.control.let
+- source: key
+  scopesBegin:
+    - meta.let.in.part1
+    - meta.statement
+    - meta.assignment-start
+  scopes:
+    - meta.attribute-key
+    - entity.other.attribute-name
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+  scopesEnd:
+    - meta.assignment-start
+- source: pred
+  scopes:
+    - entity.name.function.call
+- source: e
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: in
+  scopes:
+    - keyword.control.in
+  scopesEnd:
+    - meta.punctuation.section.let
+    - meta.let.in.part1
+- source: r
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: //
+  scopes:
+    - keyword.operator.//
+- source: '{'
+  scopesBegin:
+    - meta.punctuation.section.bracket
+  scopes:
+    - punctuation.section.bracket
+- source: '${'
+  scopesBegin:
+    - meta.attribute-set
+    - meta.statement.dynamic-attr
+  scopes:
+    - punctuation.section.embedded
+- source: key
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: '}'
+  scopes:
+    - punctuation.section.embedded
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: (
+  scopes:
+    - punctuation.section.parentheses
+- source: r
+  scopes:
+    - variable.other.object.access
+    - variable.parameter
+- source: .
+  scopes:
+    - punctuation.separator.dot-access
+- source: '${'
+  scopes:
+    - punctuation.section.embedded
+- source: key
+  scopes:
+    - variable.other.object
+    - variable.parameter
+- source: '}'
+  scopes:
+    - punctuation.section.embedded
+- source: or
+  scopes:
+    - keyword.operator.or
+- source: '['
+  scopesBegin:
+    - meta.list
+    - punctuation.definition.list
+- source: ']'
+  scopesEnd:
+    - meta.list
+    - punctuation.definition.list
+- source: )
+  scopes:
+    - punctuation.section.parentheses
+- source: ++
+  scopes:
+    - keyword.operator.++
+- source: '['
+  scopesBegin:
+    - meta.list
+  scopes:
+    - punctuation.definition.list
+- source: e
+  scopes:
+    - entity.name.function.object.method
+- source: ']'
+  scopes:
+    - punctuation.definition.list
+  scopesEnd:
+    - meta.list
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement.dynamic-attr
+- source: '}'
+  scopes:
+    - punctuation.section.bracket
+  scopesEnd:
+    - meta.punctuation.section.bracket
+    - meta.attribute-set
+- source: )
+  scopes:
+    - punctuation.section.parentheses
+- source: '{'
+  scopesBegin:
+    - punctuation.definition.dict
+- source: '}'
+  scopesEnd:
+    - punctuation.definition.dict
+- source: )
+  scopes:
+    - punctuation.section.parentheses
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.statement
+- source: '}'
+  scopes:
+    - punctuation.section.bracket
