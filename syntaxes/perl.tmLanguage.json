@@ -1,1859 +1,1842 @@
 {
-  "information_for_contributors": [
-    "This file has been converted from https://github.com/textmate/perl.tmbundle/blob/master/Syntaxes/Perl.plist",
-    "If you want to provide a fix or improvement, please create a pull request against the original repository.",
-    "Once accepted there, we are happy to receive an update request."
-  ],
-  "version": "https://github.com/textmate/perl.tmbundle/commit/80826abe75250286c2a1a07958e50e8551d3f50c",
-  "name": "Perl",
-  "scopeName": "source.perl",
-  "patterns": [
-    {
-      "include": "#using_statement"
-    },
-    {
-      "include": "#control_flow"
-    },
-    {
-      "include": "#function_definition"
-    },
-    {
-      "include": "#function_call"
-    },
-    {
-      "include": "#label"
-    },
-    {
-      "include": "#numbers"
-    },
-    {
-      "include": "#inline_regex"
-    },
-    {
-      "include": "#special_identifiers"
-    },
-    {
-      "include": "#keyword_operators"
-    },
-    {
-      "include": "#storage_declares"
-    },
-    {
-      "include": "#normal_context"
-    },
-    {
-      "include": "#operators"
-    },
-    {
-      "include": "#punctuation"
-    }
-  ],
-  "repository": {
-    "comma": {
-      "match": ",",
-      "name": "punctuation.separator.comma.perl"
-    },
-    "control_flow": {
-      "patterns": [
+    "information_for_contributors": ["This file has been converted from https://github.com/textmate/perl.tmbundle/blob/master/Syntaxes/Perl.plist", "If you want to provide a fix or improvement, please create a pull request against the original repository.", "Once accepted there, we are happy to receive an update request."],
+    "version": "https://github.com/textmate/perl.tmbundle/commit/80826abe75250286c2a1a07958e50e8551d3f50c",
+    "name": "Perl",
+    "scopeName": "source.perl",
+    "patterns": [
         {
-          "begin": "(?:(?:\\s*+)((?<!\\w)(?:if)(?!\\w))(?:\\s*+))",
-          "end": "(?:(;)|(\\}))",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.if.perl"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.terminator.statement.perl"
-            },
-            "2": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\(",
-              "end": "\\)",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "endCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "contentName": "meta.control.evaluation",
-              "patterns": [
+            "include": "#using_statement"
+        },
+        {
+            "include": "#control_flow"
+        },
+        {
+            "include": "#function_definition"
+        },
+        {
+            "include": "#function_call"
+        },
+        {
+            "include": "#label"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#inline_regex"
+        },
+        {
+            "include": "#special_identifiers"
+        },
+        {
+            "include": "#keyword_operators"
+        },
+        {
+            "include": "#storage_declares"
+        },
+        {
+            "include": "#normal_context"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#punctuation"
+        }
+    ],
+    "repository": {
+        "comma": {
+            "match": ",",
+            "name": "punctuation.separator.comma.perl"
+        },
+        "control_flow": {
+            "patterns": [
                 {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "begin": "\\{",
-              "end": "(?=\\})",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.block.control.perl"
-                }
-              },
-              "endCaptures": {
-              },
-              "contentName": "meta.control.body",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "(?:(?:\\s*+)((?<!\\w)(?:elsif)(?!\\w))(?:\\s*+))",
-          "end": "(?:(;)|(\\}))",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.elsif.perl"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.terminator.statement.perl"
-            },
-            "2": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\(",
-              "end": "\\)",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "endCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "contentName": "meta.control.evaluation",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "begin": "\\{",
-              "end": "(?=\\})",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.block.control.perl"
-                }
-              },
-              "endCaptures": {
-              },
-              "contentName": "meta.control.body",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "(?:(?:\\s*+)((?<!\\w)(?:else)(?!\\w))(?:\\s*+))",
-          "end": "(?:(;)|(\\}))",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.else.perl"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.terminator.statement.perl"
-            },
-            "2": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\(",
-              "end": "\\)",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "endCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "contentName": "meta.control.evaluation",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "begin": "\\{",
-              "end": "(?=\\})",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.block.control.perl"
-                }
-              },
-              "endCaptures": {
-              },
-              "contentName": "meta.control.body",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "(?:(?:\\s*+)((?<!\\w)(?:while)(?!\\w))(?:\\s*+))",
-          "end": "(?:(;)|(\\}))",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.while.perl"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.terminator.statement.perl"
-            },
-            "2": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\(",
-              "end": "\\)",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "endCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "contentName": "meta.control.evaluation",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "begin": "\\{",
-              "end": "(?=\\})",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.block.control.perl"
-                }
-              },
-              "endCaptures": {
-              },
-              "contentName": "meta.control.body",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "(?:(?:\\s*+)((?<!\\w)(?:for)(?!\\w))(?:\\s*+))",
-          "end": "(?:(;)|(\\}))",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.for.perl"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.terminator.statement.perl"
-            },
-            "2": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\(",
-              "end": "\\)",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "endCaptures": {
-                "0": {
-                  "name": "punctuation.section.parens.control.perl"
-                }
-              },
-              "contentName": "meta.control.evaluation",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "begin": "\\{",
-              "end": "(?=\\})",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.section.block.control.perl"
-                }
-              },
-              "endCaptures": {
-              },
-              "contentName": "meta.control.body",
-              "patterns": [
-                {
-                  "include": "$self"
-                }
-              ]
-            },
-            {
-              "include": "$self"
-            }
-          ]
-        }
-      ]
-    },
-    "curly_brackets": {
-      "begin": "\\{",
-      "end": "\\}",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.section.curly-brackets.perl"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.section.curly-brackets.perl"
-        }
-      },
-      "patterns": [
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "else_statement": {
-      "begin": "(?:(?:\\s*+)((?<!\\w)(?:else)(?!\\w))(?:\\s*+))",
-      "end": "(?:(;)|(\\}))",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.else.perl"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.terminator.statement.perl"
-        },
-        "2": {
-          "name": "punctuation.section.block.control.perl"
-        }
-      },
-      "patterns": [
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "contentName": "meta.control.evaluation",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\{",
-          "end": "(?=\\})",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "endCaptures": {
-          },
-          "contentName": "meta.control.body",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "elsif_statement": {
-      "begin": "(?:(?:\\s*+)((?<!\\w)(?:elsif)(?!\\w))(?:\\s*+))",
-      "end": "(?:(;)|(\\}))",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.elsif.perl"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.terminator.statement.perl"
-        },
-        "2": {
-          "name": "punctuation.section.block.control.perl"
-        }
-      },
-      "patterns": [
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "contentName": "meta.control.evaluation",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\{",
-          "end": "(?=\\})",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "endCaptures": {
-          },
-          "contentName": "meta.control.body",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "escaped_char": {
-      "patterns": [
-        {
-          "match": "\\\\\\d+",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\c[^\\s\\\\]",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\g(?:\\{(?:\\w*|-\\d+)\\}|\\d+)",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\k(?:\\{\\w*\\}|<\\w*>|'\\w*')",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\N\\{[^\\}]*\\}",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\o\\{\\d*\\}",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\(?:p|P)(?:\\{\\w*\\}|P)",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\x(?:[0-9a-zA-Z]{2}|\\{\\w*\\})?",
-          "name": "constant.character.escape.perl"
-        },
-        {
-          "match": "\\\\.",
-          "name": "constant.character.escape.perl"
-        }
-      ]
-    },
-    "for_statement": {
-      "begin": "(?:(?:\\s*+)((?<!\\w)(?:for)(?!\\w))(?:\\s*+))",
-      "end": "(?:(;)|(\\}))",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.for.perl"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.terminator.statement.perl"
-        },
-        "2": {
-          "name": "punctuation.section.block.control.perl"
-        }
-      },
-      "patterns": [
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "contentName": "meta.control.evaluation",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\{",
-          "end": "(?=\\})",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "endCaptures": {
-          },
-          "contentName": "meta.control.body",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "function_call": {
-      "begin": "(?:((?!\\b(?:qq|qw|q|m|qr|s|tr|y)\\b)(?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(\\())",
-      "end": "\\)",
-      "beginCaptures": {
-        "1": {
-          "name": "entity.name.function.call.perl"
-        },
-        "2": {
-          "name": "punctuation.section.arguments.perl"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.section.arguments.perl"
-        }
-      },
-      "patterns": [
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "function_definition": {
-      "begin": "(?:(sub)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?:(?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))?))",
-      "end": "(?:(\\})|(;))",
-      "beginCaptures": {
-        "1": {
-          "name": "storage.type.sub.perl"
-        },
-        "2": {
-          "name": "entity.name.function.definition.perl"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.section.block.function.perl"
-        },
-        "2": {
-          "name": "punctuation.terminator.statement.perl"
-        }
-      },
-      "patterns": [
-        {
-          "begin": "\\{",
-          "end": "(?=\\})",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.function.perl"
-            }
-          },
-          "endCaptures": {
-          },
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parameters.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parameters.perl"
-            }
-          },
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "match": "(?:(:)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z)))",
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.attribute.perl entity.name.attribute.perl"
-            },
-            "2": {
-              "name": "entity.name.attribute.perl"
-            }
-          }
-        },
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "if_statement": {
-      "begin": "(?:(?:\\s*+)((?<!\\w)(?:if)(?!\\w))(?:\\s*+))",
-      "end": "(?:(;)|(\\}))",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.if.perl"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.terminator.statement.perl"
-        },
-        "2": {
-          "name": "punctuation.section.block.control.perl"
-        }
-      },
-      "patterns": [
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "contentName": "meta.control.evaluation",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\{",
-          "end": "(?=\\})",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "endCaptures": {
-          },
-          "contentName": "meta.control.body",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "inline_regex": {
-      "match": "(?:(\\/)((?:(?:[^\\/\\\\]|\\\\.)*+))(\\/))",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.regexp.perl"
-        },
-        "2": {
-          "name": "string.regexp.perl",
-          "patterns": [
-            {
-              "include": "#regexp"
-            }
-          ]
-        },
-        "3": {
-          "name": "punctuation.section.regexp.perl"
-        }
-      }
-    },
-    "keyword_operators": {
-      "patterns": [
-        {
-          "match": "(?<![a-zA-Z0-9_'])(?:(?:and)|(?:cmp)|(?:le)|(?:ge)|(?:eq)|(?:ne)|(?:lt)|(?:or)|(?:gt))(?![a-zA-Z0-9_\\-'])",
-          "name": "keyword.operator.alias.$0.perl"
-        }
-      ]
-    },
-    "label": {
-      "match": "(?:^(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))\\b(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(:(?!:)))",
-      "captures": {
-        "1": {
-          "name": "entity.name.label.perl"
-        },
-        "2": {
-          "name": "punctuation.separator.label.perl"
-        }
-      }
-    },
-    "line_comment": {
-      "patterns": [
-        {
-          "begin": "(^[ \\t]+)?(?=#)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.whitespace.comment.leading.perl"
-            }
-          },
-          "end": "(?!\\G)",
-          "patterns": [
-            {
-              "begin": "#",
-              "beginCaptures": {
-                "0": {
-                  "name": "punctuation.definition.comment.perl"
-                }
-              },
-              "end": "\\n",
-              "name": "comment.line.number-sign.perl"
-            }
-          ]
-        }
-      ]
-    },
-    "nested_braces": {
-      "begin": "\\{",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": "\\}",
-      "patterns": [
-        {
-          "include": "#escaped_char"
-        },
-        {
-          "include": "#nested_braces"
-        }
-      ]
-    },
-    "nested_braces_interpolated": {
-      "begin": "\\{",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": "\\}",
-      "patterns": [
-        {
-          "include": "#escaped_char"
-        },
-        {
-          "include": "#variable"
-        },
-        {
-          "include": "#nested_braces_interpolated"
-        }
-      ]
-    },
-    "nested_brackets": {
-      "begin": "\\[",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": "\\]",
-      "patterns": [
-        {
-          "include": "#escaped_char"
-        },
-        {
-          "include": "#nested_brackets"
-        }
-      ]
-    },
-    "nested_brackets_interpolated": {
-      "begin": "\\[",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": "\\]",
-      "patterns": [
-        {
-          "include": "#escaped_char"
-        },
-        {
-          "include": "#variable"
-        },
-        {
-          "include": "#nested_brackets_interpolated"
-        }
-      ]
-    },
-    "nested_ltgt": {
-      "begin": "<",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": ">",
-      "patterns": [
-        {
-          "include": "#nested_ltgt"
-        }
-      ]
-    },
-    "nested_ltgt_interpolated": {
-      "begin": "<",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": ">",
-      "patterns": [
-        {
-          "include": "#variable"
-        },
-        {
-          "include": "#nested_ltgt_interpolated"
-        }
-      ]
-    },
-    "nested_parens": {
-      "begin": "\\(",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": "\\)",
-      "patterns": [
-        {
-          "include": "#escaped_char"
-        },
-        {
-          "include": "#nested_parens"
-        }
-      ]
-    },
-    "nested_parens_interpolated": {
-      "begin": "\\(",
-      "captures": {
-        "1": {
-          "name": "punctuation.section.scope.perl"
-        }
-      },
-      "end": "\\)",
-      "patterns": [
-        {
-          "comment": "This is to prevent thinks like qr/foo$/ to treat $/ as a variable",
-          "match": "\\$(?=[^\\s\\w'\\{\\[\\(\\<])",
-          "name": "keyword.control.anchor.perl"
-        },
-        {
-          "include": "#escaped_char"
-        },
-        {
-          "include": "#variable"
-        },
-        {
-          "include": "#nested_parens_interpolated"
-        }
-      ]
-    },
-    "numbers": {
-      "match": "(?<!\\w)(?:\\.?\\d)(?:(?:(?:[0-9a-zA-Z_\\.]|_)|(?:(?<=[eEpP])[+-]))*)",
-      "captures": {
-        "0": {
-          "patterns": [
-            {
-              "begin": "(?=.)",
-              "end": "$",
-              "beginCaptures": {
-              },
-              "endCaptures": {
-              },
-              "patterns": [
-                {
-                  "match": "(\\G(?:0[xX]))(?:([0-9a-fA-F](?:(?:[0-9a-fA-F]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)((?:(?<=[0-9a-fA-F])\\.|(?:\\.(?=[0-9a-fA-F]))))(?:([0-9a-fA-F](?:(?:[0-9a-fA-F]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)(?:(?:(?<!_)([pP])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:([lLfF](?!\\w))?)$",
-                  "captures": {
-                    "1": {
-                      "name": "keyword.other.unit.hexadecimal.perl"
-                    },
-                    "2": {
-                      "name": "constant.numeric.hexadecimal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "begin": "(?:(?:\\s*+)((?<!\\w)(?:if)(?!\\w))(?:\\s*+))",
+                    "end": "(?:(;)|(\\}))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.control.if.perl"
                         }
-                      ]
                     },
-                    "3": {
-                      "name": "punctuation.separator.constant.numeric.perl"
-                    },
-                    "4": {
-                      "name": "constant.numeric.hexadecimal.perl"
-                    },
-                    "5": {
-                      "name": "constant.numeric.hexadecimal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.terminator.statement.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.section.block.control.perl"
                         }
-                      ]
                     },
-                    "6": {
-                      "name": "punctuation.separator.constant.numeric.perl"
-                    },
-                    "7": {
-                      "name": "keyword.other.unit.exponent.hexadecimal.perl"
-                    },
-                    "8": {
-                      "name": "keyword.operator.plus.exponent.hexadecimal.perl"
-                    },
-                    "9": {
-                      "name": "keyword.operator.minus.exponent.hexadecimal.perl"
-                    },
-                    "10": {
-                      "name": "constant.numeric.exponent.hexadecimal.perl",
-                      "patterns": [
+                    "patterns": [
                         {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                            "begin": "\\(",
+                            "end": "\\)",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "endCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "contentName": "meta.control.evaluation",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "begin": "\\{",
+                            "end": "(?=\\})",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.block.control.perl"
+                                }
+                            },
+                            "endCaptures": {},
+                            "contentName": "meta.control.body",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "include": "$self"
                         }
-                      ]
-                    },
-                    "11": {
-                      "name": "keyword.other.unit.suffix.floating-point.perl"
-                    }
-                  }
+                    ]
                 },
                 {
-                  "match": "(?:\\G(?=[0-9.])(?!0[xXbB]))(?:([0-9](?:(?:[0-9]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)((?:(?<=[0-9])\\.|(?:\\.(?=[0-9]))))(?:([0-9](?:(?:[0-9]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)(?:(?:(?<!_)([eE])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:([lLfF](?!\\w))?)$",
-                  "captures": {
-                    "1": {
-                      "name": "constant.numeric.decimal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "begin": "(?:(?:\\s*+)((?<!\\w)(?:elsif)(?!\\w))(?:\\s*+))",
+                    "end": "(?:(;)|(\\}))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.control.elsif.perl"
                         }
-                      ]
                     },
-                    "2": {
-                      "name": "punctuation.separator.constant.numeric.perl"
-                    },
-                    "3": {
-                      "name": "constant.numeric.decimal.point.perl"
-                    },
-                    "4": {
-                      "name": "constant.numeric.decimal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.terminator.statement.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.section.block.control.perl"
                         }
-                      ]
                     },
-                    "5": {
-                      "name": "punctuation.separator.constant.numeric.perl"
-                    },
-                    "6": {
-                      "name": "keyword.other.unit.exponent.decimal.perl"
-                    },
-                    "7": {
-                      "name": "keyword.operator.plus.exponent.decimal.perl"
-                    },
-                    "8": {
-                      "name": "keyword.operator.minus.exponent.decimal.perl"
-                    },
-                    "9": {
-                      "name": "constant.numeric.exponent.decimal.perl",
-                      "patterns": [
+                    "patterns": [
                         {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                            "begin": "\\(",
+                            "end": "\\)",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "endCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "contentName": "meta.control.evaluation",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "begin": "\\{",
+                            "end": "(?=\\})",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.block.control.perl"
+                                }
+                            },
+                            "endCaptures": {},
+                            "contentName": "meta.control.body",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "include": "$self"
                         }
-                      ]
-                    },
-                    "10": {
-                      "name": "keyword.other.unit.suffix.floating-point.perl"
-                    }
-                  }
+                    ]
                 },
                 {
-                  "match": "(\\G(?:0[bB]))([01](?:(?:[01]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
-                  "captures": {
-                    "1": {
-                      "name": "keyword.other.unit.binary.perl"
-                    },
-                    "2": {
-                      "name": "constant.numeric.binary.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "begin": "(?:(?:\\s*+)((?<!\\w)(?:else)(?!\\w))(?:\\s*+))",
+                    "end": "(?:(;)|(\\}))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.control.else.perl"
                         }
-                      ]
                     },
-                    "3": {
-                      "name": "punctuation.separator.constant.numeric.perl"
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.terminator.statement.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
                     },
-                    "4": {
-                      "name": "keyword.other.unit.suffix.integer.perl"
-                    }
-                  }
+                    "patterns": [
+                        {
+                            "begin": "\\(",
+                            "end": "\\)",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "endCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "contentName": "meta.control.evaluation",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "begin": "\\{",
+                            "end": "(?=\\})",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.block.control.perl"
+                                }
+                            },
+                            "endCaptures": {},
+                            "contentName": "meta.control.body",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "include": "$self"
+                        }
+                    ]
                 },
                 {
-                  "match": "(\\G0)((?:(?:[0-7]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))+))(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
-                  "captures": {
-                    "1": {
-                      "name": "keyword.other.unit.octal.perl"
-                    },
-                    "2": {
-                      "name": "constant.numeric.octal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "begin": "(?:(?:\\s*+)((?<!\\w)(?:while)(?!\\w))(?:\\s*+))",
+                    "end": "(?:(;)|(\\}))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.control.while.perl"
                         }
-                      ]
                     },
-                    "3": {
-                      "name": "punctuation.separator.constant.numeric.perl"
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.terminator.statement.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
                     },
-                    "4": {
-                      "name": "keyword.other.unit.suffix.integer.perl"
-                    }
-                  }
+                    "patterns": [
+                        {
+                            "begin": "\\(",
+                            "end": "\\)",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "endCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "contentName": "meta.control.evaluation",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "begin": "\\{",
+                            "end": "(?=\\})",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.block.control.perl"
+                                }
+                            },
+                            "endCaptures": {},
+                            "contentName": "meta.control.body",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "include": "$self"
+                        }
+                    ]
                 },
                 {
-                  "match": "(\\G(?:0[xX]))([0-9a-fA-F](?:(?:[0-9a-fA-F]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))(?:(?:(?<!_)([pP])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
-                  "captures": {
-                    "1": {
-                      "name": "keyword.other.unit.hexadecimal.perl"
-                    },
-                    "2": {
-                      "name": "constant.numeric.hexadecimal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "begin": "(?:(?:\\s*+)((?<!\\w)(?:for)(?!\\w))(?:\\s*+))",
+                    "end": "(?:(;)|(\\}))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.control.for.perl"
                         }
-                      ]
                     },
-                    "3": {
-                      "name": "punctuation.separator.constant.numeric.perl"
-                    },
-                    "4": {
-                      "name": "keyword.other.unit.exponent.hexadecimal.perl"
-                    },
-                    "5": {
-                      "name": "keyword.operator.plus.exponent.hexadecimal.perl"
-                    },
-                    "6": {
-                      "name": "keyword.operator.minus.exponent.hexadecimal.perl"
-                    },
-                    "7": {
-                      "name": "constant.numeric.exponent.hexadecimal.perl",
-                      "patterns": [
-                        {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.terminator.statement.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.section.block.control.perl"
                         }
-                      ]
                     },
-                    "8": {
-                      "name": "keyword.other.unit.suffix.integer.perl"
-                    }
-                  }
-                },
-                {
-                  "match": "(?:\\G(?=[0-9.])(?!0[xXbB]))([0-9](?:(?:[0-9]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))(?:(?:(?<!_)([eE])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
-                  "captures": {
-                    "1": {
-                      "name": "constant.numeric.decimal.perl",
-                      "patterns": [
+                    "patterns": [
                         {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
-                        }
-                      ]
-                    },
-                    "2": {
-                      "name": "punctuation.separator.constant.numeric.perl"
-                    },
-                    "3": {
-                      "name": "keyword.other.unit.exponent.decimal.perl"
-                    },
-                    "4": {
-                      "name": "keyword.operator.plus.exponent.decimal.perl"
-                    },
-                    "5": {
-                      "name": "keyword.operator.minus.exponent.decimal.perl"
-                    },
-                    "6": {
-                      "name": "constant.numeric.exponent.decimal.perl",
-                      "patterns": [
+                            "begin": "\\(",
+                            "end": "\\)",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "endCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.parens.control.perl"
+                                }
+                            },
+                            "contentName": "meta.control.evaluation",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
                         {
-                          "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
-                          "name": "punctuation.separator.constant.numeric.perl"
+                            "begin": "\\{",
+                            "end": "(?=\\})",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.section.block.control.perl"
+                                }
+                            },
+                            "endCaptures": {},
+                            "contentName": "meta.control.body",
+                            "patterns": [
+                                {
+                                    "include": "$self"
+                                }
+                            ]
+                        },
+                        {
+                            "include": "$self"
                         }
-                      ]
-                    },
-                    "7": {
-                      "name": "keyword.other.unit.suffix.integer.perl"
-                    }
-                  }
-                },
-                {
-                  "match": "(?:(?:(?:[0-9a-zA-Z_\\.]|_)|(?:(?<=[eEpP])[+-]))+)",
-                  "name": "invalid.illegal.constant.numeric.perl"
+                    ]
                 }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    "operators": {
-      "patterns": [
-        {
-          "begin": "(?:(?<!\\s|\\w|<)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(<)(?!<|\\=))",
-          "end": ">",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.separator.readline.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.separator.readline.perl"
-            }
-          },
-          "contentName": "meta.readline",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
+            ]
         },
-        {
-          "match": "(?:(?:<=>)|(?:!=)|(?:~~)|(?:!~)|(?:==)|(?:>=)|(?:<=)|(?:=~)|>|<)",
-          "name": "keyword.operator.comparison.perl"
-        },
-        {
-          "match": "(?:(?:\\*\\*=)|(?:<<=)|(?:>>=)|(?:\\/=)|(?:%=)|(?:&=)|(?:\\|=)|(?:\\^=)|(?:\\.=)|(?:\\-=)|(?:\\*=)|(?:\\+=)|=)",
-          "name": "keyword.operator.assignment.perl"
-        },
-        {
-          "match": "(?:(?:&&)|(?:\\|\\|)|(?:\\/\\/))",
-          "name": "keyword.operator.logical.perl"
-        },
-        {
-          "match": "(?:(?:\\+\\+)|(?:\\*\\*)|(?:\\-\\-)|\\*|\\/|%|\\+|\\-)",
-          "name": "keyword.operator.arithmetic.perl"
-        },
-        {
-          "match": "(?:(?:<<)|(?:>>)|&|\\||\\^)",
-          "name": "keyword.operator.bitwise.perl"
-        },
-        {
-          "match": "(?:(?:\\*\\*=)|(?:>>=)|(?:<<=)|(?:<=>)|(?:%=)|(?:\\-\\-)|(?:\\+\\+)|(?:\\.=)|(?:\\-=)|(?:\\*=)|(?:\\/=)|(?:=~)|(?:!~)|(?:~~)|(?:&&)|(?:\\|\\|)|(?:\\/\\/)|(?:<<)|(?:>>)|(?:&=)|(?:\\|=)|(?:\\^=)|(?:\\+=)|(?:\\*\\*)|(?:==)|(?:!=)|(?:>=)|(?:<=)|&|\\||%|\\^|=|\\*|>|<|\\.|\\-|\\+|\\/)",
-          "name": "keyword.operator.perl"
-        }
-      ]
-    },
-    "parameters": {
-      "begin": "\\(",
-      "end": "\\)",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.section.parameters.perl"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.section.parameters.perl"
-        }
-      },
-      "patterns": [
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "parentheses": {
-      "begin": "\\(",
-      "end": "\\)",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.section.parens.perl"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.section.parens.perl"
-        }
-      },
-      "patterns": [
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "pod": {
-      "patterns": [
-        {
-          "match": "^=(pod|back|cut)\\b",
-          "name": "storage.type.class.pod.perl"
-        },
-        {
-          "begin": "^(=begin)\\s+(html)\\s*$",
-          "beginCaptures": {
-            "1": {
-              "name": "storage.type.class.pod.perl"
-            },
-            "2": {
-              "name": "variable.other.pod.perl"
-            }
-          },
-          "contentName": "text.embedded.html.basic",
-          "end": "^(=end)\\s+(html)|^(?==cut)",
-          "endCaptures": {
-            "1": {
-              "name": "storage.type.class.pod.perl"
-            },
-            "2": {
-              "name": "variable.other.pod.perl"
-            }
-          },
-          "name": "meta.embedded.pod.perl",
-          "patterns": [
-            {
-              "include": "text.html.basic"
-            }
-          ]
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "storage.type.class.pod.perl"
-            },
-            "2": {
-              "name": "variable.other.pod.perl",
-              "patterns": [
-                {
-                  "include": "#pod-formatting"
+        "curly_brackets": {
+            "begin": "\\{",
+            "end": "\\}",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.section.curly-brackets.perl"
                 }
-              ]
-            }
-          },
-          "match": "^(=(?:head[1-4]|item|over|encoding|begin|end|for))\\b\\s*(.*)"
-        },
-        {
-          "include": "#pod-formatting"
-        }
-      ]
-    },
-    "pod-formatting": {
-      "patterns": [
-        {
-          "captures": {
-            "1": {
-              "name": "markup.italic.pod.perl"
             },
-            "2": {
-              "name": "markup.italic.pod.perl"
-            }
-          },
-          "match": "I(?:<([^<>]+)>|<+(\\s+(?:(?<!\\s)>|[^>])+\\s+)>+)",
-          "name": "entity.name.type.instance.pod.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "markup.bold.pod.perl"
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.curly-brackets.perl"
+                }
             },
-            "2": {
-              "name": "markup.bold.pod.perl"
-            }
-          },
-          "match": "B(?:<([^<>]+)>|<+(\\s+(?:(?<!\\s)>|[^>])+\\s+)>+)",
-          "name": "entity.name.type.instance.pod.perl"
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
         },
-        {
-          "captures": {
-            "1": {
-              "name": "markup.raw.pod.perl"
-            },
-            "2": {
-              "name": "markup.raw.pod.perl"
-            }
-          },
-          "match": "C(?:<([^<>]+)>|<+(\\\\s+(?:(?<!\\\\s)>|[^>])+\\\\s+)>+)",
-          "name": "entity.name.type.instance.pod.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "markup.underline.link.hyperlink.pod.perl"
-            }
-          },
-          "match": "L<([^>]+)>",
-          "name": "entity.name.type.instance.pod.perl"
-        },
-        {
-          "match": "[EFSXZ]<[^>]*>",
-          "name": "entity.name.type.instance.pod.perl"
-        }
-      ]
-    },
-    "punctuation": {
-      "patterns": [
-        {
-          "match": ";",
-          "name": "punctuation.terminator.statement.perl"
-        },
-        {
-          "match": ",",
-          "name": "punctuation.separator.comma.perl"
-        },
-        {
-          "begin": "\\[",
-          "end": "\\]",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.square-brackets.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.square-brackets.perl"
-            }
-          },
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\{",
-          "end": "\\}",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.curly-brackets.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.curly-brackets.perl"
-            }
-          },
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.perl"
-            }
-          },
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        }
-      ]
-    },
-    "regex-character-class": {
-      "patterns": [
-        {
-          "match": "\\\\[wWsSdD]|\\.",
-          "name": "constant.character.character-class.regexp"
-        },
-        {
-          "match": "\\\\([0-7]{3}|x\\h\\h|u\\h\\h\\h\\h)",
-          "name": "constant.character.numeric.regexp"
-        },
-        {
-          "match": "\\\\c[A-Z]",
-          "name": "constant.character.control.regexp"
-        },
-        {
-          "match": "\\\\.",
-          "name": "constant.character.escape.backslash.regexp"
-        }
-      ]
-    },
-    "regexp": {
-      "patterns": [
-        {
-          "match": "\\\\[bB]|\\^|\\$",
-          "name": "keyword.control.anchor.regexp"
-        },
-        {
-          "match": "\\\\[1-9]\\d*",
-          "name": "keyword.other.back-reference.regexp"
-        },
-        {
-          "match": "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??",
-          "name": "keyword.operator.quantifier.regexp"
-        },
-        {
-          "match": "\\|",
-          "name": "keyword.operator.or.regexp"
-        },
-        {
-          "end": "(\\))",
-          "begin": "(\\()((\\?=)|(\\?!))",
-          "beginCaptures": {
-            "3": {
-              "name": "meta.assertion.look-ahead.regexp"
-            },
-            "4": {
-              "name": "meta.assertion.negative-look-ahead.regexp"
-            },
-            "1": {
-              "name": "punctuation.definition.group.regexp"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#regexp"
-            }
-          ],
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.group.regexp"
-            }
-          },
-          "name": "meta.group.assertion.regexp"
-        },
-        {
-          "end": "\\)",
-          "begin": "\\((\\?:)?",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.group.regexp"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#regexp"
-            }
-          ],
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.group.regexp"
-            }
-          },
-          "name": "meta.group.regexp"
-        },
-        {
-          "end": "(\\])",
-          "begin": "(\\[)(\\^)?",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.character-class.regexp"
-            },
-            "2": {
-              "name": "keyword.operator.negation.regexp"
-            }
-          },
-          "patterns": [
-            {
-              "match": "(?:.|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))",
-              "captures": {
-                "3": {
-                  "name": "constant.character.escape.backslash.regexp"
-                },
-                "4": {
-                  "name": "constant.character.numeric.regexp"
-                },
-                "5": {
-                  "name": "constant.character.control.regexp"
-                },
+        "else_statement": {
+            "begin": "(?:(?:\\s*+)((?<!\\w)(?:else)(?!\\w))(?:\\s*+))",
+            "end": "(?:(;)|(\\}))",
+            "beginCaptures": {
                 "1": {
-                  "name": "constant.character.numeric.regexp"
-                },
-                "6": {
-                  "name": "constant.character.escape.backslash.regexp"
+                    "name": "keyword.control.else.perl"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.terminator.statement.perl"
                 },
                 "2": {
-                  "name": "constant.character.control.regexp"
+                    "name": "punctuation.section.block.control.perl"
                 }
-              },
-              "name": "constant.other.character-class.range.regexp"
             },
-            {
-              "include": "#regex-character-class"
-            }
-          ],
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.character-class.regexp"
-            }
-          },
-          "name": "constant.other.character-class.set.regexp"
+            "patterns": [
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "contentName": "meta.control.evaluation",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{",
+                    "end": "(?=\\})",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
+                    },
+                    "endCaptures": {},
+                    "contentName": "meta.control.body",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "include": "$self"
+                }
+            ]
         },
-        {
-          "include": "#regex-character-class"
-        }
-      ]
-    },
-    "semicolon": {
-      "match": ";",
-      "name": "punctuation.terminator.statement.perl"
-    },
-    "special_identifiers": {
-      "patterns": [
-        {
-          "match": "\\$\\^[A-Z^_?\\[\\]]",
-          "name": "variable.language.special.caret.perl"
-        },
-        {
-          "match": "(?<![a-zA-Z0-9_'])(?:undef)(?![a-zA-Z0-9_\\-'])",
-          "name": "constant.language.undef.perl"
-        }
-      ]
-    },
-    "square_brackets": {
-      "begin": "\\[",
-      "end": "\\]",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.section.square-brackets.perl"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.section.square-brackets.perl"
-        }
-      },
-      "patterns": [
-        {
-          "include": "$self"
-        }
-      ]
-    },
-    "storage_declares": {
-      "match": "\\b(?:my|our|local|state)\\b",
-      "name": "storage.modifier.$0.perl"
-    },
-    "using_statement": {
-      "begin": "(?:(use)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))([\\w\\.]+))",
-      "end": ";",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.other.use.perl"
-        },
-        "2": {
-          "name": "entity.name.package.perl"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.terminator.statement.perl"
-        }
-      },
-      "name": "meta.import.perl",
-      "patterns": [
-        {
-          "match": "::",
-          "name": "punctuation.separator.resolution.perl"
-        },
-        {
-          "begin": "(?:(qw)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(\\())",
-          "end": "\\)",
-          "beginCaptures": {
-            "1": {
-              "name": "entity.name.function.special.perl"
+        "elsif_statement": {
+            "begin": "(?:(?:\\s*+)((?<!\\w)(?:elsif)(?!\\w))(?:\\s*+))",
+            "end": "(?:(;)|(\\}))",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.elsif.perl"
+                }
             },
-            "2": {
-              "name": "punctuation.section.block.function.special.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.block.function.special.perl"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#variable"
-            }
-          ]
-        }
-      ]
-    },
-    "variable": {
-      "patterns": [
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)&(?![A-Za-z0-9_])",
-          "name": "variable.other.regexp.match.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)`(?![A-Za-z0-9_])",
-          "name": "variable.other.regexp.pre-match.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)'(?![A-Za-z0-9_])",
-          "name": "variable.other.regexp.post-match.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)\\+(?![A-Za-z0-9_])",
-          "name": "variable.other.regexp.last-paren-match.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)\"(?![A-Za-z0-9_])",
-          "name": "variable.other.readwrite.list-separator.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)0(?![A-Za-z0-9_])",
-          "name": "variable.other.predefined.program-name.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)[_ab\\*\\.\\/\\|,\\\\;#%=\\-~^:?!\\$<>\\(\\)\\[\\]@](?![A-Za-z0-9_])",
-          "name": "variable.other.predefined.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$)[0-9]+(?![A-Za-z0-9_])",
-          "name": "variable.other.subpattern.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "([\\$\\@\\%](#)?)([a-zA-Zx7f-xff\\$]|::)([a-zA-Z0-9_x7f-xff\\$]|::)*\\b",
-          "name": "variable.other.readwrite.global.perl"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.terminator.statement.perl"
+                },
+                "2": {
+                    "name": "punctuation.section.block.control.perl"
+                }
             },
-            "2": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "(\\$\\{)(?:[a-zA-Zx7f-xff\\$]|::)(?:[a-zA-Z0-9_x7f-xff\\$]|::)*(\\})",
-          "name": "variable.other.readwrite.global.perl"
+            "patterns": [
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "contentName": "meta.control.evaluation",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{",
+                    "end": "(?=\\})",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
+                    },
+                    "endCaptures": {},
+                    "contentName": "meta.control.body",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "include": "$self"
+                }
+            ]
         },
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.variable.perl"
-            }
-          },
-          "match": "([\\$\\@\\%](#)?)[0-9_]\\b",
-          "name": "variable.other.readwrite.global.special.perl"
-        }
-      ]
-    },
-    "while_statement": {
-      "begin": "(?:(?:\\s*+)((?<!\\w)(?:while)(?!\\w))(?:\\s*+))",
-      "end": "(?:(;)|(\\}))",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.while.perl"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.terminator.statement.perl"
+        "escaped_char": {
+            "patterns": [
+                {
+                    "match": "\\\\\\d+",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\c[^\\s\\\\]",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\g(?:\\{(?:\\w*|-\\d+)\\}|\\d+)",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\k(?:\\{\\w*\\}|<\\w*>|'\\w*')",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\N\\{[^\\}]*\\}",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\o\\{\\d*\\}",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\(?:p|P)(?:\\{\\w*\\}|P)",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\x(?:[0-9a-zA-Z]{2}|\\{\\w*\\})?",
+                    "name": "constant.character.escape.perl"
+                },
+                {
+                    "match": "\\\\.",
+                    "name": "constant.character.escape.perl"
+                }
+            ]
         },
-        "2": {
-          "name": "punctuation.section.block.control.perl"
-        }
-      },
-      "patterns": [
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.parens.control.perl"
-            }
-          },
-          "contentName": "meta.control.evaluation",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
+        "for_statement": {
+            "begin": "(?:(?:\\s*+)((?<!\\w)(?:for)(?!\\w))(?:\\s*+))",
+            "end": "(?:(;)|(\\}))",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.for.perl"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.terminator.statement.perl"
+                },
+                "2": {
+                    "name": "punctuation.section.block.control.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "contentName": "meta.control.evaluation",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{",
+                    "end": "(?=\\})",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
+                    },
+                    "endCaptures": {},
+                    "contentName": "meta.control.body",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "include": "$self"
+                }
+            ]
         },
-        {
-          "begin": "\\{",
-          "end": "(?=\\})",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.control.perl"
-            }
-          },
-          "endCaptures": {
-          },
-          "contentName": "meta.control.body",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
+        "function_call": {
+            "begin": "(?:((?!\\b(?:qq|qw|q|m|qr|s|tr|y)\\b)(?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(\\())",
+            "end": "\\)",
+            "beginCaptures": {
+                "1": {
+                    "name": "entity.name.function.call.perl"
+                },
+                "2": {
+                    "name": "punctuation.section.arguments.perl"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.arguments.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
         },
-        {
-          "include": "$self"
+        "function_definition": {
+            "begin": "(?:(sub)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?:(?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))?))",
+            "end": "(?:(\\})|(;))",
+            "beginCaptures": {
+                "1": {
+                    "name": "storage.type.sub.perl"
+                },
+                "2": {
+                    "name": "entity.name.function.definition.perl"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.section.block.function.perl"
+                },
+                "2": {
+                    "name": "punctuation.terminator.statement.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "\\{",
+                    "end": "(?=\\})",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.function.perl"
+                        }
+                    },
+                    "endCaptures": {},
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parameters.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parameters.perl"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "match": "(?:(:)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z)))",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.attribute.perl entity.name.attribute.perl"
+                        },
+                        "2": {
+                            "name": "entity.name.attribute.perl"
+                        }
+                    }
+                },
+                {
+                    "include": "$self"
+                }
+            ]
+        },
+        "if_statement": {
+            "begin": "(?:(?:\\s*+)((?<!\\w)(?:if)(?!\\w))(?:\\s*+))",
+            "end": "(?:(;)|(\\}))",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.if.perl"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.terminator.statement.perl"
+                },
+                "2": {
+                    "name": "punctuation.section.block.control.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "contentName": "meta.control.evaluation",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{",
+                    "end": "(?=\\})",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
+                    },
+                    "endCaptures": {},
+                    "contentName": "meta.control.body",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "include": "$self"
+                }
+            ]
+        },
+        "inline_regex": {
+            "match": "(?:(\\/)((?:(?:[^\\/\\\\]|\\\\.)*+))(\\/))",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.regexp.perl"
+                },
+                "2": {
+                    "name": "string.regexp.perl",
+                    "patterns": [
+                        {
+                            "include": "#regexp"
+                        }
+                    ]
+                },
+                "3": {
+                    "name": "punctuation.section.regexp.perl"
+                }
+            }
+        },
+        "keyword_operators": {
+            "patterns": [
+                {
+                    "match": "(?<![a-zA-Z0-9_'])(?:(?:and)|(?:cmp)|(?:le)|(?:ge)|(?:eq)|(?:ne)|(?:lt)|(?:or)|(?:gt))(?![a-zA-Z0-9_\\-'])",
+                    "name": "keyword.operator.alias.$0.perl"
+                }
+            ]
+        },
+        "label": {
+            "match": "(?:^(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))((?<![a-zA-Z0-9_'])(?:[a-zA-Z_][a-zA-Z0-9_\\-']*)(?![a-zA-Z0-9_\\-'])(?:(?![a-zA-Z0-9\\-_'])(?:(?<!)|(?<=))))\\b(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(:(?!:)))",
+            "captures": {
+                "1": {
+                    "name": "entity.name.label.perl"
+                },
+                "2": {
+                    "name": "punctuation.separator.label.perl"
+                }
+            }
+        },
+        "line_comment": {
+            "patterns": [
+                {
+                    "begin": "(^[ \\t]+)?(?=#)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.whitespace.comment.leading.perl"
+                        }
+                    },
+                    "end": "(?!\\G)",
+                    "patterns": [
+                        {
+                            "begin": "#",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.definition.comment.perl"
+                                }
+                            },
+                            "end": "\\n",
+                            "name": "comment.line.number-sign.perl"
+                        }
+                    ]
+                }
+            ]
+        },
+        "nested_braces": {
+            "begin": "\\{",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": "\\}",
+            "patterns": [
+                {
+                    "include": "#escaped_char"
+                },
+                {
+                    "include": "#nested_braces"
+                }
+            ]
+        },
+        "nested_braces_interpolated": {
+            "begin": "\\{",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": "\\}",
+            "patterns": [
+                {
+                    "include": "#escaped_char"
+                },
+                {
+                    "include": "#variable"
+                },
+                {
+                    "include": "#nested_braces_interpolated"
+                }
+            ]
+        },
+        "nested_brackets": {
+            "begin": "\\[",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": "\\]",
+            "patterns": [
+                {
+                    "include": "#escaped_char"
+                },
+                {
+                    "include": "#nested_brackets"
+                }
+            ]
+        },
+        "nested_brackets_interpolated": {
+            "begin": "\\[",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": "\\]",
+            "patterns": [
+                {
+                    "include": "#escaped_char"
+                },
+                {
+                    "include": "#variable"
+                },
+                {
+                    "include": "#nested_brackets_interpolated"
+                }
+            ]
+        },
+        "nested_ltgt": {
+            "begin": "<",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": ">",
+            "patterns": [
+                {
+                    "include": "#nested_ltgt"
+                }
+            ]
+        },
+        "nested_ltgt_interpolated": {
+            "begin": "<",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": ">",
+            "patterns": [
+                {
+                    "include": "#variable"
+                },
+                {
+                    "include": "#nested_ltgt_interpolated"
+                }
+            ]
+        },
+        "nested_parens": {
+            "begin": "\\(",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": "\\)",
+            "patterns": [
+                {
+                    "include": "#escaped_char"
+                },
+                {
+                    "include": "#nested_parens"
+                }
+            ]
+        },
+        "nested_parens_interpolated": {
+            "begin": "\\(",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.scope.perl"
+                }
+            },
+            "end": "\\)",
+            "patterns": [
+                {
+                    "comment": "This is to prevent thinks like qr/foo$/ to treat $/ as a variable",
+                    "match": "\\$(?=[^\\s\\w'\\{\\[\\(\\<])",
+                    "name": "keyword.control.anchor.perl"
+                },
+                {
+                    "include": "#escaped_char"
+                },
+                {
+                    "include": "#variable"
+                },
+                {
+                    "include": "#nested_parens_interpolated"
+                }
+            ]
+        },
+        "numbers": {
+            "match": "(?<!\\w)(?:\\.?\\d)(?:(?:(?:[0-9a-zA-Z_\\.]|_)|(?:(?<=[eEpP])[+-]))*)",
+            "captures": {
+                "0": {
+                    "patterns": [
+                        {
+                            "begin": "(?=.)",
+                            "end": "$",
+                            "beginCaptures": {},
+                            "endCaptures": {},
+                            "patterns": [
+                                {
+                                    "match": "(\\G(?:0[xX]))(?:([0-9a-fA-F](?:(?:[0-9a-fA-F]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)((?:(?<=[0-9a-fA-F])\\.|(?:\\.(?=[0-9a-fA-F]))))(?:([0-9a-fA-F](?:(?:[0-9a-fA-F]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)(?:(?:(?<!_)([pP])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:([lLfF](?!\\w))?)$",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.hexadecimal.perl"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.hexadecimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "4": {
+                                            "name": "constant.numeric.hexadecimal.perl"
+                                        },
+                                        "5": {
+                                            "name": "constant.numeric.hexadecimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "6": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "7": {
+                                            "name": "keyword.other.unit.exponent.hexadecimal.perl"
+                                        },
+                                        "8": {
+                                            "name": "keyword.operator.plus.exponent.hexadecimal.perl"
+                                        },
+                                        "9": {
+                                            "name": "keyword.operator.minus.exponent.hexadecimal.perl"
+                                        },
+                                        "10": {
+                                            "name": "constant.numeric.exponent.hexadecimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "11": {
+                                            "name": "keyword.other.unit.suffix.floating-point.perl"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(?:\\G(?=[0-9.])(?!0[xXbB]))(?:([0-9](?:(?:[0-9]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)((?:(?<=[0-9])\\.|(?:\\.(?=[0-9]))))(?:([0-9](?:(?:[0-9]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))?)(?:(?:(?<!_)([eE])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:([lLfF](?!\\w))?)$",
+                                    "captures": {
+                                        "1": {
+                                            "name": "constant.numeric.decimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "2": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "3": {
+                                            "name": "constant.numeric.decimal.point.perl"
+                                        },
+                                        "4": {
+                                            "name": "constant.numeric.decimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "5": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "6": {
+                                            "name": "keyword.other.unit.exponent.decimal.perl"
+                                        },
+                                        "7": {
+                                            "name": "keyword.operator.plus.exponent.decimal.perl"
+                                        },
+                                        "8": {
+                                            "name": "keyword.operator.minus.exponent.decimal.perl"
+                                        },
+                                        "9": {
+                                            "name": "constant.numeric.exponent.decimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "10": {
+                                            "name": "keyword.other.unit.suffix.floating-point.perl"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(\\G(?:0[bB]))([01](?:(?:[01]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.binary.perl"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.binary.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "4": {
+                                            "name": "keyword.other.unit.suffix.integer.perl"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(\\G0)((?:(?:[0-7]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))+))(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.octal.perl"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.octal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "4": {
+                                            "name": "keyword.other.unit.suffix.integer.perl"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(\\G(?:0[xX]))([0-9a-fA-F](?:(?:[0-9a-fA-F]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))(?:(?:(?<!_)([pP])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.hexadecimal.perl"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.hexadecimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "4": {
+                                            "name": "keyword.other.unit.exponent.hexadecimal.perl"
+                                        },
+                                        "5": {
+                                            "name": "keyword.operator.plus.exponent.hexadecimal.perl"
+                                        },
+                                        "6": {
+                                            "name": "keyword.operator.minus.exponent.hexadecimal.perl"
+                                        },
+                                        "7": {
+                                            "name": "constant.numeric.exponent.hexadecimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "8": {
+                                            "name": "keyword.other.unit.suffix.integer.perl"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(?:\\G(?=[0-9.])(?!0[xXbB]))([0-9](?:(?:[0-9]|((?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))(?:(?:(?<!_)([eE])(\\+?)(\\-?)((?:[0-9](?:(?:[0-9]|(?:(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])))*))))?)(?:((?:(?:(?:(?:(?:[uU]|(?:[uU]ll?))|(?:[uU]LL?))|(?:ll?[uU]?))|(?:LL?[uU]?))|[fF])(?!\\w))?)$",
+                                    "captures": {
+                                        "1": {
+                                            "name": "constant.numeric.decimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "2": {
+                                            "name": "punctuation.separator.constant.numeric.perl"
+                                        },
+                                        "3": {
+                                            "name": "keyword.other.unit.exponent.decimal.perl"
+                                        },
+                                        "4": {
+                                            "name": "keyword.operator.plus.exponent.decimal.perl"
+                                        },
+                                        "5": {
+                                            "name": "keyword.operator.minus.exponent.decimal.perl"
+                                        },
+                                        "6": {
+                                            "name": "constant.numeric.exponent.decimal.perl",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])_(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.perl"
+                                                }
+                                            ]
+                                        },
+                                        "7": {
+                                            "name": "keyword.other.unit.suffix.integer.perl"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(?:(?:(?:[0-9a-zA-Z_\\.]|_)|(?:(?<=[eEpP])[+-]))+)",
+                                    "name": "invalid.illegal.constant.numeric.perl"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "begin": "(?:(?<!\\s|\\w|<)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(<)(?!<|\\=))",
+                    "end": ">",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.separator.readline.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.separator.readline.perl"
+                        }
+                    },
+                    "contentName": "meta.readline",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "match": "(?:(?:<=>)|(?:!=)|(?:~~)|(?:!~)|(?:==)|(?:>=)|(?:<=)|(?:=~)|>|<)",
+                    "name": "keyword.operator.comparison.perl"
+                },
+                {
+                    "match": "(?:(?:\\*\\*=)|(?:<<=)|(?:>>=)|(?:\\/=)|(?:%=)|(?:&=)|(?:\\|=)|(?:\\^=)|(?:\\.=)|(?:\\-=)|(?:\\*=)|(?:\\+=)|=)",
+                    "name": "keyword.operator.assignment.perl"
+                },
+                {
+                    "match": "(?:(?:&&)|(?:\\|\\|)|(?:\\/\\/))",
+                    "name": "keyword.operator.logical.perl"
+                },
+                {
+                    "match": "(?:(?:\\+\\+)|(?:\\*\\*)|(?:\\-\\-)|\\*|\\/|%|\\+|\\-)",
+                    "name": "keyword.operator.arithmetic.perl"
+                },
+                {
+                    "match": "(?:(?:<<)|(?:>>)|&|\\||\\^)",
+                    "name": "keyword.operator.bitwise.perl"
+                },
+                {
+                    "match": "(?:(?:\\*\\*=)|(?:>>=)|(?:<<=)|(?:<=>)|(?:%=)|(?:\\-\\-)|(?:\\+\\+)|(?:\\.=)|(?:\\-=)|(?:\\*=)|(?:\\/=)|(?:=~)|(?:!~)|(?:~~)|(?:&&)|(?:\\|\\|)|(?:\\/\\/)|(?:<<)|(?:>>)|(?:&=)|(?:\\|=)|(?:\\^=)|(?:\\+=)|(?:\\*\\*)|(?:==)|(?:!=)|(?:>=)|(?:<=)|&|\\||%|\\^|=|\\*|>|<|\\.|\\-|\\+|\\/)",
+                    "name": "keyword.operator.perl"
+                }
+            ]
+        },
+        "parameters": {
+            "begin": "\\(",
+            "end": "\\)",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.section.parameters.perl"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.parameters.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
+        },
+        "parentheses": {
+            "begin": "\\(",
+            "end": "\\)",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.section.parens.perl"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.parens.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
+        },
+        "pod": {
+            "patterns": [
+                {
+                    "match": "^=(pod|back|cut)\\b",
+                    "name": "storage.type.class.pod.perl"
+                },
+                {
+                    "begin": "^(=begin)\\s+(html)\\s*$",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.type.class.pod.perl"
+                        },
+                        "2": {
+                            "name": "variable.other.pod.perl"
+                        }
+                    },
+                    "contentName": "text.embedded.html.basic",
+                    "end": "^(=end)\\s+(html)|^(?==cut)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "storage.type.class.pod.perl"
+                        },
+                        "2": {
+                            "name": "variable.other.pod.perl"
+                        }
+                    },
+                    "name": "meta.embedded.pod.perl",
+                    "patterns": [
+                        {
+                            "include": "text.html.basic"
+                        }
+                    ]
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.class.pod.perl"
+                        },
+                        "2": {
+                            "name": "variable.other.pod.perl",
+                            "patterns": [
+                                {
+                                    "include": "#pod-formatting"
+                                }
+                            ]
+                        }
+                    },
+                    "match": "^(=(?:head[1-4]|item|over|encoding|begin|end|for))\\b\\s*(.*)"
+                },
+                {
+                    "include": "#pod-formatting"
+                }
+            ]
+        },
+        "pod-formatting": {
+            "patterns": [
+                {
+                    "captures": {
+                        "1": {
+                            "name": "markup.italic.pod.perl"
+                        },
+                        "2": {
+                            "name": "markup.italic.pod.perl"
+                        }
+                    },
+                    "match": "I(?:<([^<>]+)>|<+(\\s+(?:(?<!\\s)>|[^>])+\\s+)>+)",
+                    "name": "entity.name.type.instance.pod.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "markup.bold.pod.perl"
+                        },
+                        "2": {
+                            "name": "markup.bold.pod.perl"
+                        }
+                    },
+                    "match": "B(?:<([^<>]+)>|<+(\\s+(?:(?<!\\s)>|[^>])+\\s+)>+)",
+                    "name": "entity.name.type.instance.pod.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "markup.raw.pod.perl"
+                        },
+                        "2": {
+                            "name": "markup.raw.pod.perl"
+                        }
+                    },
+                    "match": "C(?:<([^<>]+)>|<+(\\\\s+(?:(?<!\\\\s)>|[^>])+\\\\s+)>+)",
+                    "name": "entity.name.type.instance.pod.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "markup.underline.link.hyperlink.pod.perl"
+                        }
+                    },
+                    "match": "L<([^>]+)>",
+                    "name": "entity.name.type.instance.pod.perl"
+                },
+                {
+                    "match": "[EFSXZ]<[^>]*>",
+                    "name": "entity.name.type.instance.pod.perl"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "match": ";",
+                    "name": "punctuation.terminator.statement.perl"
+                },
+                {
+                    "match": ",",
+                    "name": "punctuation.separator.comma.perl"
+                },
+                {
+                    "begin": "\\[",
+                    "end": "\\]",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.square-brackets.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.square-brackets.perl"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{",
+                    "end": "\\}",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.curly-brackets.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.curly-brackets.perl"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.perl"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        },
+        "regex-character-class": {
+            "patterns": [
+                {
+                    "match": "\\\\[wWsSdD]|\\.",
+                    "name": "constant.character.character-class.regexp"
+                },
+                {
+                    "match": "\\\\([0-7]{3}|x\\h\\h|u\\h\\h\\h\\h)",
+                    "name": "constant.character.numeric.regexp"
+                },
+                {
+                    "match": "\\\\c[A-Z]",
+                    "name": "constant.character.control.regexp"
+                },
+                {
+                    "match": "\\\\.",
+                    "name": "constant.character.escape.backslash.regexp"
+                }
+            ]
+        },
+        "regexp": {
+            "patterns": [
+                {
+                    "match": "\\\\[bB]|\\^|\\$",
+                    "name": "keyword.control.anchor.regexp"
+                },
+                {
+                    "match": "\\\\[1-9]\\d*",
+                    "name": "keyword.other.back-reference.regexp"
+                },
+                {
+                    "match": "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??",
+                    "name": "keyword.operator.quantifier.regexp"
+                },
+                {
+                    "match": "\\|",
+                    "name": "keyword.operator.or.regexp"
+                },
+                {
+                    "end": "(\\))",
+                    "begin": "(\\()((\\?=)|(\\?!))",
+                    "beginCaptures": {
+                        "3": {
+                            "name": "meta.assertion.look-ahead.regexp"
+                        },
+                        "4": {
+                            "name": "meta.assertion.negative-look-ahead.regexp"
+                        },
+                        "1": {
+                            "name": "punctuation.definition.group.regexp"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#regexp"
+                        }
+                    ],
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.group.regexp"
+                        }
+                    },
+                    "name": "meta.group.assertion.regexp"
+                },
+                {
+                    "end": "\\)",
+                    "begin": "\\((\\?:)?",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.group.regexp"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#regexp"
+                        }
+                    ],
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.group.regexp"
+                        }
+                    },
+                    "name": "meta.group.regexp"
+                },
+                {
+                    "end": "(\\])",
+                    "begin": "(\\[)(\\^)?",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.character-class.regexp"
+                        },
+                        "2": {
+                            "name": "keyword.operator.negation.regexp"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "match": "(?:.|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))",
+                            "captures": {
+                                "3": {
+                                    "name": "constant.character.escape.backslash.regexp"
+                                },
+                                "4": {
+                                    "name": "constant.character.numeric.regexp"
+                                },
+                                "5": {
+                                    "name": "constant.character.control.regexp"
+                                },
+                                "1": {
+                                    "name": "constant.character.numeric.regexp"
+                                },
+                                "6": {
+                                    "name": "constant.character.escape.backslash.regexp"
+                                },
+                                "2": {
+                                    "name": "constant.character.control.regexp"
+                                }
+                            },
+                            "name": "constant.other.character-class.range.regexp"
+                        },
+                        {
+                            "include": "#regex-character-class"
+                        }
+                    ],
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.character-class.regexp"
+                        }
+                    },
+                    "name": "constant.other.character-class.set.regexp"
+                },
+                {
+                    "include": "#regex-character-class"
+                }
+            ]
+        },
+        "semicolon": {
+            "match": ";",
+            "name": "punctuation.terminator.statement.perl"
+        },
+        "special_identifiers": {
+            "patterns": [
+                {
+                    "match": "\\$\\^[A-Z^_?\\[\\]]",
+                    "name": "variable.language.special.caret.perl"
+                },
+                {
+                    "match": "(?<![a-zA-Z0-9_'])(?:undef)(?![a-zA-Z0-9_\\-'])",
+                    "name": "constant.language.undef.perl"
+                }
+            ]
+        },
+        "square_brackets": {
+            "begin": "\\[",
+            "end": "\\]",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.section.square-brackets.perl"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.square-brackets.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
+        },
+        "storage_declares": {
+            "match": "\\b(?:my|our|local|state)\\b",
+            "name": "storage.modifier.$0.perl"
+        },
+        "using_statement": {
+            "begin": "(?:(use)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))([\\w\\.]+))",
+            "end": ";",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.other.use.perl"
+                },
+                "2": {
+                    "name": "entity.name.package.perl"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.terminator.statement.perl"
+                }
+            },
+            "name": "meta.import.perl",
+            "patterns": [
+                {
+                    "match": "::",
+                    "name": "punctuation.separator.resolution.perl"
+                },
+                {
+                    "begin": "(?:(qw)(?:(?:(?>(?:\\s+))+)|(?:(?:(?:(?:\\b|(?<=\\W))|(?=\\W))|\\A)|\\Z))(\\())",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "entity.name.function.special.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.section.block.function.special.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.function.special.perl"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#variable"
+                        }
+                    ]
+                }
+            ]
+        },
+        "variable": {
+            "patterns": [
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)&(?![A-Za-z0-9_])",
+                    "name": "variable.other.regexp.match.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)`(?![A-Za-z0-9_])",
+                    "name": "variable.other.regexp.pre-match.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)'(?![A-Za-z0-9_])",
+                    "name": "variable.other.regexp.post-match.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)\\+(?![A-Za-z0-9_])",
+                    "name": "variable.other.regexp.last-paren-match.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)\"(?![A-Za-z0-9_])",
+                    "name": "variable.other.readwrite.list-separator.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)0(?![A-Za-z0-9_])",
+                    "name": "variable.other.predefined.program-name.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)[_ab\\*\\.\\/\\|,\\\\;#%=\\-~^:?!\\$<>\\(\\)\\[\\]@](?![A-Za-z0-9_])",
+                    "name": "variable.other.predefined.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$)[0-9]+(?![A-Za-z0-9_])",
+                    "name": "variable.other.subpattern.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "([\\$\\@\\%](#)?)([a-zA-Zx7f-xff\\$]|::)([a-zA-Z0-9_x7f-xff\\$]|::)*\\b",
+                    "name": "variable.other.readwrite.global.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        },
+                        "2": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "(\\$\\{)(?:[a-zA-Zx7f-xff\\$]|::)(?:[a-zA-Z0-9_x7f-xff\\$]|::)*(\\})",
+                    "name": "variable.other.readwrite.global.perl"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.variable.perl"
+                        }
+                    },
+                    "match": "([\\$\\@\\%](#)?)[0-9_]\\b",
+                    "name": "variable.other.readwrite.global.special.perl"
+                }
+            ]
+        },
+        "while_statement": {
+            "begin": "(?:(?:\\s*+)((?<!\\w)(?:while)(?!\\w))(?:\\s*+))",
+            "end": "(?:(;)|(\\}))",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.while.perl"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.terminator.statement.perl"
+                },
+                "2": {
+                    "name": "punctuation.section.block.control.perl"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.parens.control.perl"
+                        }
+                    },
+                    "contentName": "meta.control.evaluation",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{",
+                    "end": "(?=\\})",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.control.perl"
+                        }
+                    },
+                    "endCaptures": {},
+                    "contentName": "meta.control.body",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "include": "$self"
+                }
+            ]
         }
-      ]
     }
-  }
 }
