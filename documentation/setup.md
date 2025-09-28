@@ -3,7 +3,7 @@
 Linux and MacOS Users, run the following in your terminal and it'll step you through setup
 
 ```
-repo=git@github.com:jeff-hykin/better-nix-syntax.git defaultNixVersion=2.18.1 eval "$(curl -fsSL https://raw.githubusercontent.com/jeff-hykin/xome/refs/heads/master/setup.sh || wget -qO- https://raw.githubusercontent.com/jeff-hykin/xome/refs/heads/master/setup.sh)"
+repo=git@github.com:jeff-hykin/better-perl-syntax.git defaultNixVersion=2.18.1 eval "$(curl -fsSL https://raw.githubusercontent.com/jeff-hykin/xome/refs/heads/master/setup.sh || wget -qO- https://raw.githubusercontent.com/jeff-hykin/xome/refs/heads/master/setup.sh)"
 ```
 
 Windows Users, install WSL and Ubuntu 20.04 or Ubuntu 22.04 and then run the command above in that terminal
@@ -16,9 +16,9 @@ Good! You probably shouldn't be running random internet scripts. Here's how you 
 # install nix
 curl -L https://nixos.org/nix/install | sh
 # clone this repo somewhere
-git clone https://github.com/jeff-hykin/better-nix-syntax.git
+git clone https://github.com/jeff-hykin/better-perl-syntax.git
 # cd into the repo
-cd better-nix-syntax
+cd better-perl-syntax
 # run nix develop
 nix develop
 ```

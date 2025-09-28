@@ -5,24 +5,10 @@ require_relative './tokens.rb'
 
 # 
 # 
-# Nix grammar
+# Perl grammar
 # 
 # 
-# grammar = Grammar.fromTmLanguage("./original.tmLanguage.json")
-@grammar = grammar = Grammar.new(
-    name: "nix",
-    scope_name: "source.nix",
-    fileTypes: [
-        "nix",
-        # for example here are come C++ file extensions:
-        #     "cpp",
-        #     "cxx",
-        #     "c++",
-    ],
-    version: "",
-)
-
-require_relative './shell_embedding.rb'
+grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
 
 # 
 #
@@ -34,7 +20,7 @@ require_relative './shell_embedding.rb'
     ]
 
 # 
-# Helpers
+# Builtin Helpers (part of ruby grammar builder)
 # 
     # @space
     # @spaces
@@ -49,1324 +35,604 @@ require_relative './shell_embedding.rb'
     # @end_of_document
     # @start_of_line
     # @end_of_line
+
+#
+# Custom Helpers
+#
     part_of_a_variable = /[a-zA-Z_][a-zA-Z0-9_\-']*/
     # this is really useful for keywords. eg: variableBounds[/new/] wont match "newThing" or "thingnew"
     variableBounds = ->(regex_pattern) do
         lookBehindToAvoid(/[a-zA-Z0-9_']/).then(regex_pattern).lookAheadToAvoid(/[a-zA-Z0-9_\-']/)
     end
-    variable = variableBounds[part_of_a_variable].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
+    @variable = variable = variableBounds[part_of_a_variable].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
     external_variable = variableBounds[/_-#{part_of_a_variable}/].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
     dirty_variable = variableBounds[/_'#{part_of_a_variable}/].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
-    
+
 # 
-# patterns
+# shared patterns
 # 
-    # 
-    # comments
-    # 
-        grammar[:line_comment] = oneOf([
-            Pattern.new(
-                match: Pattern.new(/\s*+/).then(
-                    match: /#/,
-                    tag_as: "comment.line punctuation.definition.comment"
-                ).then(
-                    match: /.*/,
-                    tag_as: "comment.line",
-                ),
-            ).then("\n"),
-        ])
+    def numeric_constant(allow_user_defined_literals: false, separator:"'")
+        # both C and C++ treat any sequence of digits, letter, periods, and valid separators
+        # as a single numeric constant even if such a sequence forms no valid
+        # constant/literal
+        # additionally +- are part of the sequence when immediately succeeding e,E,p, or P.
+        # the outer range pattern does not attempt to actually process the numbers
+        valid_single_character = /(?:[0-9a-zA-Z_\.]|#{separator})/
+        valid_after_exponent = lookBehindFor(/[eEpP]/).then(/[+-]/)
+        valid_character = Pattern.new(valid_single_character).or(valid_after_exponent)
+        end_pattern = /$/
         
-        # 
-        # /*comment*/
-        # 
-        # same as block_comment, but uses Pattern so it can be used inside other patterns
-        grammar[:inline_comment] = Pattern.new(
-            should_fully_match: [ "/* thing */", "/* thing *******/", "/* */", "/**/", "/***/" ],
-            match: Pattern.new(
-                Pattern.new(
-                    match: "/*",
-                    tag_as: "comment.block punctuation.definition.comment.begin",
-                ).then(
-                    # this pattern is complicated because its optimized to never backtrack
-                    match: Pattern.new(
-                        tag_as: "comment.block",
-                        match: zeroOrMoreOf(
-                            dont_back_track?: true,
-                            match: Pattern.new(
-                                Pattern.new(
-                                    /[^\*]++/
-                                ).or(
-                                    Pattern.new(/\*+/).lookAheadToAvoid(/\//)
-                                )
-                            ),
-                        ).then(
-                            match: "*/",
-                            tag_as: "comment.block punctuation.definition.comment.end",
-                        )
-                    )
-                )
-            )    
-        )
-        
-        # 
-        # /*comment*/
-        # 
-        # same as inline but uses PatternRange to cover multiple lines
-        grammar[:block_comment] = PatternRange.new(
-            tag_as: "comment.block",
-            start_pattern: Pattern.new(
-                Pattern.new(/\s*+/).then(
-                    match: /\/\*/,
-                    tag_as: "punctuation.definition.comment.begin"
-                )
-            ),
-            end_pattern: Pattern.new(
-                match: /\*\//,
-                tag_as: "punctuation.definition.comment.end"
+        number_separator_pattern = Pattern.new(
+            should_partial_match: [ "1#{separator}1" ],
+            should_not_partial_match: [ "1#{separator}#{separator}1", "1#{separator}#{separator}" ],
+            match: lookBehindFor(/[0-9a-fA-F]/).then(/#{separator}/).lookAheadFor(/[0-9a-fA-F]/),
+            tag_as:"punctuation.separator.constant.numeric",
             )
-        )
-        
-        grammar[:comments] = [
-            :line_comment,
-            :block_comment,
-        ]
-    
-    # 
-    # space helper
-    # 
-        # efficiently match zero or more spaces that may contain inline comments
-        std_space = Pattern.new(
-            # NOTE: this pattern can match 0-spaces so long as its still a word boundary
-            # this is the intention, for example `int/*comment*/a = 10` would be valid
-            # this space pattern will match inline /**/ comments that do not contain newlines
-            match: oneOf([
-                oneOrMoreOf(
-                    Pattern.new(/\s*/).then( 
-                        grammar[:inline_comment]
-                    ).then(/\s*/)
-                ),
-                Pattern.new(/\s++/),
-                lookBehindFor(/\W/),
-                lookAheadFor(/\W/),
-                /^/,
-                /\n?$/,
-                @start_of_document,
-                @end_of_document,
-            ]),
-            includes: [
-                :inline_comment,
-            ],
-        )
-    
-    # 
-    # 
-    # primitives
-    # 
-    # 
-        grammar[:null] = Pattern.new(
-            tag_as: "constant.language.null",
-            match: variableBounds[/null/],
-        )
-        
-        grammar[:boolean] = Pattern.new(
-            tag_as: "constant.language.boolean.$match",
-            match: variableBounds[/true|false/],
-        )
-        
-        grammar[:integer] = Pattern.new(
-            match: variableBounds[/[0-9]+/],
-            tag_as: "constant.numeric.integer",
-        )
-        
-        grammar[:decimal] = Pattern.new(
-            match: variableBounds[/[0-9]+\.[0-9]+/],
+
+        hex_digits = hex_digits = Pattern.new(
+            should_fully_match: [ "1", "123456", "DeAdBeeF", "49#{separator}30#{separator}94", "DeA#{separator}dBe#{separator}eF", "dea234f4930" ],
+            should_not_fully_match: [ "#{separator}3902" , "de2300p1000", "0x000" ],
+            should_not_partial_match: [ "p", "x", "." ],
+            match: Pattern.new(/[0-9a-fA-F]/).zeroOrMoreOf(Pattern.new(/[0-9a-fA-F]/).or(number_separator_pattern)),
+            tag_as: "constant.numeric.hexadecimal",
+            includes: [ number_separator_pattern ],
+            )
+        decimal_digits = Pattern.new(
+            should_fully_match: [ "1", "123456", "49#{separator}30#{separator}94" , "1#{separator}2" ],
+            should_not_fully_match: [ "#{separator}3902" , "1.2", "0x000" ],
+            match: Pattern.new(/[0-9]/).zeroOrMoreOf(Pattern.new(/[0-9]/).or(number_separator_pattern)),
             tag_as: "constant.numeric.decimal",
-        )
-        
-        grammar[:number] = grammar[:integer].or(grammar[:decimal])
-        
-        # I don't know why but its burned me in the past
-        # TODO: expand the scope to the full defintion (I havent checked the spec on this one yet) probably based on url
-        grammar[:unquoted_string_literal] = Pattern.new(
-            match: variableBounds[/[a-zA-Z_]+:/],
-            tag_as: "string.unquoted",
-        )
-        
-        # 
-        # file path and URLs
-        # 
-            grammar[:path_literal_angle_brackets] = Pattern.new(
-                tag_as: "string.unquoted.path punctuation.section.regexp punctuation.section.path.lookup storage.type.modifier",
-                match: /<\w+>/,
-                includes: [
-                    Pattern.new(
-                        match: /<|>/,
-                        tag_as: "punctuation.section.regexp.path.angle-brackets",
-                    ),
-                    Pattern.new(
-                        match: /\//,
-                        tag_as: "punctuation.definition.path storage.type.modifier",
-                    ),
-                    Pattern.new(
-                        match: variableBounds[/\.\.|\./],
-                        tag_as: "punctuation.definition.relative storage.type.modifier",
-                    ),
-                ],
+            includes: [ number_separator_pattern ],
             )
-            
-            grammar[:path_literal_content] = Pattern.new(
-                tag_as: "string.unquoted.path punctuation.section.regexp punctuation.section.path storage.type.modifier",
-                match: /[\w+\-\.\/]+\/[\w+\-\.\/]+/,
-                includes: [
-                    Pattern.new(
-                        match: /\//,
-                        tag_as: "punctuation.definition.path storage.type.modifier",
-                    ),
-                    Pattern.new(
-                        match: variableBounds[/\.\.|\./],
-                        tag_as: "punctuation.definition.relative storage.type.modifier",
-                    ),
-                ],
+        # 0'004'000'000 is valid (i.e. a number separator directly after the prefix)
+        octal_digits = Pattern.new(
+            should_fully_match: [ "1", "123456", "47#{separator}30#{separator}74" , "1#{separator}2" ],
+            should_not_fully_match: [ "#{separator}3902" , "1.2", "0x000" ],
+            match: oneOrMoreOf(Pattern.new(/[0-7]/).or(number_separator_pattern)),
+            tag_as: "constant.numeric.octal",
+            includes: [ number_separator_pattern ],
             )
-            
-            grammar[:relative_path_literal] = Pattern.new(
-                tag_as: "constant.other.path.relative",
-                match: Pattern.new(
-                    Pattern.new(
-                        match:/\.\//,
-                        tag_as: "punctuation.definition.path.relative storage.type.modifier",
-                    ).then(grammar[:path_literal_content])
-                ),
+        binary_digits = Pattern.new(
+            should_fully_match: [ "1", "100100", "10#{separator}00#{separator}11" , "1#{separator}0" ],
+            should_not_fully_match: [ "#{separator}3902" , "1.2", "0x000" ],
+            match: Pattern.new(/[01]/).zeroOrMoreOf(Pattern.new(/[01]/).or(number_separator_pattern)),
+            tag_as: "constant.numeric.binary",
+            includes: [ number_separator_pattern ],
             )
-            
-            grammar[:absolute_path_literal] = Pattern.new(
-                tag_as: "constant.other.path.absolute",
-                match: Pattern.new(
-                    Pattern.new(
-                        match:/\//,
-                        tag_as: "punctuation.definition.path.absolute storage.type.modifier",
-                    ).then(grammar[:path_literal_content])
-                ),
+
+        hex_prefix = Pattern.new(
+            should_fully_match: ["0x", "0X"],
+            should_partial_match: ["0x1234"],
+            should_not_partial_match: ["0b010x"],
+            match: Pattern.new(/\G/).then(/0[xX]/),
+            tag_as: "keyword.other.unit.hexadecimal",
             )
-            
-            grammar[:system_path_literal] = Pattern.new(
-                tag_as: "constant.other.path.system",
-                match: Pattern.new(
-                    Pattern.new(
-                        match: /</,
-                        tag_as: "punctuation.definition.path.system storage.type.modifier",
-                    ).then(
-                        grammar[:path_literal_content]
-                    ).then(
-                        match: />/,
-                        tag_as: "punctuation.definition.path.system storage.type.modifier",
-                    )
+        octal_prefix = Pattern.new(
+            should_fully_match: ["0"],
+            should_partial_match: ["01234"],
+            match: Pattern.new(/\G/).then(/0/),
+            tag_as: "keyword.other.unit.octal",
+            )
+        binary_prefix = Pattern.new(
+            should_fully_match: ["0b", "0B"],
+            should_partial_match: ["0b1001"],
+            should_not_partial_match: ["0x010b"],
+            match: Pattern.new(/\G/).then(/0[bB]/),
+            tag_as: "keyword.other.unit.binary",
+            )
+        decimal_prefix = Pattern.new(
+            should_partial_match: ["1234"],
+            match: Pattern.new(/\G/).lookAheadFor(/[0-9.]/).lookAheadToAvoid(/0[xXbB]/),
+            )
+        numeric_suffix = Pattern.new(
+            should_fully_match: ["u","l","UL","llU"],
+            should_not_fully_match: ["lLu","uU","lug"],
+            match: Pattern.new(/[uU]/).or(/[uU]ll?/).or(/[uU]LL?/).or(/ll?[uU]?/).or(/LL?[uU]?/).or(/[fF]/).lookAheadToAvoid(/\w/),
+            tag_as: "keyword.other.unit.suffix.integer",
+            )
+
+        # see https://en.cppreference.com/w/cpp/language/floating_literal
+        hex_exponent = Pattern.new(
+            should_fully_match: [ "p100", "p-100", "p+100", "P100" ],
+            should_not_fully_match: [ "p0x0", "p-+100" ],
+            match: lookBehindToAvoid(/#{separator}/).then(
+                    match: /[pP]/,
+                    tag_as: "keyword.other.unit.exponent.hexadecimal",
+                ).maybe(
+                    match: /\+/,
+                    tag_as: "keyword.operator.plus.exponent.hexadecimal",
+                ).maybe(
+                    match: /\-/,
+                    tag_as: "keyword.operator.minus.exponent.hexadecimal",
+                ).then(
+                    match: decimal_digits.groupless,
+                    tag_as: "constant.numeric.exponent.hexadecimal",
+                    includes: [ number_separator_pattern ]
                 ),
             )
-            
-            grammar[:url] = Pattern.new(
-                tag_as: "constant.other.url",
-                should_fully_match: [
-                    "https://github.com/NixOS/nixpkgs/archive/a71323f68d4377d12c04a5410e214495ec598d4c.tar.gz",
-                    "https://yew.rs/docs/tutorial",
-                    "http://localhost:8080",
-                ],
-                match: Pattern.new(
-                    Pattern.new(
-                        match: /[a-zA-Z][a-zA-Z0-9_+\-\.]*:/,
-                        tag_as: "punctuation.definition.url.protocol",
-                    ).then(
-                        match: /[a-zA-Z0-9%$*!@&*_=+:'\/?~\-\.:]+/,
-                        tag_as: "punctuation.definition.url.address",
-                    )
+        decimal_exponent = Pattern.new(
+            should_fully_match: [ "e100", "e-100", "e+100", "E100", ],
+            should_not_fully_match: [ "e0x0", "e-+100" ],
+            match: lookBehindToAvoid(/#{separator}/).then(
+                    match: /[eE]/,
+                    tag_as: "keyword.other.unit.exponent.decimal",
+                ).maybe(
+                    match: /\+/,
+                    tag_as: "keyword.operator.plus.exponent.decimal",
+                ).maybe(
+                    match: /\-/,
+                    tag_as: "keyword.operator.minus.exponent.decimal",
+                ).then(
+                    match: decimal_digits.groupless,
+                    tag_as: "constant.numeric.exponent.decimal",
+                    includes: [ number_separator_pattern ]
                 ),
             )
-        
-        # 
-        # 
-        # Strings
-        # 
-        # 
-            # 
-            # inline strings
-            # 
-                grammar[:double_quote_inline] = Pattern.new(
-                    Pattern.new(
-                        tag_as: "string.quoted.double punctuation.definition.string.double",
-                        match: /"/,
-                    ).then(
-                        tag_as: "string.quoted.double",
-                        should_fully_match: [ "fakljflkdjfad", "fakljflkdjfad$", "fakljflkdjfad\\${testing}", ],
-                        match: zeroOrMoreOf(
-                            match: Pattern.new(/\\./).or(lookAheadToAvoid(/\$\{/).then(/[^"]/)),
-                            atomic: true,
-                        ),
-                        includes: [
-                            grammar[:escape_character_double_quote] = Pattern.new(
-                                tag_as: "constant.character.escape",
-                                match: /\\./,
-                            ),
-                        ]
-                    ).then(
-                        tag_as: "string.quoted.double punctuation.definition.string.double",
-                        match: /"/,
-                    )
-                )
-                
-                grammar[:escape_character_single_quote] = Pattern.new(
-                    tag_as: "constant.character.escape",
-                    match: /\'\'(?:\$|\')/,
-                )
-                grammar[:single_quote_inline] = Pattern.new(
-                    tag_as: "string.quoted.single",
-                    match: Pattern.new(
-                        Pattern.new(
-                            tag_as: "punctuation.definition.string.single",
-                            match: /''/,
-                        ).then(
-                            tag_as: "string.quoted.single",
-                            match: zeroOrMoreOf(
-                                match: oneOf([
-                                    grammar[:escape_character_single_quote],
-                                    lookAheadToAvoid(/\$\{/).then(/[^']/),
-                                ]),
-                                atomic: true,
-                            ),
-                            includes: [
-                                :escape_character_single_quote,
-                            ]
-                        ).then(
-                            Pattern.new(
-                                tag_as: "punctuation.definition.string.single",
-                                match: Pattern.new(/''/).lookAheadToAvoid(/\$|\'|\\./), # I'm not exactly sure what this lookAheadFor is for
-                            )
-                        )
-                    ),
-                )
-            # 
-            # multiline strings
-            # 
-                grammar[:interpolation] = PatternRange.new(
-                    start_pattern: Pattern.new(
-                        match: /\$\{/,
-                        tag_as: "punctuation.section.embedded"
-                    ),
-                    end_pattern: Pattern.new(
-                        tag_as: "punctuation.section.embedded",
-                        match: /\}/,
-                    ),
-                    includes: [
-                        :$initial_context
-                    ]
-                )
-                
-                generateStringBlock = ->(additional_tag:"", includes:[]) do
-                    [
-                        PatternRange.new(
-                            tag_as: "string.quoted.double #{additional_tag}",
-                            start_pattern: Pattern.new(
-                                tag_as: "punctuation.definition.string.double",
-                                match: /"/,
-                            ),
-                            end_pattern: Pattern.new(
-                                tag_as: "punctuation.definition.string.double",
-                                match: /"/,
-                            ),
-                            includes: [
-                                :escape_character_double_quote,
-                                :interpolation,
-                                *includes,
-                            ],
-                        ),
-                        PatternRange.new(
-                            tag_as: "string.quoted.other #{additional_tag}",
-                            start_pattern: Pattern.new(
-                                tag_as: "string.quoted.single punctuation.definition.string.single",
-                                match: /''/,
-                            ),
-                            end_pattern: Pattern.new(
-                                tag_as: "string.quoted.single punctuation.definition.string.single",
-                                match: /''(?!'|\$)/,
-                            ),
-                            includes: [
-                                :escape_character_single_quote,
-                                :interpolation,
-                                *includes,
-                            ]
-                        )
-                    ]
-                end
-                
-                default_string_blocks = generateStringBlock[]
-                grammar[:double_quote] = default_string_blocks[0]
-                grammar[:single_quote] = default_string_blocks[1]
-    #
-    # operator hacks
-    #
-        # this one is, unfortunately, special
-        grammar[:or_operator] = Pattern.new(
-            tag_as: "keyword.operator.or",
-            match: /\bor\b/,
-        )    
-    # 
-    # variables
-    # 
-        builtin = Pattern.new(
-            tag_as: "support.module variable.language.special.builtins",
-            match: Pattern.new(variableBounds[/builtins/]),
-        )
-        grammar[:variable] = Pattern.new(
-            builtin.or(
-                tag_as: "variable.other.external",
-                match: Pattern.new(external_variable),
-            ).or(
-                tag_as: "variable.other.dirty",
-                match: Pattern.new(dirty_variable),
-            ).or(
-                grammar[:or_operator]
-            ).or(
-                tag_as: "variable.other.object variable.parameter",
-                match: Pattern.new(variable),
+        hex_point = Pattern.new(
+            # lookBehind/Ahead because there needs to be a hex digit on at least one side
+            match: lookBehindFor(/[0-9a-fA-F]/).then(/\./).or(Pattern.new(/\./).lookAheadFor(/[0-9a-fA-F]/)),
+            tag_as: "constant.numeric.hexadecimal",
             )
-        )
+        decimal_point = Pattern.new(
+            # lookBehind/Ahead because there needs to be a decimal digit on at least one side
+            match: lookBehindFor(/[0-9]/).then(/\./).or(Pattern.new(/\./).lookAheadFor(/[0-9]/)),
+            tag_as: "constant.numeric.decimal.point",
+            )
+        floating_suffix = Pattern.new(
+            should_fully_match: ["f","l","L","F"],
+            should_not_fully_match: ["lLu","uU","lug","fan"],
+            match: Pattern.new(/[lLfF]/).lookAheadToAvoid(/\w/),
+            tag_as: "keyword.other.unit.suffix.floating-point"
+            )
         
-        function_call_lookahead = std_space.lookAheadToAvoid(/or\b|\+|\/|then\b|in\b|else\b|- |-$/).then(lookAheadFor(/\{|"|'|\d|\w|-[^>]|\.\/|\.\.\/|\/\w|\(|\[|if\b|let\b|with\b|rec\b/).or(lookAheadFor(grammar[:url])))
-        builtin_attribute_tagger = lookBehindToAvoid(/[^ \t]builtins\./).lookBehindFor(/builtins\./).then(
-            tag_as: "variable.language.special.method.$match support.type.builtin.property.$match",
-            match: @tokens.that(:areBuiltinAttributes, !:areFunctions).lookAheadToAvoid(/[a-zA-Z0-9_\-']/),
-        )
-        builtin_method_tagger = lookBehindToAvoid(/[^ \t]builtins\./).lookBehindFor(/builtins\./).then(
-            tag_as: "variable.language.special.property.$match entity.name.function.call.builtin support.type.builtin.method.$match",
-            match: @tokens.that(:areBuiltinAttributes, :areFunctions).lookAheadToAvoid(/[a-zA-Z0-9_\-']/),
-        )
-        grammar[:standalone_function_call] = Pattern.new(
-            oneOf([
-                lookBehindFor(/\./).then(std_space).then(
-                    tag_as: "variable.language.special.property.$match entity.name.function.call.builtin support.type.builtin.method.$match",
-                    match: @tokens.that(:areBuiltinAttributes,:areFunctions),
-                ),
-                
-                lookBehindFor(/\./).then(std_space).then(
-                    tag_as: "variable.language.special.method.$match support.type.builtin.property.$match",
-                    match: @tokens.that(:areBuiltinAttributes, !:areFunctions),
-                ),
-                
-                lookBehindFor(/\./).then(std_space).then(
-                    tag_as: "entity.name.function.method.call.external",
-                    match: external_variable
-                ),
-                
-                lookBehindFor(/\./).then(std_space).then(
-                    tag_as: "entity.name.function.method.call.dirty",
-                    match: dirty_variable,
-                ),
-                
-                lookBehindFor(/\./).then(std_space).then(
-                    tag_as: "entity.name.function.method.call",
-                    match: variable,
-                ).lookAheadToAvoid(/\s+or\b/),
-                
-                lookBehindToAvoid(/\)|"|\d|\s/).then(std_space).then(
-                    tag_as: "entity.name.function.call support.type.builtin.top-level support.type.builtin.property.$match",
-                    match: @tokens.that(:areBuiltinAttributes,:areFunctions,:canAppearTopLevel),
-                ),
-                
-                lookBehindToAvoid(/\)|"|\d|\s/).then(std_space).then(
-                    tag_as: "entity.name.function.call.external",
-                    match: external_variable
-                ),
-                
-                lookBehindToAvoid(/\)|"|\d|\s/).then(std_space).then(
-                    tag_as: "entity.name.function.call.dirty",
-                    match: dirty_variable,
-                ),
-                
-                lookBehindToAvoid(/\)|"|\d|\s|\./).then(std_space).then(
-                    grammar[:or_operator].or(
-                        tag_as: "entity.name.function.call",
-                        match: variable,
-                    )
-                ),
-            ]).then(function_call_lookahead)
-        )
-        grammar[:standalone_function_call_guess] = oneOf([
-            lookBehindToAvoid(/\(/).then(
-                tag_as: "entity.name.function.call support.type.builtin.top-level support.type.builtin.property.$match",
-                match: @tokens.that(:areBuiltinAttributes,:areFunctions,:canAppearTopLevel),
-            ).then(function_call_lookahead),
-                
-            lookBehindFor(/\(/).then(
-                tag_as: "entity.name.function.call.external",
-                match: external_variable,
-            ).then(function_call_lookahead.or(std_space.then(@end_of_line))),
-            
-            lookBehindFor(/\(/).then( 
-                tag_as: "entity.name.function.call.dirty",
-                match: dirty_variable,
-            ).then(function_call_lookahead.or(std_space.then(@end_of_line))),
-            
-            lookBehindFor(/\(/).then(
-                tag_as: "entity.name.function.call",
-                match: variable,
-            ).then(function_call_lookahead.or(std_space.then(@end_of_line))),
-            
-        ])
         
-        grammar[:dot_access] = dot_access = Pattern.new(
-            tag_as: "punctuation.separator.dot-access",
-            match: ".",
-        )
-        inline_dot_access = std_space.then(dot_access).then(std_space)
+        hex_ending = end_pattern
+        decimal_ending = end_pattern
+        binary_ending = end_pattern
+        octal_ending = end_pattern
         
-        attributeGenerator = ->(tag, parentheses_before=false) do
-            return oneOf([
-                # standalone
-                lookBehindToAvoid(/\./).then(
-                    tag_as: if tag == "object" then "entity.name.function.#{tag}.method" else "entity.other.attribute-name" end,
-                    should_fully_match: [ "zipListsWith'" ],
-                    should_not_partial_match: ["in", "let", "if"],
-                    match: variable,
-                ).lookAheadToAvoid(/\./),
-                
-                # first
-                lookBehindToAvoid(/\./).then(
-                    tag_as: "variable.other.object.access variable.parameter",
-                    match: builtin.or(variable),
-                ),
-                
-                # last attr as function call (method call)
-                (if parentheses_before
-                    # if there was a leading parentheses, it changes what we assume is a method call
-                    Pattern.new(
-                        tag_as: if tag == "object" then "entity.name.function.method" else "entity.name.function.#{tag}.method" end,
-                        match: variable.lookAheadToAvoid(/\.|\s+or\b/), # .or(interpolated_attribut),
-                    ).then(lookAheadFor(/\s*$/).or(function_call_lookahead))
-                else
-                    # no leading parentheses makes us more conservative about what we assume is a method call
-                    Pattern.new(
-                        tag_as: if tag == "object" then "entity.name.function.method" else "entity.name.function.#{tag}.method" end,
-                        match: variable.lookAheadToAvoid(/\.|\s+or\b/), # .or(interpolated_attribut),
-                    ).then(function_call_lookahead)
-                end),
-                
-                # last
-                Pattern.new(
-                    # TODO: clean up this logic and run tests on different themes
-                    tag_as: if tag == "object" then "variable.other.property.last" else "variable.other.#{tag}.last variable.other.property variable.parameter" end,
-                    match: variable.lookAheadToAvoid(/\./), # .or(interpolated_attribut),
-                ),
-                
-                # middle
-                Pattern.new(
-                    tag_as: "variable.other.object.property",
-                    match: variable, #.or(interpolated_attribute),
-                ),
-                grammar[:double_quote_inline],
-                grammar[:single_quote_inline],
-            ])
+        decimal_user_defined_literal_pattern = Pattern.new(
+                match: maybe(Pattern.new(/\w/).lookBehindToAvoid(/[0-9eE]/).then(/\w*/)).then(end_pattern),
+                tag_as: "keyword.other.unit.user-defined"
+            )
+        hex_user_defined_literal_pattern = Pattern.new(
+                match: maybe(Pattern.new(/\w/).lookBehindToAvoid(/[0-9a-fA-FpP]/).then(/\w*/)).then(end_pattern),
+                tag_as: "keyword.other.unit.user-defined"
+            )
+        normal_user_defined_literal_pattern = Pattern.new(
+                match: maybe(Pattern.new(/\w/).lookBehindToAvoid(/[0-9]/).then(/\w*/)).then(end_pattern),
+                tag_as: "keyword.other.unit.user-defined"
+            )
+        
+        if allow_user_defined_literals
+            hex_ending     = hex_user_defined_literal_pattern
+            decimal_ending = decimal_user_defined_literal_pattern
+            binary_ending  = normal_user_defined_literal_pattern
+            octal_ending   = normal_user_defined_literal_pattern
         end
-        
-        grammar[:attribute_assignment] = attribute_assignment = attributeGenerator["constant"]
-        # NOTE: does not handle interpolation
-        attribute_assignment_chain = attribute_assignment.zeroOrMoreOf(
-            inline_dot_access.then(
-                attribute_assignment
-            )
-        )
-        
-        attribute = attributeGenerator["object"]
-        attribute_with_leading_parentheses = attributeGenerator["object", true]
-        # this should only be internally used
-        attribute_chain = Pattern.new(
-            attribute.zeroOrMoreOf(
-                inline_dot_access.then(
-                    attribute
-                )
-            ).then(std_space)
-        )
-        attribute_chain_with_leading_parentheses = Pattern.new(
-            attribute_with_leading_parentheses.zeroOrMoreOf(
-                inline_dot_access.then(
-                    attribute_with_leading_parentheses
-                )
-            ).then(std_space)
-        )
-        
-        # this is used for lists where spaces separate elements (e.g. no method calls)
-        grammar[:variable_maybe_attrs_no_method] = Pattern.new(
-            match: attribute_chain,
+
+        # 
+        # How this works
+        # 
+        # first a range (the whole number) is found
+        # then, after the range is found, it starts to figure out what kind of number/constant it is
+        # it does this by matching one of the includes
+        return Pattern.new(
+            match: lookBehindToAvoid(/\w/).then(/\.?\d/).zeroOrMoreOf(valid_character),
             includes: [
-                lookBehindToAvoid(".").then(builtin), # "builtins" at the start
-                builtin_attribute_tagger, # the attribute of builtins
-                builtin_method_tagger, # even though its a method, it can be treated as an attribute (higher order function-type-stuff)
-                attribute, # first/middle/last tagging
-                :dot_access,
+                PatternRange.new(
+                    start_pattern: lookAheadFor(/./),
+                    end_pattern: end_pattern,
+                    # only a single include pattern should match
+                    includes: [
+                        # floating point
+                        hex_prefix    .maybe(hex_digits    ).then(hex_point    ).maybe(hex_digits    ).maybe(hex_exponent    ).maybe(floating_suffix).then(hex_ending),
+                        decimal_prefix.maybe(decimal_digits).then(decimal_point).maybe(decimal_digits).maybe(decimal_exponent).maybe(floating_suffix).then(decimal_ending),
+                        # numeric
+                        binary_prefix .then(binary_digits )                        .maybe(numeric_suffix).then(binary_ending ),
+                        octal_prefix  .then(octal_digits  )                        .maybe(numeric_suffix).then(octal_ending  ),
+                        hex_prefix    .then(hex_digits    ).maybe(hex_exponent    ).maybe(numeric_suffix).then(hex_ending    ),
+                        decimal_prefix.then(decimal_digits).maybe(decimal_exponent).maybe(numeric_suffix).then(decimal_ending),
+                        # invalid
+                        Pattern.new(
+                            match: oneOrMoreOf(Pattern.new(valid_single_character).or(valid_after_exponent)),
+                            tag_as: "invalid.illegal.constant.numeric"
+                        )
+                    ]
+                )
             ]
         )
-        
-        function_method = Pattern.new(
-            tag_as: "entity.name.function.method",
-            match: variable,
-        ).lookAheadToAvoid(/\./)
-        method_pattern_tagger = builtin_method_tagger.or(
-            oneOf([
-                function_method,
-                grammar[:double_quote_inline],
-                grammar[:single_quote_inline],
-            ]).then(function_call_lookahead)
-        )
-        # this is needed because maybe-function-call needs to be below var-with-attrs but above standalone-var
-        grammar[:standalone_variable] = lookBehindToAvoid(".").then(grammar[:variable]).lookAheadToAvoid(".")
-        # this can be used everywhere except lists and attribute assignment
-        taggles_attribute = oneOf([
-            # standalone
-            lookBehindToAvoid(/\./).then(
-                should_fully_match: [ "zipListsWith'" ],
-                should_not_partial_match: ["in", "let", "if"],
-                match: variable,
-            ).lookAheadToAvoid(/\./),
-            
-            # first
-            lookBehindToAvoid(/\./).then(
-                match: variable,
-            ),
-            # last
-            Pattern.new(
-                match: variable.lookAheadToAvoid(/\./), # .or(interpolated_attribut),
-            ),
-            # middle
-            Pattern.new(
-                match: variable, #.or(interpolated_attribute),
-            ),
-            # grammar[:double_quote_inline],
-            Pattern.new(
-                Pattern.new(
-                    # tag_as: "string.quoted.double punctuation.definition.string.double",
-                    match: /"/,
-                ).then(
-                    # tag_as: "string.quoted.double",
-                    should_fully_match: [ "fakljflkdjfad", "fakljflkdjfad$", "fakljflkdjfad\\${testing}", ],
-                    match: zeroOrMoreOf(
-                        match: Pattern.new(/\\./).or(lookAheadToAvoid(/\$\{/).then(/[^"]/)),
-                        atomic: true,
-                    ),
-                    includes: [
-                        grammar[:escape_character_double_quote] = Pattern.new(
-                            # tag_as: "constant.character.escape",
-                            match: /\\./,
-                        ),
-                    ]
-                ).then(
-                    # tag_as: "string.quoted.double punctuation.definition.string.double",
-                    match: /"/,
-                )
-            ),
-            # grammar[:single_quote_inline],
-            oneOf([
-                Pattern.new(
-                    # tag_as: "string.quoted.single",
-                    match: Pattern.new(
-                        Pattern.new(
-                            # tag_as: "punctuation.definition.string.single",
-                            match: /''/,
-                        ).then(
-                            # tag_as: "string.quoted.single",
-                            match: zeroOrMoreOf(
-                                match: oneOf([
-                                    Pattern.new(
-                                        # tag_as: "constant.character.escape",
-                                        match: /\'\'(?:\$|\')/,
-                                    ),
-                                    lookAheadToAvoid(/\$\{/).then(/[^']/),
-                                ]),
-                                atomic: true,
-                            ),
-                            includes: [
-                                :escape_character_single_quote,
-                            ]
-                        ).then(
-                            Pattern.new(
-                                # tag_as: "punctuation.definition.string.single",
-                                match: Pattern.new(/''/).lookAheadToAvoid(/\$|\'|\\./), # I'm not exactly sure what this lookAheadFor is for
-                            )
-                        )
-                    ),
-                ),
-            ])
-        ])
-        grammar[:variable_attrs_maybe_method] = Pattern.new(
-            lookBehindToAvoid(/\./).then(
-                builtin.or(
-                    tag_as: "variable.other.object.access",
-                    match: variable,
-                )
-            ).then(inline_dot_access).then(attribute_chain),
-        )
-        grammar[:variable_with_method_probably] = Pattern.new(
-            lookBehindFor("(").then(
-                builtin.or(
-                    tag_as: "variable.other.object.access",
-                    match: variable,
-                )
-            ).then(inline_dot_access).then(attribute_chain_with_leading_parentheses),
-        )
-        
-        grammar[:variable_or_function] = oneOf([
-            grammar[:variable_with_method_probably],
-            # grammar[:variable_attrs_maybe_method],
-            grammar[:standalone_function_call],
-            grammar[:standalone_function_call_guess],
-            grammar[:standalone_variable],
-            attribute, # something that would be a standalone variable but has interpolation as the "next" or "prev"
-        ])
-        
-        # 
-        # namespace (which is really just a variable, but is nice to highlight different)
-        # 
-        standalone_namespace = Pattern.new(
-            tag_as: "entity.name.namespace",
-            match: variable,
-        )
-        
-        namespace_attribute = oneOf([
-            Pattern.new(
-                tag_as: "entity.name.namespace.object.property",
-                match: variable,
-            ),
-            grammar[:double_quote_inline],
-            grammar[:single_quote_inline],
-        ])
-        
-        # TODO: interpolation ${} currently doesn't work for with() statements
-        namespace_with_attributes = Pattern.new(
-            Pattern.new(
-                tag_as: "entity.name.namespace.object.access",
-                match: variable,
-            ).then(inline_dot_access).then(
-                match: zeroOrMoreOf(
-                    middle_repeat_namespace = Pattern.new(
-                        namespace_attribute.then(inline_dot_access),
-                    ),
-                ),
-                includes: [ middle_repeat_namespace ],
-            ).then(
-                tag_as: "entity.name.namespace.property",
-                match: namespace_attribute,
-            ),
-        )
-        
-        namespace = standalone_namespace.or(namespace_with_attributes)
+    end
     
+    def c_style_control(keyword:"", primary_inlcudes:[],  parentheses_include:[], body_includes:[], secondary_includes:[])
+        PatternRange.new(
+            start_pattern: Pattern.new(
+                Pattern.new(/\s*+/).then(
+                    match: lookBehindToAvoid(@standard_character).then(/#{keyword}/).lookAheadToAvoid(@standard_character),
+                    tag_as: "keyword.control.#{keyword}"
+                ).then(/\s*+/)
+            ),
+            end_pattern: Pattern.new(
+                match: Pattern.new(
+                    match: /;/,
+                    tag_as: "punctuation.terminator.statement"
+                ).or(
+                    match: /\}/,
+                    tag_as: "punctuation.section.block.control"
+                )
+            ),
+            includes: [
+                *primary_inlcudes,
+                PatternRange.new(
+                    tag_content_as: "meta.control.evaluation",
+                    start_pattern: Pattern.new(
+                        match: /\(/,
+                        tag_as: "punctuation.section.parens.control",
+                    ),
+                    end_pattern: Pattern.new(
+                        match: /\)/,
+                        tag_as: "punctuation.section.parens.control",
+                    ),
+                    includes: parentheses_include
+                ),
+                PatternRange.new(
+                    tag_content_as: "meta.control.body",
+                    start_pattern: Pattern.new(
+                        match: /\{/,
+                        tag_as: "punctuation.section.block.control"
+                    ),
+                    end_pattern: lookAheadFor(/\}/),
+                    includes: body_includes
+                ),
+                *secondary_includes
+            ]
+        )
+    end
+
+    
+# 
+# utils
+# 
+    # NOTE: this pattern can match 0-spaces so long as its still a word boundary
+    std_space = Pattern.new(
+        Pattern.new(
+            at_least: 1,
+            quantity_preference: :as_few_as_possible,
+            match: Pattern.new(
+                    match: @spaces,
+                    dont_back_track?: true
+                )
+        # zero length match
+        ).or(
+            Pattern.new(/\b/).or(
+                lookBehindFor(/\W/)
+            ).or(
+                lookAheadFor(/\W/)
+            ).or(
+                @start_of_document
+            ).or(
+                @end_of_document
+            )
+        )
+    )
+#
+#
+# Contexts
+#
+#
+    grammar[:$initial_context] = [
+            :using_statement,
+            :control_flow,
+            :function_definition,
+            :function_call,
+            :label,
+            :numbers,
+            :inline_regex,
+            :special_identifiers,
+            :keyword_operators,
+            :storage_declares,
+            # put all the original patterns here
+            *grammar[:$initial_context],
+            :operators,
+            :punctuation,
+        ]
+#
+#
+# Patterns
+#
+#
+    # 
+    # numbers
+    # 
+        grammar[:numbers] = numeric_constant(separator:"_")
+    # 
+    # regex
+    # 
+        grammar[:inline_regex] = Pattern.new(
+            Pattern.new(
+                match: /\//,
+                tag_as: "punctuation.section.regexp"
+            ).then(
+                match: zeroOrMoreOf(
+                    match: /[^\/\\]|\\./,
+                    dont_back_track?: true,
+                ),
+                tag_as: "string.regexp",
+                includes: [ :regexp ],
+            ).then(
+                match: /\//,
+                tag_as: "punctuation.section.regexp"
+            )
+        )
+    # 
+    # builtins
+    # 
+        grammar[:special_identifiers] = [
+            Pattern.new(
+                match: /\$\^[A-Z^_?\[\]]/,
+                tag_as: "variable.language.special.caret"
+            ),
+            Pattern.new(
+                match: variableBounds[/undef/],
+                tag_as: "constant.language.undef",
+            )
+        ]
+            
     # 
     # operators
     # 
-        grammar[:operators] = Pattern.new(
-            tag_as: "keyword.operator.$match",
-            match: @tokens.that(:areOperators),
-        )
-    
-    # 
-    # keyworded values
-    # 
-        with_operator = Pattern.new(
-            tag_as: "keyword.operator.with",
-            match: variableBounds[/with/],
-        )
-        semicolon_for_with_keyword = Pattern.new(
-            match: /;/,
-            tag_as: "punctuation.separator.with",
-        )
-        grammar[:value_prefix] = value_prefix = Pattern.new(
-            with_operator.then(std_space).then(
-                tag_as: "meta.with",
-                match: namespace,
-            ).then(
-                std_space
-            ).then(
-                semicolon_for_with_keyword
-            ).then(std_space)
-        )
-        grammar[:value_prefix_range] = PatternRange.new(
-            tag_as: "meta.with",
-            start_pattern: with_operator,
-            end_pattern: semicolon_for_with_keyword,
-            includes: [
-                :normal_context,
-            ],
-        )
-    
-    # 
-    # list
-    # 
-        grammar[:empty_list] = Pattern.new(
-            maybe(std_space).then(
-                match: "[",
-                tag_as: "punctuation.definition.list",
-            ).maybe(std_space).then(
-                match: "]",
-                tag_as: "punctuation.definition.list",
+        grammar[:keyword_operators]  = [
+            Pattern.new(
+                match: variableBounds[@tokens.that(:areOperatorAliases)],
+                tag_as: "keyword.operator.alias.$match",
             ),
-        )
-        
-        grammar[:list] = [
+        ]
+        grammar[:operators] = [
             PatternRange.new(
-                tag_as: "meta.list",
-                start_pattern: maybe(value_prefix).then(
-                    match: "[",
-                    tag_as: "punctuation.definition.list",
+                tag_content_as: "meta.readline",
+                start_pattern: Pattern.new(
+                    lookBehindToAvoid(/\s|\w|</).then(std_space).then(
+                        match: /</,
+                        tag_as: "punctuation.separator.readline",
+                    ).lookAheadToAvoid(/<|\=/)
                 ),
                 end_pattern: Pattern.new(
-                    match: "]",
-                    tag_as: "punctuation.definition.list",
+                    match: />/,
+                    tag_as:"punctuation.separator.readline",
                 ),
-                includes: [
-                    :list_context,
-                ]
+                includes: [ :$initial_context ]
+            ),
+            Pattern.new(
+                match: @tokens.that(:areComparisonOperators, not(:areOperatorAliases)),
+                tag_as: "keyword.operator.comparison",
+            ),
+            Pattern.new(
+                match: @tokens.that(:areAssignmentOperators, not(:areOperatorAliases)),
+                tag_as: "keyword.operator.assignment",
+            ),
+            Pattern.new(
+                match: @tokens.that(:areLogicalOperators, not(:areOperatorAliases)),
+                tag_as: "keyword.operator.logical",
+            ),
+            Pattern.new(
+                match: @tokens.that(:areArithmeticOperators, not(:areAssignmentOperators), not(:areOperatorAliases)),
+                tag_as: "keyword.operator.arithmetic",
+            ),
+            Pattern.new(
+                match: @tokens.that(:areBitwiseOperators, not(:areAssignmentOperators), not(:areOperatorAliases)),
+                tag_as: "keyword.operator.bitwise",
+            ),
+            Pattern.new(
+                match: @tokens.that(:areOperators, not(:areOperatorAliases)),
+                tag_as: "keyword.operator",
             ),
         ]
     # 
-    # basic function
+    # state
     # 
-        grammar[:parameter] = Pattern.new(
-            tag_as: "variable.parameter.function variable.other.object.parameter",
-            match: variable,
-        )
-        grammar[:probably_parameter] = grammar[:parameter].lookAheadFor(/ *+:/)
-        grammar[:basic_function] = Pattern.new(
-            Pattern.new(
-                match: variable,
-                tag_as: "variable.parameter.function.standalone variable.other.object.parameter",
-            ).then(
-                std_space
-            ).then(
-                match: ":",
-                tag_as: "punctuation.definition.function.colon variable.other.object.parameter"
-            )
+        grammar[:storage_declares] = Pattern.new(
+            match: /\b(?:my|our|local|state)\b/,
+            tag_as: "storage.modifier.$match",
         )
     # 
-    # attribute_set or function
+    # punctuation
     # 
-        
-        grammar[:empty_set] = Pattern.new(
-            maybe(std_space).then(
-                match: "{",
-                tag_as: "punctuation.definition.dict",
-            ).maybe(std_space).then(
-                match: "}",
-                tag_as: "punctuation.definition.dict",
+        grammar[:punctuation] = [
+            grammar[:semicolon] = Pattern.new(
+                match: /;/,
+                tag_as: "punctuation.terminator.statement"
             ),
-        )
-        
-        assignment_operator = Pattern.new(
-            match: /\=/,
-            tag_as: "keyword.operator.assignment",
-        )
-        assignmentOf = ->(attribute_pattern) do
-            Pattern.new(
+            grammar[:comma] = Pattern.new(
+                match: /,/,
+                tag_as: "punctuation.separator.comma"
+            ),
+            # unknown/other
+            grammar[:square_brackets] = PatternRange.new(
+                start_pattern: Pattern.new(
+                    match: /\[/,
+                    tag_as: "punctuation.section.square-brackets",
+                ),
+                end_pattern: Pattern.new(
+                    match: /\]/,
+                    tag_as: "punctuation.section.square-brackets",
+                ),
+                includes: [ :$initial_context ]
+            ),
+            grammar[:curly_brackets] = PatternRange.new(
+                start_pattern: Pattern.new(
+                    match: /\{/,
+                    tag_as: "punctuation.section.curly-brackets",
+                ),
+                end_pattern: Pattern.new(
+                    match: /\}/,
+                    tag_as: "punctuation.section.curly-brackets",
+                ),
+                includes: [ :$initial_context ]
+            ),
+            grammar[:parentheses] = PatternRange.new(
+                start_pattern: Pattern.new(
+                    match: /\(/,
+                    tag_as: "punctuation.section.parens",
+                ),
+                end_pattern: Pattern.new(
+                    match: /\)/,
+                    tag_as: "punctuation.section.parens",
+                ),
+                includes: [ :$initial_context ]
+            )
+        ]
+    # 
+    # imports
+    # 
+        grammar[:using_statement] = PatternRange.new(
+            tag_as: "meta.import",
+            start_pattern: Pattern.new(
                 Pattern.new(
-                    tag_as: "meta.attribute-key",
-                    match: attribute_pattern,
-                    includes: [
-                        :attribute_assignment,
-                        :dot_access,
-                    ],
+                    match: /use/,
+                    tag_as: "keyword.other.use"
                 ).then(std_space).then(
-                    assignment_operator
+                    match: /[\w\.]+/,
+                    tag_as: "entity.name.package",
                 )
-            )
-        end
-        
-        normal_attr_assignment = assignmentOf[
-            attribute_assignment_chain
-        ]
-        
-        assignment_start = Pattern.new(
-            tag_as: "meta.assignment-start",
-            match: Pattern.new(
+            ),
+            end_pattern: grammar[:semicolon],
+            includes: [
                 Pattern.new(
-                    lookBehindToAvoid(/[^ \t]/).lookAheadFor(/inherit\b/)
-                ).or(
-                    normal_attr_assignment,
-                )
-            ),
-            includes: [
-                normal_attr_assignment,
-                :attribute_assignment,
-                :dot_access,
-                assignment_operator,
-            ],
-        )
-        
-        
-        # NOTE: this one doesn't actually need to tag stuff or fully-match things
-        #       it ONLY needs to detect the start
-        assignment_start_lookahead = Pattern.new(
-            Pattern.new(assignment_start).or(
-                /\$\{/, # start of a dynamic attribute
-            ).or(
-                # normal attribute, then start of a dynamic attribute
-                attribute_assignment_chain.then(inline_dot_access).then(/\$\{/) 
-            )
-        )
-        shell_hook_start = Pattern.new(
-            std_space.then(
-                match: variableBounds[/initContent|shellHook|buildCommand|buildPhase|installPhase/],
-                tag_as: "meta.assignment-start meta.attribute-key entity.other.attribute-name",
-            ).then(std_space).then(tag_as: "meta.assignment-start", match: assignment_operator).then(std_space).then(
-                tag_as: "string.quoted.other.shell string.quoted.single punctuation.definition.string.single",
-                match: /''/,
-            )
-        )
-        safe_shell_inject = Pattern.new(
-            tag_as: "source.shell",
-            match: /(?:(?:''['\$])|\$[^\{]|'[^']|[^$'])++/,
-            includes: [
-                # :escape_character_single_quote,
-                :SHELL_initial_context,
-            ]
-        )
-        at_symbol = Pattern.new(
-            tag_as: "punctuation.definition.arguments",
-            match: /@/,
-        )
-        grammar[:assignment_statements] = [
-            # shell hooks
-            PatternRange.new(
-                tag_content_as: "string.quoted.other.shell",
-                start_pattern: shell_hook_start,
-                end_pattern: Pattern.new(
-                    tag_as: "string.quoted.other.shell string.quoted.single punctuation.definition.string.single",
-                    match: Pattern.new(/''/).lookAheadToAvoid(/\$|\'/),
-                ).maybe(
-                    match: / *;/,
-                    tag_as: "punctuation.terminator.statement",
+                    match: /::/,
+                    tag_as: "punctuation.separator.resolution"
                 ),
-                includes: [
-                    :escape_character_single_quote,
-                    :interpolation,
-                    safe_shell_inject,
-                ],
-            ),
-            
-            # 
-            # inherit statement
-            # 
-            PatternRange.new(
-                tag_as: "meta.inherit",
-                start_pattern: Pattern.new(
-                    match: variableBounds[/inherit/],
-                    tag_as: "keyword.other.inherit",
-                ),
-                end_pattern: Pattern.new(
-                    match: /;/,
-                    tag_as: "punctuation.terminator.statement"
-                ),
-                includes: [
-                    PatternRange.new(
-                        tag_as: "meta.source",
-                        start_pattern: Pattern.new(
-                            match: "(",
-                            tag_as: "punctuation.separator.source",
-                        ),
-                        end_pattern: Pattern.new(
-                            match: ")",
-                            tag_as: "punctuation.separator.source"
-                        ),
-                        includes: [
-                            namespace,
-                            :normal_context,
-                        ],
-                    ),
-                    attribute_assignment,
-                ]
-            ),
-            
-            # 
-            # shellHook
-            # 
-                # its broken atm
-                # PatternRange.new(
-                #     tag_as: "meta.shell-hook",
-                #     start_pattern: assignmentOf[variableBounds[/shellHook/]],
-                #     end_pattern: Pattern.new(
-                #         match: /;/,
-                #         tag_as: "punctuation.terminator.statement"
-                #     ),
-                #     includes: [
-                #         generateStringBlock[ additional_tag:"source.shell", includes:[ "source.shell" ] ],
-                #         :normal_context,
-                #     ]
-                # ),
-            
-            # 
-            # normal attribute assignment
-            # 
-            PatternRange.new(
-                tag_as: "meta.statement",
-                start_pattern: assignment_start,
-                end_pattern: Pattern.new(
-                    match: /;/,
-                    tag_as: "punctuation.terminator.statement"
-                ),
-                includes: [
-                    :normal_context,
-                    at_symbol,
-                ]
-            ),
-            
-            # 
-            # dynamic attribute assignment
-            # 
-            PatternRange.new(
-                tag_as: "meta.statement.dynamic-attr",
-                start_pattern: Pattern.new(
-                    match: lookAheadFor(/\$/),
-                ),
-                end_pattern: Pattern.new(
-                    match: /;/,
-                    tag_as: "punctuation.terminator.statement"
-                ),
-                includes: [
-                    :interpolation,
-                    PatternRange.new(
-                        start_pattern: assignment_operator,
-                        end_pattern: lookAheadFor(/;/),
-                        includes: [
-                            :bracket_ending_with_semicolon_context,
-                            :normal_context,
-                        ],
-                    ),
-                ]
-            ),
-            
-            # 
-            # dynamic attribute assignment
-            # 
-            PatternRange.new(
-                tag_as: "meta.statement.dynamic-attr",
-                start_pattern: Pattern.new(
-                    match: lookAheadFor(/"|'/),
-                ),
-                end_pattern: Pattern.new(
-                    match: /;/,
-                    tag_as: "punctuation.terminator.statement"
-                ),
-                includes: [
-                    :double_quote,
-                    :single_quote,
-                    PatternRange.new(
-                        start_pattern: assignment_operator,
-                        end_pattern: lookAheadFor(/;/),
-                        includes: [
-                            :bracket_ending_with_semicolon_context,
-                            :normal_context,
-                        ],
-                    ),
-                ]
-            ),
-            
-            attribute,
-        ]
-        
-        optional = Pattern.new(
-            match: "?",
-            tag_as: "punctuation.separator.default",
-        )
-        comma = Pattern.new(
-            match: ",",
-            tag_as: "punctuation.separator.comma",
-        )
-        eplipsis = Pattern.new(
-            tag_as: "punctuation.vararg-ellipses",
-            match: "...",
-        )
-        
-        grammar[:newline_eater] = Pattern.new(
-            match: /\s++/,
-        )
-        
-        bracketContext = ->(lookahead_end) do
-            PatternRange.new(
-                tag_as: "meta.punctuation.section.bracket",
-                start_pattern: Pattern.new(
-                    maybe(value_prefix).maybe(
-                        std_space.then(
-                            match: variableBounds[/rec/],
-                            tag_as: "storage.modifier",
-                        ).then(std_space)
-                    ).then(
-                        match: "{",
-                        tag_as: "punctuation.section.bracket",
-                    ).lookBehindToAvoid(/\$\{/),
-                ),
-                end_pattern: lookAheadFor(lookahead_end).or(lookBehindFor(/\}|:/)),
-                includes: [
-                    :comments,
-                    # 
-                    # attribute set
-                    # 
-                    PatternRange.new(
-                        tag_as: "meta.attribute-set",
-                        start_pattern: lookAheadFor(assignment_start_lookahead),
-                        end_pattern: Pattern.new(
-                            match: "}",
-                            tag_as: "punctuation.section.bracket",
-                        ),
-                        includes: [
-                            :comments,
-                            :assignment_statements,
-                        ],
-                    ),
-                    # 
-                    # function definition
-                    # 
-                    PatternRange.new(
-                        tag_as: "meta.punctuation.section.function meta.punctuation.section.parameters",
-                        start_pattern: Pattern.new(
-                            grammar[:parameter].or(eplipsis).then(std_space).lookAheadFor(/$|\?|,|\}/),
-                        ),
-                        end_pattern: Pattern.new(
-                            Pattern.new(
-                                match: "}",
-                                tag_as: "punctuation.section.bracket",
-                            ).then(std_space).maybe(
-                                at_symbol.then(std_space).then(
-                                    tag_as: "variable.language.arguments",
-                                    match: variable,
-                                ).then(std_space)
-                            ).then(match: ":", tag_as: "punctuation.definition.function.colon")
-                        ),
-                        includes: [
-                            :comments,
-                            :eplipsis,
-                            grammar[:parameter],
-                            PatternRange.new(
-                                tag_as: "meta.default",
-                                start_pattern: optional,
-                                end_pattern: lookAheadFor(/,|}/),
-                                includes: [
-                                    :normal_context,
-                                ]
-                            ),
-                            eplipsis,
-                            comma,
-                        ],
-                    ),
-                    # just a normal ending bracket to an empty attribute set
-                    std_space.then(
-                        match: "}",
-                        tag_as: "punctuation.section.bracket",
-                    ),
-                ]
-            )
-        end
-        
-        grammar[:bracket_ending_with_semicolon_context] = bracketContext[/;/]
-        grammar[:brackets] = bracketContext[/;|,|\)|else\W|then\W|in\W|else$|then$|in$/]
-    
-    value_end = lookAheadFor(/\}|;|,|\)|else\W|then\W|in\W|else$|then$|in$/) # technically this is imperfect, but must be done cause of multi-line values
-    # 
-    # keyworded statements
-    # 
-        # let in
-        grammar[:let_in_statement] =  PatternRange.new(
-            tag_as: "meta.punctuation.section.let",
-            start_pattern: Pattern.new(
-                match: variableBounds[/let/],
-                tag_as: "keyword.control.let",
-            ),
-            apply_end_pattern_last: true,
-            end_pattern: lookAheadFor(/./).or(/$/), # match anything (once inner patterns are done)
-            includes: [
-                # first part
-                PatternRange.new(
-                    tag_as: "meta.let.in.part1",
-                    # anchor to the begining of the match
-                    start_pattern: /\G/,
-                    # then grab the "in"
-                    end_pattern: Pattern.new(
-                        match: variableBounds[/in/],
-                        tag_as: "keyword.control.in",
-                    ),
-                    includes: [
-                        :comments,
-                        :assignment_statements,
-                    ],
-                ),
-                # second part
-                PatternRange.new(
-                    tag_as: "meta.let.in.part2",
-                    start_pattern: lookBehindFor(/\Win\W|\Win\$|^in\W|^in\$/),
-                    end_pattern: value_end,
-                    includes: [
-                        :comments,
-                        :normal_context,
-                    ],
-                ),
-            ]
-        )
-        
-        grammar[:if_then_else] =  PatternRange.new(
-            tag_as: "meta.punctuation.section.conditional",
-            start_pattern: Pattern.new(
-                maybe(value_prefix).lookBehindToAvoid(/\./).then(
-                    match: variableBounds[/if/],
-                    tag_as: "keyword.control.if",
-                ),
-            ),
-            end_pattern: lookBehindFor(/^else\W|^else$|\Welse\W|\Welse$/),
-            includes: [
-                PatternRange.new(
-                    tag_as: "meta.punctuation.section.condition",
-                    start_pattern: /\G/,
-                    end_pattern: lookAheadFor(/\Wthen\W|\Wthen$|^then\W|^then$\W/),
-                    includes: [
-                        :comments,
-                        :normal_context,
-                    ],
-                ),
+                # qw()
                 PatternRange.new(
                     start_pattern: Pattern.new(
-                        match: variableBounds[/then/],
-                        tag_as: "keyword.control.then",
+                        Pattern.new(
+                            match: /qw/,
+                            tag_as: "entity.name.function.special"
+                        ).then(std_space).then(
+                            match: /\(/,
+                            tag_as: "punctuation.section.block.function.special",
+                        )
                     ),
                     end_pattern: Pattern.new(
-                        match: variableBounds[/else/],
-                        tag_as: "keyword.control.else",
+                        match: /\)/,
+                        tag_as: "punctuation.section.block.function.special",
                     ),
                     includes: [
-                        :comments,
-                        :normal_context
-                    ],
+                        :variable
+                    ]
                 ),
-            ],
+            ]
         )
-        
-        grammar[:assert] =  PatternRange.new(
-            tag_as: "meta.punctuation.section.conditional",
-            start_pattern: Pattern.new(
-                maybe(value_prefix).then(
-                    match: variableBounds[/assert/],
-                    tag_as: "keyword.operator.assert",
-                ),
-            ),
-            end_pattern: Pattern.new(
-                match: /;/,
-                tag_as: "punctuation.separator.assert",
-            ),
-            includes: [
-                :comments,
-                :normal_context,
-            ],
-        )
-    
     # 
-    # values
+    # control flow
     # 
-        grammar[:parentheses] =  PatternRange.new(
+        grammar[:control_flow] = [
+            grammar[:if_statement]    = c_style_control(keyword:"if"    , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
+            grammar[:elsif_statement] = c_style_control(keyword:"elsif" , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
+            grammar[:else_statement]  = c_style_control(keyword:"else"  , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
+            grammar[:while_statement] = c_style_control(keyword:"while" , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
+            grammar[:for_statement]   = c_style_control(keyword:"for"   , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
+        ]
+    # 
+    # function definition
+    # 
+        # see https://perldoc.perl.org/perlsub.html
+        grammar[:function_definition] = PatternRange.new(
             start_pattern: Pattern.new(
-                tag_as: "punctuation.section.parentheses",
-                match: /\(/,
+                Pattern.new(
+                    match: /sub/,
+                    tag_as: "storage.type.sub",
+                ).then(std_space).maybe(
+                    match: @variable,
+                    tag_as: "entity.name.function.definition",
+                )
             ),
             end_pattern: Pattern.new(
                 Pattern.new(
-                    tag_as: "punctuation.section.parentheses",
-                    match: /\)/,
-                ).maybe(
-                    dot_access.then(std_space).then(
-                        match: zeroOrMoreOf(
-                            middle_repeat = Pattern.new(
-                                attribute.then(inline_dot_access),
-                            ),
-                        ),
-                        includes: [ middle_repeat ],
-                    ).then(
-                        tag_as: "variable.other.property",
-                        match: attribute,
-                    )
-                ),
+                    match: /\}/,
+                    tag_as: "punctuation.section.block.function",
+                ).or(
+                    grammar[:semicolon]
+                )
             ),
             includes: [
-                :normal_context,
+                PatternRange.new(
+                    start_pattern: Pattern.new(
+                        match: /\{/,
+                        tag_as: "punctuation.section.block.function",  
+                    ),
+                    end_pattern: lookAheadFor(/\}/),
+                    includes: [ :$initial_context ],
+                ),
+                grammar[:parameters] = PatternRange.new(
+                    start_pattern: Pattern.new(
+                        match: /\(/,
+                        tag_as: "punctuation.section.parameters",
+                    ),
+                    end_pattern: Pattern.new(
+                        match: /\)/,
+                        tag_as: "punctuation.section.parameters",
+                    ),
+                    includes: [ :$initial_context ]
+                ),
+                Pattern.new(
+                    Pattern.new(
+                        match: /:/,
+                        tag_as: "punctuation.definition.attribute entity.name.attribute"
+                    ).then(std_space).then(
+                        match: @variable,
+                        tag_as: "entity.name.attribute",
+                    ).then(std_space)
+                ),
+                # todo: make this more restrictive 
+                :$initial_context
             ]
         )
-        
-        grammar[:literal] = oneOf([
-            grammar[:double_quote_inline],
-            grammar[:single_quote_inline],
-            grammar[:url],
-            grammar[:relative_path_literal],
-            grammar[:absolute_path_literal],
-            grammar[:path_literal_angle_brackets],
-            grammar[:path_literal_content],
-            grammar[:system_path_literal],
-            grammar[:null],
-            grammar[:boolean],
-            grammar[:decimal],
-            grammar[:integer],
-            grammar[:empty_list],
-            grammar[:empty_set],
-        ])
-        grammar[:inline_value] = maybe(value_prefix).oneOf([
-            grammar[:literal],
-            grammar[:probably_parameter],
-            grammar[:variable_or_function],
-        ])
-        
-        grammar[:normal_context] = [
-            :comments,
-            :value_prefix,
-            :value_prefix_range,
-            :double_quote,
-            :single_quote,
-            :url,
-            :list,
-            :brackets,
-            :parentheses,
-            :if_then_else,
-            :let_in_statement,
-            :assert,
-            :path_literal_angle_brackets,
-            :relative_path_literal,
-            :absolute_path_literal,
-            :system_path_literal,
-            :operators,
-            :basic_function,
-            :inline_value,
-            :interpolation,
-            attribute,  # these would be redundant except that interpolation causes variable_or_function not to match 
-            :dot_access, # these would be redundant except that interpolation causes variable_or_function not to match 
-        ]
-        grammar[:list_context] = [
-            :comments,
-            # :value_prefix,                # not allowed in :list_context (needs parentheses)
-            :double_quote,
-            :single_quote,
-            :list,
-            :brackets, # NOTE: this matched func-or-attrset but in :list_context only attrset is valid (e.g. could be improved in future)
-            :parentheses,
-            # :if_then_else,                # not allowed in :list_context (needs parentheses)
-            # :let_in_statement,            # not allowed in :list_context (needs parentheses)
-            # :assert,                      # not allowed in :list_context (needs parentheses)
-            :path_literal_angle_brackets,
-            :relative_path_literal,
-            :absolute_path_literal,
-            # :operators,                   # not allowed in :list_context (needs parentheses)
-            :or_operator, # for some reason... this one is allowed in list contexts
-            # :basic_function,              # not allowed in :list_context (needs parentheses)
-            # :inline_value,                # not allowed in :list_context because of the value_prefix
-            :literal,                        # partial substitute for :inline_value
-            :variable_maybe_attrs_no_method, # partial substitute for :inline_value
-            :interpolation,
-            attribute,  # these would be redundant except that interpolation causes variable_or_function not to match 
-            :dot_access, # these would be redundant except that interpolation causes variable_or_function not to match 
-        ]
+        grammar[:function_call] = PatternRange.new(
+            start_pattern: Pattern.new(
+                Pattern.new(
+                    match: @variable,
+                    tag_as: "entity.name.function.call",
+                    word_cannot_be_any_of: ["qq", "qw", "q", "m", "qr", "s" , "tr", "y"], # see https://perldoc.perl.org/perlop.html#Quote-and-Quote-like-Operators
+                ).then(std_space).then(
+                    match: /\(/,
+                    tag_as: "punctuation.section.arguments",
+                )
+            ),
+            end_pattern: Pattern.new(
+                match: /\)/,
+                tag_as: "punctuation.section.arguments",
+            ),
+            includes: [ :$initial_context ]
+        )
+    # 
+    # Labels
+    # 
+        grammar[:label] = Pattern.new(
+            Pattern.new(/^/).then(std_space).then(
+                tag_as: "entity.name.label",
+                match: @variable,
+            ).then(@word_boundary).then(
+                std_space
+            ).then(
+                match: Pattern.new(/:/).lookAheadToAvoid(/:/),
+                tag_as: "punctuation.separator.label",
+            )
+        )
+    # 
+    # copy over all the repos
+    # 
+        # for each_key, each_value in original_grammar["repository"]
+        #     grammar[each_key.to_sym] = each_value
+        # end
+ 
 #
 # Save
 #
-name = "nix"
+name = "perl"
+dir = "./syntaxes"
+Dir.mkdir(dir) unless File.exist?(dir)
 grammar.save_to(
     syntax_name: name,
-    syntax_dir: "./autogenerated",
-    tag_dir: "./autogenerated",
+    syntax_dir: dir,
+    tag_dir: dir,
 )

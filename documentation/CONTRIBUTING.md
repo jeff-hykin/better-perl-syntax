@@ -5,7 +5,7 @@ Take a look at `documentation/setup.md` for details on installing dependencies a
 ## Adding a Feature
 
 If you believe you've successfully made a change.
-- Create a `your_feature.nix` file in the `language_examples/` folder. Once it is created, add code to it that demonstrates your feature (more demonstration the better).
+- Create a `your_feature.perl` file in the `language_examples/` folder. Once it is created, add code to it that demonstrates your feature (more demonstration the better).
 - Then use `project test` to generate specs for all the examples.
 - If there were no side effects, then `your_feature.spec.yaml` should be the only new/changed file. However, if there were side effects then some of the other `.spec.yaml` files will be changed. Sometimes those side effects are good, sometimes they're irrelevant, and often times they're a regression. 
 - Once that is ready, make a pull request!
@@ -28,7 +28,7 @@ Something like this in a tmLanguage.json file
 ```json
 {
     "match": "blah/blah/blah",
-    "name": "punctuation.separator.attribute.nix",
+    "name": "punctuation.separator.attribute.perl",
     "patterns": [
         {
           "include": "#evaluation_context"
@@ -57,15 +57,15 @@ And things like this
     "end": "\\]\\]",
     "beginCaptures": {
         "0": {
-            "name": "punctuation.section.attribute.begin.nix"
+            "name": "punctuation.section.attribute.begin.perl"
         }
     },
     "endCaptures": {
         "0": {
-            "name": "punctuation.section.attribute.end.nix"
+            "name": "punctuation.section.attribute.end.perl"
         }
     },
-    "name": "support.other.attribute.nix",
+    "name": "support.other.attribute.perl",
     "patterns": [
         {
             "include": "#attributes_context"

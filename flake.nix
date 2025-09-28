@@ -38,7 +38,7 @@
                 {
                     # for home-manager examples, see: https://deepwiki.com/nix-community/home-manager/5-configuration-examples
                     # all home-manager options: https://nix-community.github.io/home-manager/options.xhtml
-                    home.homeDirectory = "/tmp/virtual_homes/xome_simple";
+                    home.homeDirectory = "/tmp/virtual_homes/better-perl-syntax";
                     home.stateVersion = "25.05";
                     home.packages = [
                         # vital stuff

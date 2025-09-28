@@ -1,33 +1,32 @@
 # What does this do?
-This is a VS Code extension (Better Nix Syntax). It helps highlight your nix code better, including the code inside `shellHook`s. If your theme is good (please do not use the default theme), the colors themselves should look better. I'd recommended Atom One Dark, Tokyo Night, Cobalt Next, Bearded Theme (tons of variants), Noctis, XD Theme.
+This enables your theme to better color your code. There are "textmate scopes" that your theme uses to apply color, this extension adds/improves the textmate scopes which should improve the way your code looks.
 
-# Before and After 
+NOTE: The default VS Code theme does not color much. Use a theme like one of the following to benefit from the changes:
+- [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
+- [Noctis](https://marketplace.visualstudio.com/items?itemName=liviuschera.noctis)
+- [XD Theme](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.xd-theme)
+- [One Monokai Theme](https://marketplace.visualstudio.com/items?itemName=azemoh.one-monokai)
+- [Winteriscoming](https://marketplace.visualstudio.com/items?itemName=johnpapa.winteriscoming)
+- [Popping and Locking](https://marketplace.visualstudio.com/items?itemName=hedinne.popping-and-locking-vscode)
+- [Syntax Highlight Theme](https://marketplace.visualstudio.com/items?itemName=peaceshi.syntax-highlight)
 
+## How do I use it?
+Just install the VS Code extension and the changes will automatically be applied to all relevent files.
 
-## Bearded Theme (Stained Blue)
-Before                     | After 
-
-<img width="2652" alt="before_after_pt1" src="https://github.com/user-attachments/assets/77eeb240-af2a-44b4-955b-c2bbbeda226e" />
-<img width="2652" alt="before_after 2" src="https://github.com/user-attachments/assets/bb069750-cfd3-42c0-923c-aa40744c4b40" />
-
-
-
-## Atom One Dark
-Before                     | After 
+Before                     | After
 :-------------------------:|:-------------------------:
-<img width="1386" alt="code_atom_theirs" src="https://github.com/user-attachments/assets/83035afd-ec1a-413c-9b13-ee3292be6d07" /> | <img width="1386" alt="code_atom_mine" src="https://github.com/user-attachments/assets/4208f0dd-b410-452a-966a-684a08acfcbd" />
+![code_before](https://user-images.githubusercontent.com/17692058/60395944-9b573600-9b00-11e9-9748-30abe491f474.png) | ![code_after](https://user-images.githubusercontent.com/17692058/60395959-c772b700-9b00-11e9-821e-f95544b6ba3e.png)
 
+## What is different?
 
-
-## Cobalt Next
-Before                     | After 
-:-------------------------:|:-------------------------:
-<img width="1386" alt="code_cobalt_theirs" src="https://github.com/user-attachments/assets/f70c84f2-f5df-48c2-826e-92c6f9046ff1" /> | <img width="1386" alt="code_cobalt_mine" src="https://github.com/user-attachments/assets/c47be3fe-bbd7-4104-bf5d-3b7b63d56d37" />
-
-## Bearded Theme
-Before                     | After 
-:-------------------------:|:-------------------------:
-<img width="1346" alt="code_beard_theirs" src="https://github.com/user-attachments/assets/c794b3fe-892f-450f-920e-37ef0f3ec5e2" /> | <img width="1346" alt="code_beard_mine" src="https://github.com/user-attachments/assets/004022dd-6d26-4965-8405-2bf99b186a32" />
+It adds:
+- Numbers
+- Operators
+- Function Calls
+- Word operators
+- Caret Special Variables
+- Function brackets
+- General Punctuation
 
 
 ### Like this extension?

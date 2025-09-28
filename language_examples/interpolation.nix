@@ -1,3 +1,0 @@
-{
-    gcc = pkgs.${"gcc${numS}"};
-}
