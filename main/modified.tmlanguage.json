@@ -8,33 +8,14 @@
 	"name": "Perl",
 	"scopeName": "source.perl",
 	"comment": "\n\tTODO:\tInclude RegExp syntax\n",
+    "fileTypes": [
+        "perl",
+        "pl"
+    ],
 	"patterns": [
-		{
-			"include": "#line_comment"
-		},
-		{
-			"begin": "^(?==[a-zA-Z]+)",
-			"end": "^(=cut\\b.*$)",
-			"endCaptures": {
-				"1": {
-					"patterns": [
-						{
-							"include": "#pod"
-						}
-					]
-				}
-			},
-			"name": "comment.block.documentation.perl",
-			"patterns": [
-				{
-					"include": "#pod"
-				}
-			]
-		},
-		{
-			"include": "#variable"
-		},
-		{
+	],
+	"repository": {
+        "anon_pattern_1": {
 			"applyEndPatternLast": 1,
 			"begin": "\\b(?=qr\\s*[^\\s\\w])",
 			"comment": "string.regexp.compile.perl",
@@ -200,7 +181,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_2": {
 			"applyEndPatternLast": 1,
 			"begin": "(?<!\\{|\\+|\\-)\\b(?=m\\s*[^\\sa-zA-Z0-9])",
 			"comment": "string.regexp.find-m.perl",
@@ -387,7 +368,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_3": {
 			"applyEndPatternLast": 1,
 			"begin": "\\b(?=(?<!\\&)(s)(\\s+\\S|\\s*[;\\,\\{\\}\\(\\)\\[<]|$))",
 			"comment": "string.regexp.replace.perl",
@@ -611,7 +592,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_4": {
 			"begin": "\\b(?=s([^\\sa-zA-Z0-9\\[({<]).*\\1([egimosxradlupcn]*)([\\}\\)\\;\\,]|\\s+))",
 			"comment": "string.regexp.replaceXXX",
 			"end": "((([egimosxradlupcn]*)))(?=([\\}\\)\\;\\,]|\\s+|\\s*$))",
@@ -681,7 +662,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_5": {
 			"begin": "\\b(?=(?<!\\\\)s\\s*([^\\s\\w\\[({<>]))",
 			"comment": "string.regexp.replace.extended",
 			"end": "((([egimosradlupc]*x[egimosradlupc]*)))\\b",
@@ -750,7 +731,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_6": {
 			"begin": "(?<=\\(|\\{|~|&|\\||if|unless|^)\\s*((\\/))",
 			"beginCaptures": {
 				"1": {
@@ -790,19 +771,15 @@
                 }
 			]
 		},
-		{
-			"captures": {
-				"1": {
-					"name": "constant.other.key.perl"
-				}
-			},
-			"match": "\\b(\\w+)\\s*(?==>)"
+		"anon_pattern_7": {
+			"match": "\\b(\\w+)\\s*(?==>)",
+            "name": "constant.other.key.perl"
 		},
-		{
+		"anon_pattern_8": {
 			"match": "(?<={)\\s*\\w+\\s*(?=})",
 			"name": "constant.other.bareword.perl"
 		},
-		{
+		"anon_pattern_9": {
 			"captures": {
 				"1": {
 					"name": "keyword.control.perl"
@@ -814,7 +791,7 @@
 			"match": "^\\s*(package)\\s+([^\\s;]+)",
 			"name": "meta.class.perl"
 		},
-		{
+		"anon_pattern_10": {
 			"captures": {
 				"1": {
 					"name": "storage.type.sub.perl"
@@ -829,7 +806,7 @@
 			"match": "\\b(sub)(?:\\s+([-a-zA-Z0-9_]+))?\\s*(?:\\([\\$\\@\\*;]*\\))?[^\\w\\{]",
 			"name": "meta.function.perl"
 		},
-		{
+		"anon_pattern_11": {
 			"captures": {
 				"1": {
 					"name": "entity.name.function.perl"
@@ -844,7 +821,7 @@
 			"match": "^\\s*(BEGIN|UNITCHECK|CHECK|INIT|END|DESTROY)\\b",
 			"name": "meta.function.perl"
 		},
-		{
+		"anon_pattern_12": {
 			"begin": "^(?=(\\t| {4}))",
 			"end": "(?=[^\\t\\s])",
 			"name": "meta.leading-tabs",
@@ -862,7 +839,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_13": {
 			"captures": {
 				"1": {
 					"name": "support.function.perl"
@@ -880,11 +857,11 @@
 			"match": "\\b(tr|y)\\s*([^A-Za-z0-9\\s])(.*?)(?<!\\\\)(\\\\{2})*(\\2)(.*?)(?<!\\\\)(\\\\{2})*(\\2)",
 			"name": "string.regexp.replace.perl"
 		},
-		{
+		"anon_pattern_14": {
 			"match": "\\b(__FILE__|__LINE__|__PACKAGE__|__SUB__)\\b",
 			"name": "constant.language.perl"
 		},
-		{
+		"anon_pattern_15": {
 			"begin": "\\b(__DATA__|__END__)\\n?",
 			"beginCaptures": {
 				"1": {
@@ -899,27 +876,27 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_16": {
 			"match": "(?<!->)\\b(continue|default|die|do|else|elsif|exit|for|foreach|given|goto|if|last|next|redo|return|select|unless|until|wait|when|while|switch|case|require|use|eval)\\b",
 			"name": "keyword.control.perl"
 		},
-		{
+		"anon_pattern_17": {
 			"match": "\\b(my|our|local)\\b",
 			"name": "storage.modifier.perl"
 		},
-		{
+		"anon_pattern_18": {
 			"match": "(?<!\\w)\\-[rwxoRWXOezsfdlpSbctugkTBMAC]\\b",
 			"name": "keyword.operator.filetest.perl"
 		},
-		{
+		"anon_pattern_19": {
 			"match": "\\b(and|or|xor|as|not)\\b",
 			"name": "keyword.operator.logical.perl"
 		},
-		{
+		"anon_pattern_20": {
 			"match": "(<=>|=>|->)",
 			"name": "keyword.operator.comparison.perl"
 		},
-		{
+		"anon_pattern_21": {
 			"begin": "(((<<) *\"HTML\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -953,7 +930,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_22": {
 			"begin": "(((<<) *\"XML\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -987,7 +964,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_23": {
 			"begin": "(((<<) *\"CSS\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1021,7 +998,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_24": {
 			"begin": "(((<<) *\"JAVASCRIPT\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1055,7 +1032,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_25": {
 			"begin": "(((<<) *\"SQL\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1089,7 +1066,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_26": {
 			"begin": "(((<<) *\"POSTSCRIPT\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1123,7 +1100,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_27": {
 			"begin": "(((<<) *\"([^\"]*)\"))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1154,7 +1131,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_28": {
 			"begin": "(((<<) *'HTML'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1182,7 +1159,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_29": {
 			"begin": "(((<<) *'XML'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1210,7 +1187,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_30": {
 			"begin": "(((<<) *'CSS'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1238,7 +1215,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_31": {
 			"begin": "(((<<) *'JAVASCRIPT'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1266,7 +1243,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_32": {
 			"begin": "(((<<) *'SQL'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1294,7 +1271,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_33": {
 			"begin": "(((<<) *'POSTSCRIPT'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1322,7 +1299,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_34": {
 			"begin": "(((<<) *'([^']*)'))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1345,7 +1322,7 @@
 			"contentName": "string.unquoted.heredoc.quote.perl",
 			"end": "(^\\4$)"
 		},
-		{
+		"anon_pattern_35": {
 			"begin": "(((<<) *\\\\((?![=\\d\\$\\( ])[^;,'\"`\\s\\)]*)))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1368,7 +1345,7 @@
 			"contentName": "string.unquoted.heredoc.quote.perl",
 			"end": "(^\\4$)"
 		},
-		{
+		"anon_pattern_36": {
 			"begin": "(((<<) *`([^`]*)`))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1399,7 +1376,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_37": {
 			"begin": "(((<<) *HTML\\b))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1433,7 +1410,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_38": {
 			"begin": "(((<<) *XML\\b))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1467,7 +1444,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_39": {
 			"begin": "(((<<) *JAVASCRIPT\\b))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1501,7 +1478,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_40": {
 			"begin": "(((<<) *SQL\\b))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1535,7 +1512,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_41": {
 			"begin": "(((<<) *POSTSCRIPT\\b))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1569,7 +1546,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_42": {
 			"begin": "(((<<) *((?![=\\d\\$\\( ])[^;,'\"`\\s\\)]*)))(.*)\\n?",
 			"captures": {
 				"1": {
@@ -1600,7 +1577,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_43": {
 			"begin": "\\bqq\\s*([^\\(\\{\\[\\<\\w\\s])",
 			"beginCaptures": {
 				"0": {
@@ -1623,7 +1600,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_44": {
 			"begin": "\\bqx\\s*([^'\\(\\{\\[\\<\\w\\s])",
 			"beginCaptures": {
 				"0": {
@@ -1646,7 +1623,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_45": {
 			"begin": "\\bqx\\s*'",
 			"beginCaptures": {
 				"0": {
@@ -1666,7 +1643,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_46": {
 			"begin": "\"",
 			"beginCaptures": {
 				"0": {
@@ -1689,7 +1666,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_47": {
 			"begin": "(?<!->)\\bqw?\\s*([^\\(\\{\\[\\<\\w\\s])",
 			"beginCaptures": {
 				"0": {
@@ -1704,7 +1681,7 @@
 			},
 			"name": "string.quoted.other.q.perl"
 		},
-		{
+		"anon_pattern_48": {
 			"begin": "'",
 			"beginCaptures": {
 				"0": {
@@ -1725,7 +1702,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_49": {
 			"begin": "`",
 			"beginCaptures": {
 				"0": {
@@ -1748,7 +1725,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_50": {
 			"begin": "(?<!->)\\bqq\\s*\\(",
 			"beginCaptures": {
 				"0": {
@@ -1774,7 +1751,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_51": {
 			"begin": "\\bqq\\s*\\{",
 			"beginCaptures": {
 				"0": {
@@ -1800,7 +1777,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_52": {
 			"begin": "\\bqq\\s*\\[",
 			"beginCaptures": {
 				"0": {
@@ -1826,7 +1803,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_53": {
 			"begin": "\\bqq\\s*\\<",
 			"beginCaptures": {
 				"0": {
@@ -1852,7 +1829,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_54": {
 			"begin": "(?<!->)\\bqx\\s*\\(",
 			"beginCaptures": {
 				"0": {
@@ -1878,7 +1855,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_55": {
 			"begin": "\\bqx\\s*\\{",
 			"beginCaptures": {
 				"0": {
@@ -1904,7 +1881,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_56": {
 			"begin": "\\bqx\\s*\\[",
 			"beginCaptures": {
 				"0": {
@@ -1930,7 +1907,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_57": {
 			"begin": "\\bqx\\s*\\<",
 			"beginCaptures": {
 				"0": {
@@ -1956,7 +1933,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_58": {
 			"begin": "(?<!->)\\bqw?\\s*\\(",
 			"beginCaptures": {
 				"0": {
@@ -1976,7 +1953,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_59": {
 			"begin": "\\bqw?\\s*\\{",
 			"beginCaptures": {
 				"0": {
@@ -1996,7 +1973,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_60": {
 			"begin": "\\bqw?\\s*\\[",
 			"beginCaptures": {
 				"0": {
@@ -2016,7 +1993,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_61": {
 			"begin": "\\bqw?\\s*\\<",
 			"beginCaptures": {
 				"0": {
@@ -2036,7 +2013,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_62": {
 			"begin": "^__\\w+__",
 			"beginCaptures": {
 				"0": {
@@ -2051,7 +2028,7 @@
 			},
 			"name": "string.unquoted.program-block.perl"
 		},
-		{
+		"anon_pattern_63": {
 			"begin": "\\b(format)\\s+(\\w+)\\s*=",
 			"beginCaptures": {
 				"1": {
@@ -2072,7 +2049,7 @@
 				}
 			]
 		},
-		{
+		"anon_pattern_64": {
 			"captures": {
 				"1": {
 					"name": "support.function.perl"
@@ -2083,11 +2060,11 @@
 			},
 			"match": "\\b(x)\\s*(\\d+)\\b"
 		},
-		{
+		"anon_pattern_65": {
 			"match": "\\b(ARGV|DATA|ENV|SIG|STDERR|STDIN|STDOUT|atan2|bind|binmode|bless|caller|chdir|chmod|chomp|chop|chown|chr|chroot|close|closedir|cmp|connect|cos|crypt|dbmclose|dbmopen|defined|delete|dump|each|endgrent|endhostent|endnetent|endprotoent|endpwent|endservent|eof|eq|eval|exec|exists|exp|fcntl|fileno|flock|fork|formline|ge|getc|getgrent|getgrgid|getgrnam|gethostbyaddr|gethostbyname|gethostent|getlogin|getnetbyaddr|getnetbyname|getnetent|getpeername|getpgrp|getppid|getpriority|getprotobyname|getprotobynumber|getprotoent|getpwent|getpwnam|getpwuid|getservbyname|getservbyport|getservent|getsockname|getsockopt|glob|gmtime|grep|gt|hex|import|index|int|ioctl|join|keys|kill|lc|lcfirst|le|length|link|listen|local|localtime|log|lstat|lt|m|map|mkdir|msgctl|msgget|msgrcv|msgsnd|ne|no|oct|open|opendir|ord|pack|pipe|pop|pos|print|printf|push|quotemeta|rand|read|readdir|readlink|recv|ref|rename|reset|reverse|rewinddir|rindex|rmdir|s|say|scalar|seek|seekdir|semctl|semget|semop|send|setgrent|sethostent|setnetent|setpgrp|setpriority|setprotoent|setpwent|setservent|setsockopt|shift|shmctl|shmget|shmread|shmwrite|shutdown|sin|sleep|socket|socketpair|sort|splice|split|sprintf|sqrt|srand|stat|study|substr|symlink|syscall|sysopen|sysread|system|syswrite|tell|telldir|tie|tied|time|times|tr|truncate|uc|ucfirst|umask|undef|unlink|unpack|unshift|untie|utime|values|vec|waitpid|wantarray|warn|write|y)\\b",
 			"name": "support.function.perl"
 		},
-		{
+		"anon_pattern_66": {
 			"captures": {
 				"1": {
 					"name": "punctuation.section.scope.begin.perl"
@@ -2099,7 +2076,7 @@
 			"comment": "Match empty brackets for ↩ snippet",
 			"match": "(\\{)(\\})"
 		},
-		{
+		"anon_pattern_67": {
 			"captures": {
 				"1": {
 					"name": "punctuation.section.scope.begin.perl"
@@ -2110,9 +2087,7 @@
 			},
 			"comment": "Match empty parenthesis for ↩ snippet",
 			"match": "(\\()(\\))"
-		}
-	],
-	"repository": {
+		},
 		"escaped_char": {
 			"patterns": [
 				{

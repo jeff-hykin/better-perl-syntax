@@ -1,0 +1,1187 @@
+- source: upcase_in
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: v1
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: v2
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' this changes $v1 and $v2'
+  scopesEnd:
+    - comment.line.number-sign
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: upcase_in
+  scopes:
+    - entity.name.function.definition
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: for
+  scopes:
+    - keyword.control.for
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: '@'
+  scopesBegin:
+    - meta.control.evaluation
+    - variable.other.readwrite.global.special
+  scopes:
+    - punctuation.definition.variable
+- source: _
+  scopesEnd:
+    - meta.control.evaluation
+    - variable.other.readwrite.global.special
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: tr
+  scopesBegin:
+    - meta.control.body
+    - string.regexp.replace
+  scopes:
+    - support.function
+- source: /
+  scopes:
+    - punctuation.definition.string
+- source: a-z
+- source: /
+  scopes:
+    - punctuation.definition.string
+- source: A-Z
+- source: /
+  scopes:
+    - punctuation.definition.string
+  scopesEnd:
+    - meta.control.body
+    - string.regexp.replace
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: (
+  scopes:
+    - punctuation.section.parens
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: v3
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: v4
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parens
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: upcase
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: v1
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: v2
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' this doesn''t change $v1 and $v2'
+  scopesEnd:
+    - comment.line.number-sign
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: upcase
+  scopes:
+    - entity.name.function.definition
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: return
+  scopesBegin:
+    - keyword.control
+- source: unless
+  scopesEnd:
+    - keyword.control
+- source: defined
+  scopesBegin:
+    - support.function
+- source: wantarray
+  scopesEnd:
+    - support.function
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' void context, do nothing'
+  scopesEnd:
+    - comment.line.number-sign
+- source: my
+  scopes:
+    - storage.modifier.my
+- source: '@'
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: parms
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: '@'
+  scopesBegin:
+    - variable.other.readwrite.global.special
+  scopes:
+    - punctuation.definition.variable
+- source: _
+  scopesEnd:
+    - variable.other.readwrite.global.special
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: for
+  scopes:
+    - keyword.control.for
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: '@'
+  scopesBegin:
+    - meta.control.evaluation
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: parms
+  scopesEnd:
+    - meta.control.evaluation
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: tr
+  scopesBegin:
+    - meta.control.body
+    - string.regexp.replace
+  scopes:
+    - support.function
+- source: /
+  scopes:
+    - punctuation.definition.string
+- source: a-z
+- source: /
+  scopes:
+    - punctuation.definition.string
+- source: A-Z
+- source: /
+  scopes:
+    - punctuation.definition.string
+  scopesEnd:
+    - meta.control.body
+    - string.regexp.replace
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: return
+  scopes:
+    - keyword.control
+- source: wantarray
+  scopes:
+    - support.function
+- source: ' ? '
+- source: '@'
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: parms
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ' : '
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: parms
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '['
+  scopes:
+    - punctuation.section.square-brackets
+- source: '0'
+  scopes:
+    - constant.numeric.decimal
+- source: ']'
+  scopes:
+    - punctuation.section.square-brackets
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: get_line
+  scopes:
+    - entity.name.function.definition
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thisline
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: lookahead
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' global variables!'
+  scopesEnd:
+    - comment.line.number-sign
+- source: LINE
+  scopes:
+    - entity.name.label
+- source: ':'
+  scopes:
+    - punctuation.separator.label
+- source: while
+  scopes:
+    - keyword.control.while
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: defined
+  scopesBegin:
+    - meta.control.evaluation
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: lookahead
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: <
+  scopes:
+    - punctuation.separator.readline
+- source: STDIN
+  scopes:
+    - meta.readline
+    - support.function
+- source: '>'
+  scopes:
+    - punctuation.separator.readline
+- source: )
+  scopes:
+    - punctuation.section.arguments
+  scopesEnd:
+    - meta.control.evaluation
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: if
+  scopesBegin:
+    - meta.control.body
+  scopes:
+    - keyword.control.if
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: $
+  scopesBegin:
+    - meta.control.evaluation
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: lookahead
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '=~'
+  scopes:
+    - keyword.operator.comparison
+- source: /
+  scopesBegin:
+    - string.regexp.find
+  scopes:
+    - punctuation.definition.string
+- source: ^
+  scopes:
+    - keyword.control.anchor.regexp
+- source: '['
+  scopesBegin:
+    - constant.other.character-class.set.regexp
+  scopes:
+    - punctuation.definition.character-class.regexp
+- source: \t
+  scopes:
+    - constant.character.escape.backslash.regexp
+- source: ']'
+  scopes:
+    - punctuation.definition.character-class.regexp
+  scopesEnd:
+    - constant.other.character-class.set.regexp
+- source: /
+  scopes:
+    - punctuation.definition.string
+  scopesEnd:
+    - meta.control.evaluation
+    - string.regexp.find
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: $
+  scopesBegin:
+    - meta.control.body
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thisline
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: .=
+  scopes:
+    - keyword.operator.assignment
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: lookahead
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: else
+  scopes:
+    - keyword.control.else
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: last
+  scopesBegin:
+    - meta.control.body
+  scopes:
+    - keyword.control
+- source: ' LINE'
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: return
+  scopes:
+    - keyword.control
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thisline
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: '&'
+  scopes:
+    - keyword.operator.bitwise
+- source: foo
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: '2'
+  scopes:
+    - constant.numeric.decimal
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: '3'
+  scopes:
+    - constant.numeric.decimal
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' pass three arguments'
+  scopesEnd:
+    - comment.line.number-sign
+- source: foo
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: '2'
+  scopes:
+    - constant.numeric.decimal
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: '3'
+  scopes:
+    - constant.numeric.decimal
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' the same'
+  scopesEnd:
+    - comment.line.number-sign
+- source: foo
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopesBegin:
+    - punctuation.section.arguments
+- source: )
+  scopesEnd:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' pass a null list'
+  scopesEnd:
+    - comment.line.number-sign
+- source: '&'
+  scopes:
+    - keyword.operator.bitwise
+- source: foo
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopesBegin:
+    - punctuation.section.arguments
+- source: )
+  scopesEnd:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' the same'
+  scopesEnd:
+    - comment.line.number-sign
+- source: '&'
+  scopes:
+    - keyword.operator.bitwise
+- source: foo
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' foo() get current args, like foo(@_) !!'
+  scopesEnd:
+    - comment.line.number-sign
+- source: foo
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' like foo() IFF sub foo predeclared, else "foo"'
+  scopesEnd:
+    - comment.line.number-sign
+- source: use
+  scopesBegin:
+    - meta.import
+  scopes:
+    - keyword.other.use
+- source: 5.16.0
+  scopes:
+    - entity.name.package
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.import
+- source: my
+  scopes:
+    - storage.modifier.my
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: factorial
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: my
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: x
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: '@'
+  scopesBegin:
+    - variable.other.readwrite.global.special
+  scopes:
+    - punctuation.definition.variable
+- source: _
+  scopesEnd:
+    - variable.other.readwrite.global.special
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: return
+  scopes:
+    - keyword.control
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: if
+  scopes:
+    - keyword.control.if
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: x
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '=='
+  scopes:
+    - keyword.operator.comparison
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: return
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: x
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '*'
+  scopes:
+    - keyword.operator.arithmetic
+- source: __SUB__
+  scopes:
+    - constant.language
+- source: '->'
+  scopes:
+    - keyword.operator.comparison
+- source: (
+  scopes:
+    - punctuation.section.parens
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: x
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '-'
+  scopes:
+    - keyword.operator.arithmetic
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: )
+  scopes:
+    - punctuation.section.parens
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: foo
+  scopes:
+    - entity.name.function.definition
+- source: ':'
+  scopes:
+    - punctuation.definition.attribute
+    - entity.name.attribute
+- source: lvalue
+  scopes:
+    - entity.name.attribute
+- source: (
+  scopes:
+    - punctuation.section.parameters
+- source: $
+  scopesBegin:
+    - variable.other.predefined
+  scopes:
+    - punctuation.definition.variable
+- source: a
+  scopesEnd:
+    - variable.other.predefined
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.predefined
+  scopes:
+    - punctuation.definition.variable
+- source: b
+  scopesEnd:
+    - variable.other.predefined
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: '@'
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: c
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parameters
+- source: '{'
+  scopesBegin:
+    - punctuation.section.block.function
+- source: '}'
+  scopesEnd:
+    - punctuation.section.block.function
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: foo
+  scopes:
+    - entity.name.function.definition
+- source: (
+  scopes:
+    - punctuation.section.parameters
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: left
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: right
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parameters
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: return
+  scopes:
+    - keyword.control
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: left
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: +
+  scopes:
+    - keyword.operator.arithmetic
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: right
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: my
+  scopes:
+    - storage.modifier.my
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: auto_id
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: '0'
+  scopes:
+    - constant.numeric.decimal
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: foo
+  scopes:
+    - entity.name.function.definition
+- source: (
+  scopes:
+    - punctuation.section.parameters
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thing
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: id
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: auto_id
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ++
+  scopes:
+    - keyword.operator.arithmetic
+- source: )
+  scopes:
+    - punctuation.section.parameters
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: print
+  scopes:
+    - support.function
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.begin
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thing
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ' has ID '
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: id
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '"'
+  scopes:
+    - punctuation.definition.string.end
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: foo
+  scopes:
+    - entity.name.function.definition
+- source: (
+  scopes:
+    - punctuation.section.parameters
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thing
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: ' @'
+- source: )
+  scopes:
+    - punctuation.section.parameters
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: print
+  scopes:
+    - support.function
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: thing
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: foo
+  scopes:
+    - entity.name.function.definition
+- source: (
+  scopes:
+    - punctuation.section.parameters
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: filter
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: '%'
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: inputs
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parameters
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: print
+  scopes:
+    - support.function
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: filter
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '->'
+  scopes:
+    - keyword.operator.comparison
+- source: (
+  scopes:
+    - punctuation.section.parens
+- source: $
+  scopesBegin:
+    - variable.other.predefined
+  scopes:
+    - punctuation.definition.variable
+- source: _
+  scopesEnd:
+    - variable.other.predefined
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: inputs
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '{'
+  scopes:
+    - punctuation.section.curly-brackets
+- source: $
+  scopesBegin:
+    - variable.other.predefined
+  scopes:
+    - punctuation.definition.variable
+- source: _
+  scopesEnd:
+    - variable.other.predefined
+- source: '}'
+  scopes:
+    - punctuation.section.curly-brackets
+- source: )
+  scopes:
+    - punctuation.section.parens
+- source: foreach
+  scopes:
+    - keyword.control
+- source: sort
+  scopesBegin:
+    - support.function
+- source: keys
+  scopesEnd:
+    - support.function
+- source: '%'
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: inputs
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: '}'
+  scopes:
+    - punctuation.section.block.function

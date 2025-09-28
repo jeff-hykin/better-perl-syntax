@@ -11,15 +11,6 @@ require_relative './tokens.rb'
 grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
 
 # 
-#
-# Setup Grammar
-#
-# 
-    grammar[:$initial_context] = [
-        :normal_context,
-    ]
-
-# 
 # Builtin Helpers (part of ruby grammar builder)
 # 
     # @space
@@ -331,8 +322,79 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
             :special_identifiers,
             :keyword_operators,
             :storage_declares,
-            # put all the original patterns here
-            *grammar[:$initial_context],
+            :line_comment,
+            :block_comment,
+            :variable,
+            
+            # all the originals from "modified.tmLanguage.json"
+            :anon_pattern_1,
+            :anon_pattern_2,
+            :anon_pattern_3,
+            :anon_pattern_4,
+            :anon_pattern_5,
+            :anon_pattern_6,
+            :anon_pattern_7,
+            :anon_pattern_8,
+            :anon_pattern_9,
+            :anon_pattern_10,
+            :anon_pattern_11,
+            :anon_pattern_12,
+            :anon_pattern_13,
+            :anon_pattern_14,
+            :anon_pattern_15,
+            :anon_pattern_16,
+            :anon_pattern_17,
+            :anon_pattern_18,
+            :anon_pattern_19,
+            :anon_pattern_20,
+            :anon_pattern_21,
+            :anon_pattern_22,
+            :anon_pattern_23,
+            :anon_pattern_24,
+            :anon_pattern_25,
+            :anon_pattern_26,
+            :anon_pattern_27,
+            :anon_pattern_28,
+            :anon_pattern_29,
+            :anon_pattern_30,
+            :anon_pattern_31,
+            :anon_pattern_32,
+            :anon_pattern_33,
+            :anon_pattern_34,
+            :anon_pattern_35,
+            :anon_pattern_36,
+            :anon_pattern_37,
+            :anon_pattern_38,
+            :anon_pattern_39,
+            :anon_pattern_40,
+            :anon_pattern_41,
+            :anon_pattern_42,
+            :anon_pattern_43,
+            :anon_pattern_44,
+            :anon_pattern_45,
+            :anon_pattern_46,
+            :anon_pattern_47,
+            :anon_pattern_48,
+            :anon_pattern_49,
+            :anon_pattern_50,
+            :anon_pattern_51,
+            :anon_pattern_52,
+            :anon_pattern_53,
+            :anon_pattern_54,
+            :anon_pattern_55,
+            :anon_pattern_56,
+            :anon_pattern_57,
+            :anon_pattern_58,
+            :anon_pattern_59,
+            :anon_pattern_60,
+            :anon_pattern_61,
+            :anon_pattern_62,
+            :anon_pattern_63,
+            :anon_pattern_64,
+            :anon_pattern_65,
+            :anon_pattern_66,
+            :anon_pattern_67,
+            
             :operators,
             :punctuation,
         ]
@@ -341,6 +403,43 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
 # Patterns
 #
 #
+    # 
+    # comment
+    # 
+        # {
+        # 		"begin": "^(?==[a-zA-Z]+)",
+        # 		"end": "^(=cut\\b.*$)",
+        # 		"endCaptures": {
+        # 			"1": {
+        # 				"patterns": [
+        # 					{
+        # 						"include": "#pod"
+        # 					}
+        # 				]
+        # 			}
+        # 		},
+        # 		"name": "comment.block.documentation.perl",
+        # 		"patterns": [
+        # 			{
+        # 				"include": "#pod"
+        # 			}
+        # 		]
+        # }
+    grammar[:block_comment] = PatternRange.new(
+        tag_as: "comment.block.documentation.perl",
+        start_pattern: Pattern.new(
+            match: /^(?==[a-zA-Z]+)/,
+        ),
+        end_pattern: Pattern.new(
+            match: /^(?:=cut\b.*$)/,
+            includes: [
+                :pod,
+            ]
+        ),
+        includes: [
+            :pod,
+        ],
+    )
     # 
     # numbers
     # 

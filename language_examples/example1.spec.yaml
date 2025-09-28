@@ -1,0 +1,384 @@
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: '!/usr/bin/perl'
+  scopesEnd:
+    - comment.line.number-sign
+- source: use
+  scopesBegin:
+    - meta.import
+  scopes:
+    - keyword.other.use
+- source: strict
+  scopes:
+    - entity.name.package
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: use
+  scopes:
+    - keyword.other.use
+- source: warnings
+  scopes:
+    - entity.name.package
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.import
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' check if ruby exists'
+- source: '#'
+  scopes:
+    - punctuation.definition.comment
+- source: ' check if its version 2.4 or higher'
+- source: '#'
+  scopes:
+    - punctuation.definition.comment
+- source: ' if it doesn''t ex'
+  scopesEnd:
+    - comment.line.number-sign
+- source: sub
+  scopes:
+    - storage.type.sub
+- source: is_a_command
+  scopes:
+    - entity.name.function.definition
+- source: '{'
+  scopes:
+    - punctuation.section.block.function
+- source: my
+  scopes:
+    - storage.modifier.my
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: command_name
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: $
+  scopesBegin:
+    - variable.other.predefined
+  scopes:
+    - punctuation.definition.variable
+- source: _
+  scopesEnd:
+    - variable.other.predefined
+- source: '['
+  scopes:
+    - punctuation.section.square-brackets
+- source: '0'
+  scopes:
+    - constant.numeric.decimal
+- source: ']'
+  scopes:
+    - punctuation.section.square-brackets
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: my
+  scopes:
+    - storage.modifier.my
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: output
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: '`'
+  scopesBegin:
+    - string.interpolated
+  scopes:
+    - punctuation.definition.string.begin
+- source: 'command -v '
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: command_name
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '`'
+  scopes:
+    - punctuation.definition.string.end
+  scopesEnd:
+    - string.interpolated
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: if
+  scopes:
+    - keyword.control.if
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: $
+  scopesBegin:
+    - meta.control.evaluation
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: output
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '=~'
+  scopes:
+    - keyword.operator.comparison
+- source: /
+  scopesBegin:
+    - string.regexp.find
+  scopes:
+    - punctuation.definition.string
+- source: .
+  scopes:
+    - constant.character.character-class.regexp
+- source: +
+  scopes:
+    - keyword.operator.quantifier.regexp
+- source: /
+  scopes:
+    - punctuation.definition.string
+  scopesEnd:
+    - meta.control.evaluation
+    - string.regexp.find
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: return
+  scopesBegin:
+    - meta.control.body
+  scopes:
+    - keyword.control
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: output
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: else
+  scopes:
+    - keyword.control.else
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: return
+  scopesBegin:
+    - meta.control.body
+  scopes:
+    - keyword.control
+- source: undef
+  scopes:
+    - constant.language.undef
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: '}'
+  scopes:
+    - punctuation.section.block.function
+- source: if
+  scopes:
+    - keyword.control.if
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: $^O
+  scopesBegin:
+    - meta.control.evaluation
+  scopes:
+    - variable.language.special.caret
+- source: eq
+  scopes:
+    - keyword.operator.alias.eq
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.begin
+- source: linux
+- source: '"'
+  scopes:
+    - punctuation.definition.string.end
+  scopesEnd:
+    - meta.control.evaluation
+    - string.quoted.double
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: '#'
+  scopesBegin:
+    - meta.control.body
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' find the package manager'
+  scopesEnd:
+    - comment.line.number-sign
+- source: system
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.begin
+- source: command -v ruby
+- source: '"'
+  scopes:
+    - punctuation.definition.string.end
+  scopesEnd:
+    - string.quoted.double
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' system("cat /etc/os-release")'
+  scopesEnd:
+    - meta.control.body
+    - comment.line.number-sign
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: elsif
+  scopes:
+    - keyword.control.elsif
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: $^O
+  scopesBegin:
+    - meta.control.evaluation
+  scopes:
+    - variable.language.special.caret
+- source: eq
+  scopes:
+    - keyword.operator.alias.eq
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.begin
+- source: darwin
+- source: '"'
+  scopes:
+    - punctuation.definition.string.end
+  scopesEnd:
+    - meta.control.evaluation
+    - string.quoted.double
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: '#'
+  scopesBegin:
+    - meta.control.body
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' just run the mac command'
+- source: '#'
+  scopes:
+    - punctuation.definition.comment
+- source: ' is_a_command("ruby");'
+  scopesEnd:
+    - comment.line.number-sign
+- source: print
+  scopes:
+    - entity.name.function.call
+- source: (
+  scopes:
+    - punctuation.section.arguments
+- source: '100'
+  scopes:
+    - constant.numeric.decimal
+- source: )
+  scopes:
+    - punctuation.section.arguments
+- source: '#'
+  scopesBegin:
+    - comment.line.number-sign
+  scopes:
+    - punctuation.definition.comment
+- source: ' system("eval `curl -L git.io/fjBzd`")'
+  scopesEnd:
+    - meta.control.body
+    - comment.line.number-sign
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
+- source: else
+  scopes:
+    - keyword.control.else
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: print
+  scopesBegin:
+    - meta.control.body
+  scopes:
+    - support.function
+- source: '"'
+  scopesBegin:
+    - string.quoted.double
+  scopes:
+    - punctuation.definition.string.begin
+- source: 'Wtf, what operating system are you running this on?'
+- source: '"'
+  scopes:
+    - punctuation.definition.string.end
+  scopesEnd:
+    - string.quoted.double
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control

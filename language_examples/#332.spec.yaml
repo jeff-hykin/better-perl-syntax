@@ -1,0 +1,26 @@
+- source: split
+  scopes:
+    - support.function
+- source: /
+  scopes:
+    - punctuation.section.regexp
+- source: '"'
+  scopes:
+    - string.regexp
+- source: /
+  scopes:
+    - punctuation.section.regexp
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: substring
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
