@@ -125,14 +125,4 @@
     };
     version = "1.1.1";
   };
-  walk_up = {
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["http://rubygems.org"];
-      sha256 = "1g5xh4nk2dd5zrq2lfs4g5r7krfp4s4ppwy02ckqd5i2wbw16lf1";
-      type = "gem";
-    };
-    version = "1.0.1";
-  };
 }

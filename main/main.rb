@@ -4,7 +4,6 @@ require 'fileutils'
 require 'pathname'
 
 require 'ruby_grammar_builder'
-require 'walk_up'
 require_relative './tokens.rb'
 
 # 
