@@ -5,95 +5,8 @@ require 'deep_clone' # gem install deep_clone
 require 'pathname'
 
 #
-# Recursive value setting
+# this is to help make patterns lik "tokens.that(:areWords, !:areControlFlow)"
 #
-# TODO: these names/methods should probably be formalized and then put inside their own ruby gem
-# TODO: methods should probably be added for other containers, like sets
-# TODO: probably should use blocks instead of a lambda
-#     # the hash (or array) you want to change
-#     a_hash = {
-#         a: nil,
-#         b: {
-#             c: nil,
-#             d: {
-#                 e: nil
-#             }
-#         }
-#     }
-#     # lets say you want to convert all the nil's into empty arrays []
-#     # then you'd do:
-#     a_hash.recursively_set_each_value! ->(each_value, each_key) do
-#         if each_value == nil
-#             # return an empty list
-#             []
-#         else
-#             # return the original
-#             each_value
-#         end
-#     end
-#     # this would result in:
-#     a_hash = {
-#         a: [],
-#         b: {
-#             c: []
-#             d: {
-#                 e: []
-#             }
-#         }
-#     }
-class Hash
-    def recursively_set_each_value!(a_lambda)
-        for each_key, each_value in self.clone
-            # if this was a tree, then start by exploring the tip of the first root
-            # (rather than the base of the tree)
-            # if it has a :recursively_set_each_value! method, then call it
-            if self[each_key].respond_to?(:recursively_set_each_value!)
-                self[each_key].recursively_set_each_value!(a_lambda)
-            end
-            # then allow manipulation of the value
-            self[each_key] = a_lambda[each_value, each_key]
-        end
-    end
-end
-
-class Array
-    def recursively_set_each_value!(a_lambda)
-        new_values = []
-        clone = self.clone
-        clone.each_with_index do |each_value, each_key|
-            # if it has a :recursively_set_each_value! method, then call it
-            if self[each_key].respond_to?(:recursively_set_each_value!)
-                self[each_key].recursively_set_each_value!(a_lambda)
-            end
-            self[each_key] = a_lambda[each_value, each_key]
-        end
-    end
-end
-
-#
-# Helpers for Tokens
-#
-class NegatedSymbol
-    def initialize(a_symbol)
-        @symbol = a_symbol
-    end
-    def to_s
-        return "not(#{@symbol.to_s})"
-    end
-    def to_sym
-        return @symbol
-    end
-end
-
-class Symbol
-    def !@
-        return NegatedSymbol.new(self)
-    end
-end
-
-def word_pattern()
-    return /[a-zA-Z0-9\-_']/
-end
 class TokenHelper
     attr_accessor :tokens
     def initialize(tokens, for_each_token:nil)
@@ -134,44 +47,45 @@ class TokenHelper
         return matches.map do |each| each[:representation] end
     end
 
-    def lookBehindForWordsThat(*adjectives)
-        array_of_invalid_names = self.representationsThat(*adjectives)
-        return Pattern.new(/[\\t ]/).lookBehindFor(/#{array_of_invalid_names.map { |each| '\W'+each+'[\\t ]|^'+each+'[\\t ]|\W'+each+'$|^'+each+'$' } .join('|')}/)
-    end
-    
     def lookBehindToAvoidWordsThat(*adjectives)
-        names = self.representationsThat(*adjectives)
-        return lookAheadToAvoid(word_pattern).oneOf([
-            # good case: no partial match
-            lookBehindToAvoid(/#{names.join("|")}/),
-            # good case: partial match but was only an ending prefix
-            lookBehindFor(/#{names.map{ |each| "#{word_pattern.to_s[7...-1]}#{each}" }.join("|")}/),
-            # all other cases are invalid
-        ])
+        array_of_invalid_names = self.representationsThat(*adjectives)
+        return Pattern.new(/\b/).lookBehindToAvoid(/#{array_of_invalid_names.map { |each| '\W'+each+'|^'+each } .join('|')}/)
     end
 
     def lookAheadToAvoidWordsThat(*adjectives)
         array_of_invalid_names = self.representationsThat(*adjectives)
-        return lookBehindToAvoid(word_pattern).oneOf([
-            # good case: no partial match
-            lookAheadToAvoid(/#{names.join("|")}/),
-            # good case: partial match but was only an ending prefix
-            lookAheadFor(/#{names.map{ |each| /#{each}#{word_pattern.to_s[7...-1]}/ }.join('|')}/),
-            # all other cases are invalid
-        ])
+        return Pattern.new(/\b/).lookAheadToAvoid(/#{array_of_invalid_names.map { |each| each+'\W|'+each+'\$' } .join('|')}/)
     end
 
     def that(*adjectives)
-        return oneOf(representationsThat(*adjectives))
+        representations = representationsThat(*adjectives)
+        regex_internals = representations.map do |each|
+             Regexp.escape(each)
+        end.join('|')
+        return Pattern.new(/(?:#{regex_internals})/)
+        # oneOf has problems (as of 2024-07)
+        # return oneOf(representationsThat(*adjectives))
     end
 end
 
-class Array
-    def without(*args)
-        copy = self.clone
-        for each in args
-            copy.delete(each)
-        end
-        return copy
+#
+# These monkey patch the builtin Symbol to allow for easy negation
+#
+# (not the greatest developer pattern, but makes it more readable in main.rb)
+class NegatedSymbol
+    def initialize(a_symbol)
+        @symbol = a_symbol
+    end
+    def to_s
+        return "not(#{@symbol.to_s})"
+    end
+    def to_sym
+        return @symbol
+    end
+end
+
+class Symbol
+    def !@
+        return NegatedSymbol.new(self)
     end
 end
