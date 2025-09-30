@@ -319,7 +319,6 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
             :using_statement,
             :control_flow,
             :function_definition,
-            :function_call,
             :label,
             :numbers,
             :inline_regex,
@@ -396,6 +395,9 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
             :anon_pattern_63,
             :anon_pattern_64,
             :anon_pattern_65,
+            
+            :function_call,
+            
             :anon_pattern_66,
             :anon_pattern_67,
             

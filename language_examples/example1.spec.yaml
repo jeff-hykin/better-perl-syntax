@@ -253,10 +253,10 @@
     - comment.line.number-sign
 - source: system
   scopes:
-    - entity.name.function.call
+    - support.function
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '"'
   scopesBegin:
     - string.quoted.double
@@ -270,7 +270,7 @@
     - string.quoted.double
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '#'
   scopesBegin:
     - comment.line.number-sign
@@ -330,16 +330,16 @@
     - comment.line.number-sign
 - source: print
   scopes:
-    - entity.name.function.call
+    - support.function
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '100'
   scopes:
     - constant.numeric.decimal
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '#'
   scopesBegin:
     - comment.line.number-sign

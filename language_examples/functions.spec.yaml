@@ -357,10 +357,10 @@
   scopesBegin:
     - meta.control.evaluation
   scopes:
-    - entity.name.function.call
+    - support.function
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: $
   scopesBegin:
     - variable.other.readwrite.global
@@ -384,7 +384,7 @@
     - punctuation.separator.readline
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
   scopesEnd:
     - meta.control.evaluation
 - source: )
@@ -694,10 +694,10 @@
     - punctuation.section.block.function
 - source: my
   scopes:
-    - entity.name.function.call
+    - storage.modifier.my
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: $
   scopesBegin:
     - variable.other.readwrite.global
@@ -708,7 +708,7 @@
     - variable.other.readwrite.global
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '='
   scopes:
     - keyword.operator.assignment
@@ -751,10 +751,10 @@
     - punctuation.terminator.statement
 - source: return
   scopes:
-    - entity.name.function.call
+    - keyword.control
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: $
   scopesBegin:
     - variable.other.readwrite.global
@@ -790,11 +790,11 @@
   scopes:
     - constant.numeric.decimal
 - source: )
-  scopes:
+  scopesBegin:
     - punctuation.section.parens
 - source: )
-  scopes:
-    - punctuation.section.arguments
+  scopesEnd:
+    - punctuation.section.parens
 - source: ;
   scopes:
     - punctuation.terminator.statement

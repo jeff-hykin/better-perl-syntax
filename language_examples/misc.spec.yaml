@@ -77,10 +77,10 @@
     - comment.line.number-sign
 - source: my
   scopes:
-    - entity.name.function.call
+    - storage.modifier.my
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: $
   scopesBegin:
     - variable.other.readwrite.global
@@ -91,7 +91,7 @@
     - variable.other.readwrite.global
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '='
   scopes:
     - keyword.operator.assignment
@@ -108,10 +108,10 @@
     - punctuation.terminator.statement
 - source: open
   scopes:
-    - entity.name.function.call
+    - support.function
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: my
   scopes:
     - storage.modifier.my
@@ -169,7 +169,7 @@
     - string.quoted.double
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: or
   scopes:
     - keyword.operator.alias.or
@@ -658,10 +658,10 @@
   scopesBegin:
     - meta.control.body
   scopes:
-    - entity.name.function.call
+    - support.function
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '"'
   scopesBegin:
     - string.quoted.double
@@ -768,7 +768,7 @@
 - source: as_string
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
   scopesEnd:
     - meta.control.body
 - source: '}'

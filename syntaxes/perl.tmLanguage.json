@@ -22,9 +22,6 @@
       "include": "#function_definition"
     },
     {
-      "include": "#function_call"
-    },
-    {
       "include": "#label"
     },
     {
@@ -245,6 +242,9 @@
     },
     {
       "include": "#anon_pattern_65"
+    },
+    {
+      "include": "#function_call"
     },
     {
       "include": "#anon_pattern_66"
