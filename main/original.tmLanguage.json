@@ -657,7 +657,7 @@
 					"patterns": [
 						{
 							"match": "\\\\['\\\\]",
-							"name": "constant.character.escape.perl.perl"
+							"name": "constant.character.escape.perl"
 						}
 					]
 				},

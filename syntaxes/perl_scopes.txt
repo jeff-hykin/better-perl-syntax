@@ -4,7 +4,6 @@ constant.character.character-class.regexp
 constant.character.control.regexp
 constant.character.escape.backslash.regexp
 constant.character.escape.perl
-constant.character.escape.perl.perl
 constant.character.numeric.regexp
 constant.language.perl
 constant.language.undef.perl
@@ -71,8 +70,8 @@ markup.underline.link.hyperlink.pod.perl
 meta.assertion.look-ahead.regexp
 meta.assertion.negative-look-ahead.regexp
 meta.class.perl
-meta.control.body
-meta.control.evaluation
+meta.control.body.perl
+meta.control.evaluation.perl
 meta.embedded.pod.perl
 meta.even-tab
 meta.format.perl
@@ -82,7 +81,7 @@ meta.group.regexp
 meta.import.perl
 meta.leading-tabs
 meta.odd-tab
-meta.readline
+meta.readline.perl
 punctuation.definition.attribute.perl
 punctuation.definition.character-class.begin.perl
 punctuation.definition.character-class.end.perl

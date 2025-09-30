@@ -33,14 +33,13 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
 #
 # Custom Helpers
 #
-    part_of_a_variable = /[a-zA-Z_][a-zA-Z0-9_\-']*/
+    part_of_a_variable = /[a-zA-Z_][a-zA-Z0-9_]*/
+    @standard_character = /[a-zA-Z0-9_]/
     # this is really useful for keywords. eg: variableBounds[/new/] wont match "newThing" or "thingnew"
     variableBounds = ->(regex_pattern) do
-        lookBehindToAvoid(/[a-zA-Z0-9_']/).then(regex_pattern).lookAheadToAvoid(/[a-zA-Z0-9_\-']/)
+        lookBehindToAvoid(@standard_character).then(regex_pattern).lookAheadToAvoid(@standard_character)
     end
     @variable = variable = variableBounds[part_of_a_variable].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
-    external_variable = variableBounds[/_-#{part_of_a_variable}/].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
-    dirty_variable = variableBounds[/_'#{part_of_a_variable}/].then(@tokens.lookBehindToAvoidWordsThat(:areKeywords))
 
 # 
 # shared patterns
@@ -258,7 +257,7 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
             includes: [
                 *primary_inlcudes,
                 PatternRange.new(
-                    tag_content_as: "meta.control.evaluation",
+                    tag_content_as: "meta.control.evaluation.perl", # this ".perl" is a workaround for a bug in ruby_grammar_builder
                     start_pattern: Pattern.new(
                         match: /\(/,
                         tag_as: "punctuation.section.parens.control",
@@ -270,7 +269,7 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
                     includes: parentheses_include
                 ),
                 PatternRange.new(
-                    tag_content_as: "meta.control.body",
+                    tag_content_as: "meta.control.body.perl", # this ".perl" is a workaround for a bug in ruby_grammar_builder
                     start_pattern: Pattern.new(
                         match: /\{/,
                         tag_as: "punctuation.section.block.control"
@@ -288,27 +287,29 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
 # utils
 # 
     # NOTE: this pattern can match 0-spaces so long as its still a word boundary
-    std_space = Pattern.new(
-        Pattern.new(
-            at_least: 1,
-            quantity_preference: :as_few_as_possible,
-            match: Pattern.new(
-                    match: @spaces,
-                    dont_back_track?: true
-                )
-        # zero length match
-        ).or(
-            Pattern.new(/\b/).or(
-                lookBehindFor(/\W/)
-            ).or(
-                lookAheadFor(/\W/)
-            ).or(
-                @start_of_document
-            ).or(
-                @end_of_document
-            )
-        )
-    )
+    # std_space = Pattern.new(
+    #     Pattern.new(
+    #         at_least: 1,
+    #         quantity_preference: :as_few_as_possible,
+    #         match: Pattern.new(
+    #                 match: @spaces,
+    #                 dont_back_track?: true
+    #             )
+    #     # zero length match
+    #     ).or(
+    #         Pattern.new(/\b/).or(
+    #             lookBehindFor(/\W/)
+    #         ).or(
+    #             lookAheadFor(/\W/)
+    #         ).or(
+    #             @start_of_document
+    #         ).or(
+    #             @end_of_document
+    #         )
+    #     )
+    # )
+    # equivlent to above, but with less generated wrappers (more optimized)
+    std_space = /(?>\s+)+?|\b|(?<=\W)|(?=\W)|\A|\Z/
 #
 #
 # Contexts
@@ -491,7 +492,7 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
         ]
         grammar[:operators] = [
             PatternRange.new(
-                tag_content_as: "meta.readline",
+                tag_content_as: "meta.readline.perl", # this ".perl" is a workaround for a bug in ruby_grammar_builder
                 start_pattern: Pattern.new(
                     lookBehindToAvoid(/\s|\w|</).then(std_space).then(
                         match: /</,
@@ -539,49 +540,54 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
     # 
     # punctuation
     # 
+        grammar[:semicolon] = Pattern.new(
+            match: /;/,
+            tag_as: "punctuation.terminator.statement"
+        )
+        grammar[:comma] = Pattern.new(
+            match: /,/,
+            tag_as: "punctuation.separator.comma"
+        )
+        # unknown/other
+        grammar[:square_brackets] = PatternRange.new(
+            start_pattern: Pattern.new(
+                match: /\[/,
+                tag_as: "punctuation.section.square-brackets",
+            ),
+            end_pattern: Pattern.new(
+                match: /\]/,
+                tag_as: "punctuation.section.square-brackets",
+            ),
+            includes: [ :$initial_context ]
+        )
+        grammar[:curly_brackets] = PatternRange.new(
+            start_pattern: Pattern.new(
+                match: /\{/,
+                tag_as: "punctuation.section.curly-brackets",
+            ),
+            end_pattern: Pattern.new(
+                match: /\}/,
+                tag_as: "punctuation.section.curly-brackets",
+            ),
+            includes: [ :$initial_context ]
+        )
+        grammar[:parentheses] = PatternRange.new(
+            start_pattern: Pattern.new(
+                match: /\(/,
+                tag_as: "punctuation.section.parens",
+            ),
+            end_pattern: Pattern.new(
+                match: /\)/,
+                tag_as: "punctuation.section.parens",
+            ),
+            includes: [ :$initial_context ]
+        )
         grammar[:punctuation] = [
-            grammar[:semicolon] = Pattern.new(
-                match: /;/,
-                tag_as: "punctuation.terminator.statement"
-            ),
-            grammar[:comma] = Pattern.new(
-                match: /,/,
-                tag_as: "punctuation.separator.comma"
-            ),
-            # unknown/other
-            grammar[:square_brackets] = PatternRange.new(
-                start_pattern: Pattern.new(
-                    match: /\[/,
-                    tag_as: "punctuation.section.square-brackets",
-                ),
-                end_pattern: Pattern.new(
-                    match: /\]/,
-                    tag_as: "punctuation.section.square-brackets",
-                ),
-                includes: [ :$initial_context ]
-            ),
-            grammar[:curly_brackets] = PatternRange.new(
-                start_pattern: Pattern.new(
-                    match: /\{/,
-                    tag_as: "punctuation.section.curly-brackets",
-                ),
-                end_pattern: Pattern.new(
-                    match: /\}/,
-                    tag_as: "punctuation.section.curly-brackets",
-                ),
-                includes: [ :$initial_context ]
-            ),
-            grammar[:parentheses] = PatternRange.new(
-                start_pattern: Pattern.new(
-                    match: /\(/,
-                    tag_as: "punctuation.section.parens",
-                ),
-                end_pattern: Pattern.new(
-                    match: /\)/,
-                    tag_as: "punctuation.section.parens",
-                ),
-                includes: [ :$initial_context ]
-            )
+            :semicolon,
+            :comma,
+            :square_brackets,
+            :curly_brackets,
+            :parentheses,
         ]
     # 
     # imports
@@ -628,16 +634,32 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
     # control flow
     # 
         grammar[:control_flow] = [
-            grammar[:if_statement]    = c_style_control(keyword:"if"    , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
-            grammar[:elsif_statement] = c_style_control(keyword:"elsif" , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
-            grammar[:else_statement]  = c_style_control(keyword:"else"  , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
-            grammar[:while_statement] = c_style_control(keyword:"while" , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
-            grammar[:for_statement]   = c_style_control(keyword:"for"   , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context]),
+            :if_statement,
+            :elsif_statement,
+            :else_statement,
+            :while_statement,
+            :for_statement,
         ]
+        grammar[:if_statement]    = c_style_control(keyword:"if"    , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context])
+        grammar[:elsif_statement] = c_style_control(keyword:"elsif" , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context])
+        grammar[:else_statement]  = c_style_control(keyword:"else"  , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context])
+        grammar[:while_statement] = c_style_control(keyword:"while" , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context])
+        grammar[:for_statement]   = c_style_control(keyword:"for"   , parentheses_include:[ :$initial_context ], body_includes:[ :$initial_context ], secondary_includes:[:$initial_context])
     # 
     # function definition
     # 
         # see https://perldoc.perl.org/perlsub.html
+        grammar[:parameters] = PatternRange.new(
+            start_pattern: Pattern.new(
+                match: /\(/,
+                tag_as: "punctuation.section.parameters",
+            ),
+            end_pattern: Pattern.new(
+                match: /\)/,
+                tag_as: "punctuation.section.parameters",
+            ),
+            includes: [ :$initial_context ]
+        )
         grammar[:function_definition] = PatternRange.new(
             start_pattern: Pattern.new(
                 Pattern.new(
@@ -663,19 +685,11 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
                         tag_as: "punctuation.section.block.function",  
                     ),
                     end_pattern: lookAheadFor(/\}/),
-                    includes: [ :$initial_context ],
+                    includes: [ 
+                        :$initial_context 
+                    ],
                 ),
-                grammar[:parameters] = PatternRange.new(
-                    start_pattern: Pattern.new(
-                        match: /\(/,
-                        tag_as: "punctuation.section.parameters",
-                    ),
-                    end_pattern: Pattern.new(
-                        match: /\)/,
-                        tag_as: "punctuation.section.parameters",
-                    ),
-                    includes: [ :$initial_context ]
-                ),
+                :parameters,
                 Pattern.new(
                     Pattern.new(
                         match: /:/,
