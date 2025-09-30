@@ -1,6 +1,4 @@
-require "walk_up"
-require_relative walk_up_until("paths.rb")
-require_relative PathFor[:textmate_tools]
+require_relative "./textmate_tools.rb"
 
 tokens = [
     { representation: 'ENV'    , areBuiltIn: true },
