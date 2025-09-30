@@ -665,7 +665,7 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
         grammar[:function_definition] = PatternRange.new(
             start_pattern: Pattern.new(
                 Pattern.new(
-                    match: /sub/,
+                    match: variableBounds[/sub/],
                     tag_as: "storage.type.sub",
                 ).then(std_space).maybe(
                     match: @variable,
