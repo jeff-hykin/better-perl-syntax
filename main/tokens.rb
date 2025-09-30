@@ -1,4 +1,4 @@
-require_relative "./textmate_tools.rb"
+require_relative "./token_helper.rb"
 
 tokens = [
     { representation: 'ENV'    , areBuiltIn: true },
