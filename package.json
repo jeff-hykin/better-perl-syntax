@@ -2,7 +2,7 @@
     "name": "better-perl-syntax",
     "displayName": "Better Perl Syntax",
     "description": "An enhanced version of Perl Syntax highlighting",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "icon": "icon.png",
     "author": {
         "name": "Jeff Hykin"
