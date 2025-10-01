@@ -451,7 +451,7 @@ grammar = Grammar.fromTmLanguage("./main/modified.tmLanguage.json")
     # 
     # regex
     # 
-        grammar[:inline_regex] = Pattern.new(
+        grammar[:inline_regex] = Pattern.new(std_space).then(
             Pattern.new(
                 match: /\//,
                 tag_as: "punctuation.section.regexp"
