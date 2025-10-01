@@ -414,11 +414,11 @@
   scopes:
     - keyword.operator.comparison
 - source: /
-  scopesBegin:
-    - string.regexp.find
   scopes:
-    - punctuation.definition.string
+    - punctuation.section.regexp
 - source: ^
+  scopesBegin:
+    - string.regexp
   scopes:
     - keyword.control.anchor.regexp
 - source: '['
@@ -433,13 +433,13 @@
   scopes:
     - punctuation.definition.character-class.regexp
   scopesEnd:
+    - string.regexp
     - constant.other.character-class.set.regexp
 - source: /
   scopes:
-    - punctuation.definition.string
+    - punctuation.section.regexp
   scopesEnd:
     - meta.control.evaluation
-    - string.regexp.find
 - source: )
   scopes:
     - punctuation.section.parens.control
@@ -694,10 +694,10 @@
     - punctuation.section.block.function
 - source: my
   scopes:
-    - entity.name.function.call
+    - storage.modifier.my
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: $
   scopesBegin:
     - variable.other.readwrite.global
@@ -708,7 +708,7 @@
     - variable.other.readwrite.global
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '='
   scopes:
     - keyword.operator.assignment

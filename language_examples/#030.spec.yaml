@@ -1,0 +1,40 @@
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: x
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: /
+  scopesBegin:
+    - punctuation.section.regexp
+- source: /
+  scopesEnd:
+    - punctuation.section.regexp
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: '1'
+  scopes:
+    - constant.numeric.decimal
+- source: ;
+  scopesBegin:
+    - punctuation.terminator.statement
+- source: ;
+  scopesEnd:
+    - punctuation.terminator.statement
+- source: say
+  scopes:
+    - support.function
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: x
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement

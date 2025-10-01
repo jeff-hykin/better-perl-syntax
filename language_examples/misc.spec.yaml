@@ -77,10 +77,10 @@
     - comment.line.number-sign
 - source: my
   scopes:
-    - entity.name.function.call
+    - storage.modifier.my
 - source: (
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: $
   scopesBegin:
     - variable.other.readwrite.global
@@ -91,7 +91,7 @@
     - variable.other.readwrite.global
 - source: )
   scopes:
-    - punctuation.section.arguments
+    - punctuation.section.parens
 - source: '='
   scopes:
     - keyword.operator.assignment
@@ -433,22 +433,23 @@
   scopes:
     - keyword.operator.comparison
 - source: /
-  scopesBegin:
-    - string.regexp.find
   scopes:
-    - punctuation.definition.string
+    - punctuation.section.regexp
 - source: .
+  scopesBegin:
+    - string.regexp
   scopes:
     - constant.character.character-class.regexp
 - source: +
   scopes:
     - keyword.operator.quantifier.regexp
+  scopesEnd:
+    - string.regexp
 - source: /
   scopes:
-    - punctuation.definition.string
+    - punctuation.section.regexp
   scopesEnd:
     - meta.control.evaluation
-    - string.regexp.find
 - source: )
   scopes:
     - punctuation.section.parens.control

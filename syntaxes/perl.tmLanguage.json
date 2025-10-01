@@ -22,6 +22,9 @@
       "include": "#function_definition"
     },
     {
+      "include": "#storage_declares"
+    },
+    {
       "include": "#function_call"
     },
     {
@@ -38,9 +41,6 @@
     },
     {
       "include": "#keyword_operators"
-    },
-    {
-      "include": "#storage_declares"
     },
     {
       "include": "#line_comment"

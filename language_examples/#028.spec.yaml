@@ -1,0 +1,114 @@
+- source: while
+  scopes:
+    - keyword.control.while
+- source: (
+  scopes:
+    - punctuation.section.parens.control
+- source: my
+  scopesBegin:
+    - meta.control.evaluation
+  scopes:
+    - storage.modifier.my
+- source: (
+  scopes:
+    - punctuation.section.parens
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: dest_path
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ','
+  scopes:
+    - punctuation.separator.comma
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: cfg
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parens
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: each
+  scopes:
+    - support.function
+- source: '%'
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: polls
+  scopesEnd:
+    - meta.control.evaluation
+    - variable.other.readwrite.global
+- source: )
+  scopes:
+    - punctuation.section.parens.control
+- source: '{'
+  scopes:
+    - punctuation.section.block.control
+- source: my
+  scopesBegin:
+    - meta.control.body
+  scopes:
+    - storage.modifier.my
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: dest_path
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: dest_path
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+- source: my
+  scopes:
+    - storage.modifier.my
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: cfg
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: '='
+  scopes:
+    - keyword.operator.assignment
+- source: $
+  scopesBegin:
+    - variable.other.readwrite.global
+  scopes:
+    - punctuation.definition.variable
+- source: cfg
+  scopesEnd:
+    - variable.other.readwrite.global
+- source: ;
+  scopes:
+    - punctuation.terminator.statement
+  scopesEnd:
+    - meta.control.body
+- source: '}'
+  scopes:
+    - punctuation.section.block.control
